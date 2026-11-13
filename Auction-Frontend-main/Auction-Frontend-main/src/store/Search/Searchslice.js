@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import searchService from "./searchService";
+import searchService from "./Searchservice";
 
 export const searchMarketplace = createAsyncThunk(
   "search/searchMarketplace",

@@ -144,6 +144,15 @@ import deletedataRoutes from "./routes/deleteData.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import searchRoutes from "./routes/search.routes.js";
 import emailSettingsRouter from "./routes/emailSettings.routes.js";
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "online",
+    message: "Rule 7 Media API Service is running successfully!",
+    uptime: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.use("/api/v1/blogs", blogRoutes);
 app.use("/api/v1/users",userRouter);
 app.use("/api/v1/product-categories",productCategoryRouter);

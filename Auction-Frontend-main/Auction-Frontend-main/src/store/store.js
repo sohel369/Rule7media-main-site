@@ -36,7 +36,7 @@ import subscriptionPlanReducer from "./subscriptionplans/subscriptionPlanSlice";
 import campaignReducer from "./campaign/campaignSlice";
 import gifReducer from "./gif/gifSlice";
 import franchiseReducer from "./franchise/franchiseSlice";
-import mediaKitReducer from "./mediakit/mediakitSlice";
+import mediaKitReducer from "./mediakit/mediaKitSlice";
 import enquiryReducer from "./enquiry/enquirySlice";
 import backupReducer from "./backup/backupSlice";
 import deleteDataReducer from "./deleteData/deleteDataSlice"

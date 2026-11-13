@@ -1,0 +1,406 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: "border-box";
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background-color: whitesmoke;
+  min-width: 300px;
+  margin-bottom: 180px;
+}
+.no-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.no-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 9999px; /* Add this line */
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  border: solid 1px #ffffff;
+  background-color: #aaaaaa;
+  border-radius: 9999px; /* Add this line */
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #29b6f6;
+}
+
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 2px #29b6f6;
+  -webkit-text-fill-color: transparent;
+}
+
+swiper-slide {
+  height: auto;
+}
+
+input[type="submit"] {
+  background-color: #c21300;
+}
+.stsearch-box input {
+  background-color: #0e294d;
+  width: 100%;
+  color: white;
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid #0e294d;
+  border-radius: 5px;
+}
+* {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: "border-box";
+}
+.stdropdown-menu {
+  position: absolute;
+  transform: translateY(4px);
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: auto;
+  max-height: 150px;
+  background-color: #0e294d;
+  z-index: 99;
+}
+.stdropdown-menu {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: "border-box";
+  color: white;
+  height: 300px;
+}
+.stsearch-box input {
+  background-color: #0e294d;
+  width: 100%;
+  height: 55px;
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid #0e294d;
+  border-radius: 5px;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  /* border-color: #d5d8df; */
+}
+.stdropdown-container {
+  text-align: left;
+  /* border: 1px solid #ccc; */
+  position: relative;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  /* border-color: #d5d8df; */
+}
+.stdropdown-tool svg {
+  fill: white;
+}
+.stdropdown-container,
+.stdropdown-input,
+.stdropdown-menu,
+.stdropdown-item {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.stdropdown-input input:focus {
+  border-color: blue !important;
+  box-shadow: 0 0 3px blue !important;
+  outline: none !important;
+}
+.stdropdown-menu {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: "border-box";
+  color: white;
+}
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-xl {
+  font-size: 15px;
+  line-height: 1.75rem;
+}
+.mb-10 {
+  margin-bottom: 0.5rem;
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverts colors, making the icon white */
+}
+
+@media (max-width: 786px) {
+  .responsive-width {
+    width: 100% !important;
+  }
+}
+.goog-logo-link,
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.goog-tooltip,
+.goog-tooltip:hover,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .goog-te-combo,
+  .md:w-40 {
+    width: 13rem;
+    color: rgb(13, 20, 30);
+  }
+}
+
+/* custom css  */
+.profile0 .fixed.top-0.left-0 {
+  z-index: 9999;
+}
+.admin-head {
+  z-index: 999;
+}
+@media (max-width: 1024px) {
+  .mb-36.select-box-wrapper {
+    margin-bottom: 2rem;
+  }
+  section.about-us {
+    padding-bottom: 3rem;
+  }
+  h2.custom-h2.section-title {
+    line-height: normal;
+    margin-bottom: 30px;
+  }
+  .cart-main-box {
+    padding: 0;
+  }
+  .cart-box-main-head {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cart-box-main-head h1 {
+    font-size: 26px;
+  }
+  .profile0 > .container {
+    padding: 0;
+  }
+  /* .select-box-wrapper{
+  min-height: auto;
+  padding-bottom: 240px;
+} */
+  .select-box-mein {
+    bottom: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-slide-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.privacy-content a {
+  color: blue; /* link color */
+  text-decoration: underline; /* optional */
+} /* Dropdown menu base */
+.stdropdown-menu {
+  background-color: #ffffff !important; /* pure white background */
+  color: #000000 !important; /* black text */
+  border: 1px solid #d1d5db !important; /* gray-300 border */
+  border-radius: 0 !important; /* no rounding */
+  padding: 0.25rem 0 !important; /* small vertical padding */
+  margin-top: 0.25rem !important; /* small gap from input */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; /* light shadow */
+  font-size: 1rem !important; /* slightly bigger text */
+  font-weight: 500 !important; /* medium font weight */
+  z-index: 50 !important; /* on top of other elements */
+}
+
+.stdropdown-item {
+  padding: 0.25rem 0.5rem !important; /* vertical + horizontal padding, thoda kam karke gap kam kiya */
+  cursor: pointer !important;
+  transition: background-color 0.15s ease-in-out !important;
+  color: #000000 !important; /* black text */
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-align: left !important; /* left aligned text */
+  line-height: 1.25rem !important; /* text height thoda kam karke gap kam kiya */
+}
+.stdropdown-menu .option:hover {
+  background-color: #2454b3 !important;
+  color: #000000 !important;
+}
+
+.stdropdown-menu .option.selected {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox ke liye */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox ke liye */
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+input[type="radio"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #60a5fa #1f2937; /* blue thumb, gray track */
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #60a5fa;
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6;
+  }
+}
+.ql-toolbar {
+  background-color: #020617;
+  border-color: #334155;
+}
+
+.ql-container {
+  background-color: #020617;
+  border-color: #334155;
+}
+
+.ql-editor {
+  color: #ffffff;
+  min-height: 400px;
+}
+
+.ql-editor.ql-blank::before {
+  color: #9ca3af;
+}
+
+.ql-toolbar .ql-stroke {
+  stroke: #ffffff;
+}
+
+.ql-toolbar .ql-fill {
+  fill: #ffffff;
+}
+
+.ql-toolbar .ql-picker {
+  color: #ffffff;
+}
+/* styles.css */
+input[type="file"]::file-selector-button {
+  @apply bg-theme-bg2 text-white  rounded hover:bg-theme-bg;
+}
+/* Dropdown label (jo selected value dikhti hai) */
+.ql-snow .ql-picker-label {
+  color: #fff !important;
+}
+
+/* Dropdown items (open hone ke baad list) */
+.ql-snow .ql-picker-item {
+  color: #fff !important;
+}
+
+/* Dropdown background */
+.ql-snow .ql-picker-options {
+  background-color: #1f2937 !important; /* dark bg */
+  border: 1px solid #374151 !important;
+}
+
+/* Hover state */
+.ql-snow .ql-picker-item:hover {
+  background-color: #374151 !important;
+  color: #fff !important;
+}

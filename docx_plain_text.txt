@@ -1,0 +1,1563 @@
+﻿
+Consolidated Rule 7 Media Client Queries
+Hi Sohel 
+im
+ listing tasks 
+in order to
+ allow me to do the soft 
+launch .
+1. Install Cloudflare
+Dashboard Access  
+kjl5500@outlook.com
+VU_9R_4L6Aid2xx
+There is a section on the website 
+https://www.rule7media.com/about-us
+ Led by visionaries 
+( This
+ is the key executives and 
+im
+ currently finalising this so just hide this section for now without deleting it.
+IN THE FIRST INSTANCE PLEASE CHANGE ALL PASSWORDS FOR ACCESS to DIGITAL 
+OCEAN
+( WE
+ HAVE DONE THIS) 
+&lt; GO DADDY&lt; RAILWAY, GOOGLE SEARCH CONSOLE etc and supply them to me.
+Can you please 
+ respond within the document 
+as this is the most efficient manner.
+ Every single point should have a reply to it in GREEN
+When I see replies in Section 1 that they are fixed I can then merely click on the hyperlink and check this is in fact the case.
+SECTION 1 Clients Original Comments 
+Please respond to each item in this document so I can use the hyperlinks to retest once you say it is fixed
+ 
+the comments in Green are by the original developer
+Items in Red are for client reference and action as reminder to fix in ADMIN 
+https://www.rule
+7
+media.com/
+Tekes forever to load, Cloudflare has not been initiated which would also help as site can load in background during cloudflare verification
+. I will supply Cloudflare details 
+Need to test Country menu with VPN to see if correct information is displayed
+ 
+im
+ finding this difficult to do due to original developers set up.
+ 
+2. 
+SEO needs to be checked but all other items must take priority
+Can you explain this to me please as I copied the page source into AI and this was the response 
+Maybe im reading to wrong but if you could explain the SEO strategy that has been employed
+“This is a critical SEO failure for a production website. The code you provided is effectively a "blank canvas" shell. Search engines like Google will see this page as having zero content, zero relevance, and zero value, which will result in it never ranking for any keyword.
+🔴
+ Critical Issues Identified
+Missing Page Title: The &lt;title&gt; tag is just "Rule7Media". It lacks keywords (e.g., "Vehicle Wrapping Leads," "First-Mover Advantage").
+No Meta Description: There is no &lt;meta name="description"&gt; tag. Google cannot write a compelling snippet for search results.
+No Semantic Content: The &lt;body&gt; only contains a &lt;div id="root"&gt;. All your text, images, and forms are injected via JavaScript.
+Why this matters: While Google can render JS, it is slower and less reliable than reading static HTML. If the JS fails to load or render quickly, the page is invisible to crawlers.
+Missing H1 Tag: There is no &lt;h1&gt; heading. The H1 is the most important signal for what a page is about.
+No Structured Data: There are no JSON-LD scripts to help Google understand this is a business or a service page.
+Missing Open Graph Tags: No metadata for social media sharing (Facebook, LinkedIn, X).
+🚀
+ Optimization Strategy
+Since you are building a React/Vite application (indicated by the /assets/index-...js and div id="root"), you cannot simply "edit the HTML file" for every page change. You need a framework-level solution.
+1. Immediate Fix: Dynamic HTML Head Management
+You must use a library like react-helmet-async to inject tags dynamically based on the route.
+Implementation Plan:
+Install: npm install react-helmet-async
+Wrap your app in &lt;HelmetProvider&gt; in main.jsx.
+Add &lt;Helmet&gt; tags inside your page components.
+2. Code Optimization Example
+Here is how the optimized index.html and a sample Page Component should look.
+Updated index.html (Static Baseline):
+Specific SEO Recommendations for Your Content
+Based on your memory of the "First-Mover Franchise" and "Email Sequences" content:
+Keyword Targeting
+:
+Primary
+: "Vehicle wrapping leads," "Car wrap marketing agency," "Wrapping business leads."
+Secondary
+: "First-mover advantage wrapping," "Rule7Media franchise."
+Content Structure
+:
+Ensure your 
+H1
+ is unique per page and includes the main keyword.
+Use 
+H2
+ tags for sections like "Financial Data," "Success Stories," and "Why Choose Us."
+Alt Text
+: Every image (charts, hero images) must have descriptive 
+alt
+ attributes (e.g., 
+alt="Chart showing 18.9% CAGR in vehicle wrapping vs 9.75% social media"
+).
+Performance (Core Web Vitals)
+:
+Since you are using a dark theme with glass morphism, ensure the CSS is optimized.
+Use 
+loading="lazy"
+ on images below the fold.
+The font 
+Plus Jakarta Sans
+ should be self-hosted or using 
+display=swap
+ to prevent layout shifts.
+🔍 Next Steps
+Install 
+react-helmet-async
+ immediately to handle dynamic titles and meta descriptions.
+Audit your build
+: Run 
+npm run build
+ and inspect the generated 
+dist/index.html
+. If it still looks like the empty shell you posted, your SEO is dead on arrival.
+Submit to Google Search Console
+: Once the content is rendered statically or via SSR (Server Side Rendering), submit your sitemap
+3. 
+General Languages and Regions
+The site is designed so that viewers can only view data in their own regions and are IP Blocked from other countries but many languages and countries are missing from the drop down. How should we do this ( bear in Mind if im in Australia all I can see in Country Drop down is Australia) but I should be able to choose any language 
+Countries Grouped by Region
+North America
+Canada
+United States
+Europe
+Austria
+Belarus
+Belgium
+Bulgaria
+Czech Republic
+Denmark
+Finland
+Estonia
+France
+Germany
+Greece
+Hungary
+Iceland
+Ireland
+Italy
+Latvia
+Lithuania
+Moldova
+Netherlands
+Norway
+Poland
+Portugal
+Romania
+Russia
+Slovakia
+Spain
+Sweden
+Switzerland
+Ukraine
+United Kingdom
+Oceania
+Australia
+New Zealand
+Asia
+Bangladesh
+China
+China (Hong Kong)
+India
+Indonesia
+Japan
+Malaysia
+Myanmar
+Pakistan
+Philippines
+Singapore
+South Korea
+Sri Lanka
+Tiawan
+Vietnam
+Asia
+Bangladesh
+Cambodia
+China (Hong Kong)
+India
+Indonesia
+Japan
+Malaysia
+Myanmar
+Pakistan
+Philippines
+Singapore
+South Korea
+Sri Lanka
+Thailand
+Vietnam
+South America
+Argentina
+Bolivia
+Brazil
+Chile
+Colombia
+Ecuador
+Mexico
+Paraguay
+Peru
+Venezuela
+Africa
+Algeria
+Angola
+Cameroon
+Côte d’Ivoire
+Democratic Republic of the Congo
+Egypt
+Ghana
+Kenya
+Madagascar
+Morocco
+Mozambique
+Nigeria
+Senegal
+South Africa
+Sudan
+Tanzania
+Tunisia
+Zambia
+Zimbabwe
+Uganda
+Middle East
+Bahrain
+Iran
+Iraq
+Israel
+Jordan
+Kuwait
+Lebanon
+Oman
+Qatar
+Saudi Arabia
+Syria
+Turkey
+United Arab Emirates
+Yemen
+Central Asia and Caucasus
+Armenia
+Azerbaijan
+Georgia
+Kazakhstan
+Kyrgyzstan
+Tajikistan
+Turkmenistan
+Uzbekistan
+Languages
+Language Dropdown Menu — Ordered by Estimated Worldwide Speakers
+Use this sequence for the website language dropdown. Ranking is approximate and includes first- and second-language speakers.
+English
+Mandarin Chinese
+Hindi
+Spanish
+Arabic
+French
+Bengali
+Portuguese
+Urdu
+Indonesian
+Russian
+German
+Japanese
+Nigerian Pidgin
+Western Punjabi
+Marathi
+Telugu
+Turkish
+Tamil
+Yue Chinese (Cantonese)
+Vietnamese
+Wu Chinese
+Javanese
+Italian
+Iranian Persian (Farsi)
+Gujarati
+Thai
+Korean
+Polish
+Tagalog (Filipino)
+Dutch
+Swahili
+Romanian
+Hungarian
+Czech
+Swedish
+Bulgarian
+Slovak
+Finnish
+Norwegian
+Developer note:
+ Belgian is not a language; support Dutch and French for Belgium. “Finish” has been corrected to Finnish, and “Slovakian” to Slovak.
+Obviously you can only use a language it it auto converts 
+Header
+https://www.rule7m
+e
+dia.com/how-it-works
+When I clicked on start your viral campaign a log in page 
+there is a difference in the headers between logged in and logged out the latter being the correct one 
+https://www.rule7media.c
+o
+m/subscriberonly
+https://www.rule7media.com/register
+The above page could do with a revamp using your special talent.
+SEO
+https://www.rule7media.com/missionstatement
+SEO 
+https://www.rule7media.com/register
+SEO
+https://www.rule7media.com/login
+SEO
+https://www.rule7media.com/faq
+SEO
+https://www.rule7media.com/Statistics
+SEO
+https://www.rule7medi
+a
+.com/Cpm
+SEO
+Inconsistent LOGO
+   
+THE LOGO IS STILL INCONSISTENT WITH THE MAIN SITE 
+ and needs fixed . I can see one video is there facility to upload a second video 
+Video not present
+ may need uploading by client.
+ 
+CPM rates need changing for Vehicle Wraps to $1.25 to $2.88 USD which is for the USA 
+clients
+ and I would like your suggestions SOHEL on how to change this for each country. Would it just be auto changed using the Mc Donalds Hamburger Index 
+https://bigmacindex.app/
+Please go to https://www.rule7media.com/admin/CpmTable and select Filter by Form Type. You can edit the CPM details from the https://www.rule7media.com/cpm page.
+Admin@admin.com
+Admin@1234
+I cannot see this edit facility working 
+We need to change these once launched 
+I understand this but I cant enter a  from and to rate of $1.25 to $2.88 for Veh
+i
+cle Wraps as it wont save 
+it
+You cannot enter the $ symbol directly in the input because it is an input type number. You don’t need to add the `$` or any other currency symbol manually.
+Please enter only the numeric value, such as 1.25 to 2.88. The system will automatically add the appropriate currency symbol based on the selected country.
+This is not the solution as different countries have different currencies with 158 Yen to 1 USD so value will change. 
+F
+rom memory 
+I could only 
+enter
+ either 1.25 or 1.28 but not with both numers and a dash between the two
+Admin Login Details
+Email :-  
+Admin@admin.com
+Password :-  
+Admin@1234
+Understood. The CPM Range field already supports entering and saving a range, such as 1.25 - 2.88.
+The concern is specifically about the currency/value being different for each country. We will review the country-based currency handling so that the CPM range and Wrap CPM values are displayed correctly according to the selected country's currency and conversion.
+The entire admin dashboard will need your special ability eventually after all other tasks have been completed 
+Clicking on Register to receive updates resolves at 
+https://www.rule7medi
+a
+.
+c
+o
+m/register?role=seller
+          
+SEO
+The displayed registration for is for an Ancillary Advertiser when it should be Buyer or Marketing Executive.
+https://www
+.
+rule7m
+e
+dia.com/AncillaryAdvertisers
+NONE OF THE 
+ANCILLARY ADVERTISER 
+OR  
+F
+R
+ANCHISE
+ PAGES HAVE COUNTRY OR LANGUAGE OPTIONS WHICH IS VERY IMPORTANT
+https://www.rule7media.com/Cpm
+SEO
+https://www.rule7media.co
+m
+/A
+n
+cillaryA
+d
+vertisers
+SEO 
+https://www.rule7media.com/Ancillar
+y
+Advertisers#contact
+   
+The media Kit needs to be in 11 different languages how do we ensure each language receives correct kit
+ please test MB capacity for the uploads
+Client needs to create and upload media kit in numerous languages this is a long laborious process so English should be default where another language is not uploaded
+SEO
+https://www.rule7media.com/pricing-info
+SEO 
+Download Media Kit worked on this page as no form was involved
+THE BUTTON SAYS DOWNLOAD 
+ENGLISH MEDIA KIT AND I CANT CHECK IF THE COUNTRIES CHANGE BY LOCATION AS THE SAME AS THE FRANCHISE PAGES THE COUNTRY AND LANGUAGE OPTIONS ARE MISSING FROM ALL THE ANCILLIARY ADVERTISER PAGES 
+  
+They say this is fixed but I 
+cant
+ tell as if I use a 
+VPN
+ it does not change from Australia.
+ I used Germany as VPN location but still got Australian Media Kit
+SEO
+Header 
+Exclusivity Hyperlink does not go anywhere 
+THIS STILL DOES NOT GO ANYWHERE I CANT REMEMBER IF I SUPPLIED A PAGE FOR THIS. WHAT ARE YOUR RECOMMENDATIONS? DESIGN A PAGE OR DELETE THE HEADER ITEM ?
+Sohel what is your recommendation in this,
+There appear to be problems with all forms please run tests once fixed to ensure they all resolve at correct database and are forwarded to correct emails. The Emails are now all set up 
+https://www.rule7media.com
+/
+franchise
+There is an issue when selecting German while in English menu the german translation does not generate but it does when in other languages
+https://www.rule7media.
+c
+om/
+f
+irstmover
+I am currently in Vietnam and tried to change the country from Australia but got a message that it was IP blocked but as I’m connected with a Vietnam IP this should not be the case 
+The current setup is configured to work based on 11 supported countries. If the user accesses the website from a country outside these 11 supported countries, the system falls back to Australia as the default country, which is why Vietnam is still displaying Australia details.
+So, Vietnam is currently outside the configured 11-country list and therefore the Australia default is being shown. IP-based country detection itself can identify the visitor’s country, but the application still needs a supported-country mapping for that country.
+I found it was defaulting to India not Australia 
+I tired with German VPN but still getting Australia 
+SEO
+https://www.rule7media.com
+/
+fra
+n
+chise-faq
+SEO
+Buttons 
+Enquiry Form does not produce a response at all 
+Check if emails are received from any form submissions
+https://www.rule7media.com/countries-franchise#enquiry-form
+SEO
+https://www.rule7media.com/fra
+n
+chise-card/1
+SEO
+https://ww
+w
+.rule7media.com/franchise-card/2
+SEO
+https://www
+.
+rule7media.com/franchi
+s
+e-card/3
+SEO
+https://www.rule7media.
+c
+om/franchise-card/4
+SEO
+6
+https://www.rule7media.com/franchise-card/
+5
+SEO
+https://www.rule7media.com/franchise-card/4
+SEO
+8
+https://www.rule7media.com/franchise-card/
+7
+SEO
+https://www.rule7media.com/franchise-card/
+8
+SEO
+https://www.rule7media.com/franchise-card/
+9
+SEO
+https://www.rule7me
+d
+ia.com/affiliate
+SEO
+Buttons 
+ Instant Sign up   
+Goes to register page need to provide RefferQ landing page 
+Join the Program 
+Goes to register page need to provide RefferQ landing page
+Join Elite    
+Goes to register page need to provide RefferQ landing page
+Log In       
+Goes to register page need to provide RefferQ landing page
+All the buttons have been fixed. 
+Instant Sign Up, Join the Program, Join Elite, and Log In
+ now redirect users to the 
+RefferQ landing page
+ as requested. https://www.refferq.com/ 
+     
+SOHEL I 
+cant
+ remember where we are on this as these buttons all resolve on an error page 
+did
+ we create our own Affiliate scheme 
+Footer not yet covered
+https://www.rule7media.
+c
+om/blog
+ 
+   
+SEO
+Appears to have video Panel placeholder just above Footer
+. Is there facility in admin to upload 
+Stay ahead of the Curve no acknowledgement of subscription or 
+Double
+ opt in Process
+After a user subscribes, a confirmation email is sent to both the user and the admin. The user receives the subscription confirmation, while the admin also receives a notification confirming that a new user has subscribed.
+ 
+NEED TO CHECK THIS 
+Received to successful subscription messages one I top centre which is not required and slider from right which should be retained and did not receive any confirmation on my email 
+Form 
+Submission  no
+ action acknowledged or transmission of forms
+STILL 
+OUTSTANDING 
+ its
+ very important that I 
+am able to
+ view database to see all enquiry form submissions are being written to database as it 
+has to
+ link with CRM
+https://www.rule7media.com/blog/6a2b7d8e8b06520fa2260eb5
+SEO
+ 
+Draw on this article for Video Script
+Need to Author Part 2 
+https://www.rule7media.com/blog/6a223ab5f629847dcd85cdbf
+SEO
+ 
+Draw on this article for Video Script
+https://www.rule7media.com/blog/6a1e71fb568587327c71d3e9
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e71b6568587327c71d3e1
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e717b568587327c71d3d9
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e7124568587327c71d3d0
+SEO
+  
+Need to Author Article
+https://www.rule7media.com/blog/6a1e70e9568587327c71d3c9
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e70a5568587327c71d3be
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e705b568587327c71d3b6
+SEO
+ 
+Need to Author Article
+https://www.rule7media.com/blog/6a1e6fe6568587327c71d3a6
+SEO
+ 
+Draw on this article for Video Script
+https://www.rule7media.com/blog/6a1e6f49568587327c71d38e
+SEO
+ 
+Need to Author Article 
+https://www.rule7media.com/whitepaper
+SEO 
+Same comment as Media Kit how do Users download in their own language
+Need to Convert PDF into multiple languages 
+           
+https://www.rule7media.com/about-us#global-offices
+SEO 
+https://www.rule7media.com/su
+b
+scriberonly
+SEO 
+No Header or Footer 
+STILL OUTSTANDING
+ 
+Buttons  
+https://www.r
+u
+le7media.com/terms-conditions
+SEO
+https://www.rule7media.com/privacy-policy
+SEO 
+https://www.rule7media.com/Careers
+SEO 
+https://www.rule7media.com/contact-us
+SEO
+https://www.rule7media.com/contact-us#contact-form
+Direct Line needs changed
+You can update the address and other contact details directly from the Admin Panel here:
+ 
+https://www.rule7media.com/admin/update-address
+You can make the required changes to the address and related details from this page.
+Sohel
+ I don’t think they understand as each country will display a different phone number 
+Email Desk
+Australia@rule7media.com
+  How does this change depending on which country they are viewing from  and it should be hperlinked
+The email address will change dynamically based on the visitor’s IP address. We will detect the country associated with their IP and display the corresponding country-specific email address.
+For example, if the visitor is detected as being in Australia, it will show 
+Australia@rule7media.com
+. The email address will also be hyperlinked so the user can click it directly to send an email.
+Sohel please check if this works 
+STILL OUTSTANDING 
+as explained I’m in Vietnam using Vietnam IP and still displaying Australia details
+The current setup is configured to work based on 11 supported countries. If the user accesses the website from a country outside these 11 supported countries, the system falls back to Australia as the default country, which is why Vietnam is still displaying Australia details.
+So, Vietnam is currently outside the configured 11-country list and therefore the Australia default is being shown. IP-based country detection itself can identify the visitor’s country, but the application still needs a supported-country mapping for that country.
+You won’t see the IP blocked message in this case because Australia is the default country.
+Sohel please check if this is working properly
+https://www.rule7media.com/BuyerMarketingExecutive
+SEO
+Regarding the YouTube video thumbnails, we understand that the thumbnails need to be changed. Could you please provide the new thumbnail images, or should we create/design new thumbnails for the videos?
+Need to change Thumbnails on You Tube Videos
+https://www.rule7media.com/register
+?
+role=advertiser
+Will eventually need your special design skills
+https://www.rule7media.com/VehicleOwner
+SEO
+https://www.rule7media.com/subscriptionpaymentsuccess?session_id=cs_test_a1Ys7gr0uAuMjjBMy4AYLsfRaZFRBJl24FgdZVRPlEaPm7cUftA9bY7fsC&amp;email=USA@rule7media.com
+When registering as Fleet Manager I was presented with all Explainer Videos in English including those for Vehicle Wrapper and Buyer or Marketing Executive.   
+Is there a way in admin to control this ?
+You can manage and control the Explainer Videos page-wise from the Admin Panel. Please go to: https://www.rule7media.com/admin/Statistics
+From there, you can manage the appropriate video for each page/user type
+Need to test this fix 
+Registered with email address 
+usa@rule7media.com
+ no email confirmation received and assume database not populated at this stage. 
+Check how database is accessed
+We didn’t understand this point. Could you please clarify?
+Dashboard 
+https://www.ru
+l
+e7media.com/user-profile/add-vehicle-dimensions
+The database has not been uploaded the drop down just offers random manufacturers
+https://www.rule7media.com/user-profile/search
+I don’t understand the logic between vehicle owners being above to search for other Vehicles as it destroys the reverse auction process as they can see how many competitors they have
+Can you please explain the logic behind First Name and Last Name and Email address as the user is Logged in so all user details should pre-populate. Remember these are blind auctions and we dont want buyer an seller able to contact each other outside the platform. Interested to hear your thoughts on this
+There should be a for example prompt in the Te
+ll
+ us about your background box
+Multi Vehicle Operator Covering Local and Interstate
+We have enhanced the search functionality by adding Name, Last Name,
+Country, State, and City. Based on the user's basic details, these fields will be
+filled automatically where applicable.
+Regarding the blank page, the search results depend on the Post Code, Vehicle
+Type, City, and State selected by the user. If there is no matching data available
+for the selected criteria, the page will display no results (blank) because there are
+no matching records to show.
+SOHEL PLEASE CHECK THIS 
+https://www.rule7media.com/search-results
+Although entering only Queensland Post Codes the search produced results for Adelaide which is another state using all Vehicle Check Box in Drop Down 
+Clicking on Refine Search returns to search details which user has to populate again ( Start from Scratch) which will be very annoying to users
+When Using only 1 vehicle Type search produces no results and when clicking on Back to search Generates a 404 Error
+Where is the facility to add images and the instructions for the image profiles. ie Front Rear Side 2D etc
+https://www.rule7media.com/user-profile/add-auction
+1. Image previews are unstable and continually flash also receive a message failed to produce images
+2. Is this enough information for database sorting purposes ie Country/State/Town or City
+3. Its not possible to add an auction without at least one image 
+4. Admin panel is still using old header so when clicking on Home Brings you to original landing page which should be deleted. Old Page and New Page seem to use same URL
+The Admin Panel design was not included in the requirements, and no changes to the Admin Panel header or navigation were requested. The redesign scope was limited to the specified website pages
+.
+This does not answer the question about
+ 
+user interface 
+for loading images and adding auctions.
+Admin panel may not have been included in redesign but functionality does not work. 
+It should be a simple fix to redirect URL. CRM facility was included in original qoute by 
+has not been provided
+.
+Could you please clarify which functionality in the Admin Panel is not working for you? The Admin Panel is currently working properly on our end.
+SOHEL PLEASE CHECK THI S
+  5. The map facility is unusable sometimes works and sometimes not
+ 
+---Fixed
+SOHEL PLEASE CHECK THIS 
+I have a video of this Glitching 
+https://www.rule7media.com/user-profile/notifications
+The advertising placeholders on the Notifications page are already centred
+.
+The advertising placeholders are not centred 
+STILL OUTS
+T
+ANDING
+TESTING 22
+nd
+ July 2026
+I am continuing with the Fleet Mangers Dashboard
+Tried to add images to the approved Mitsibushi Outlander but there was no facility to do so is this because it was already approved. By default a user should not be allowed to upload a vehicle without 3 images and should be displayed sample images of Rear Side and Two Dimensional.
+Add Auction 
+https://www.rule7media.com/user-profile/add-auction
+So adding postcodes to the auction works correctly but then user receives a message disappear they should stay fixed for a better user experience.
+There is an anomaly from Logged in and Logged out Landing Pages.
+The Logged out landing page is correct but when clicking on either home or the Logo when   users are redirected to the old landing page which is completely redundant even though the both have the same URL and is also effecting SEO
+For logged-in users, the same common header that was already implemented for all users is currently being used. We had previously asked you for clarification regarding 
+the header design and where the navigation items should be placed. For example, after login, the navigation currently includes Home, About, Contact, Statistics, etc. Please confirm where you would like these navigation options to be placed and how you would like the logged-in header to be designed, so we can implement it accordingly.
+Sohel your comments please 
+https://www.rule7media.com/user-profile/fleet-budget-request
+Please remind me how budget requests work. Is this a one way system where only Advertisers can request from Vehicle Owners a budget for certain vehicles, routes and length of contract or doe sit work in reverse order also.
+As we have explained several times, the Budget Request works as follows:
+When a user places a bid on an auction but the vehicle is outside their budget, the user can send a Budget Request to the Fleet Owner based on their budget.
+The Fleet Owner receives the request, and the system automatically shows the Fleet Owner’s own auctions that match the user’s requested budget. If an auction matches the budget, the Fleet Owner can send that auction to the user.
+So, the flow works from the Advertiser/User to the Fleet Owner.
+Tried  to log in as user    
+Advertiser10@gmail.com
+   Pass Advertiser10@1234 as already have an active subscription but instead of taking me to dashboard im presented with the sales sheets again  
+https://rule7media.com/Billboard
+ 
+Im then invited to checkout again 
+https://rule7media.com/pricing
+This will be very confusing for the user and of course when attempting to check out receives a message that already has active subscription so user is again be sent around in circles.
+Im guessing this fault exists for all registered users in  Buyers  Vehicle Owners and Wrapping businesses. Please rectify all user types for this error
+This issue has been fixed for all user types. Users with an active subscription will now be redirected directly to their dashboard after login
+.
+There is no way for user to access his dashboard as although he is an active subscriber no button exists to go to dashboard.
+Even though a registered subscriber wherever he goes on the site every button just takes him back to the Billboard page 
+Delete original Home Page
+Various buttons take me to this old home page and we have a new home page now with the same URL please delete this page after confirming that it will be replaced with new home page.
+After login, the same home page is currently shown for all user types. When a logged-in user clicks Home, it takes them to the old Home page. As previously discussed, you asked us to prepare the new Home page design, which is why the old Home page is still present for now. Once the new design is confirmed, we can replace the old page with the new Home page
+.
+Conducting a blanket search as a Fleet Manager of Vehicle Owner for all of Australia it generates 4 Campaigns in Total 
+( Check in Admin if that’s the total Campaigns ) 
+but its not possible to drill down into any of those campaigns so User cannot take any further action to bid on the campaigns 
+The campaigns are displayed based on the Post Code search. If there are only 4 active campaigns within the searched Post Code area, then 4 campaigns will be shown.
+Also, each campaign has a 
+Details
+ button, which allows the user to open the campaign details page and proceed with further actions.
+As stated above Fleet Manager or Vehicle Owner should only be able to search Buyer or Marketing Executive Campaigns and  Not other Vehicle Listings and the same applies the other way round.
+If user then presses back button or Search Marketplace to  search a different area or vehicle type he then has to input all his details again which is a poor user experience. As said before once user is logged in these details should pre-populate and should stay visible until logged out to facilitate numerous searches.
+Understood. We’ll ensure Fleet Managers / Vehicle Owners only see relevant Buyer and Marketing Executive campaigns, and other user types only see their relevant listings.
+We’ll also keep the logged-in user’s details pre-populated when they perform multiple searches
+,
+https://www.rule7media.com/single-fleet-auction-detail/6a6179860df1cf42a8dbdb78
+This is the Request Budget Facility for Fleet Managers. I still cant get my head around this as the pop-up requests dollar per square meter inputs. Who is he requesting budget from and id its buyer or marketing executive how does this form work.
+The Fleet Manager sends the Budget Request to the Buyer or Marketing Executive whose campaign they are interested in.
+The 
+$/m²
+ field is the rate the Fleet Manager is willing to pay based on their own budget. For example, if their budget is $10 per m², they enter $10/m² in the request.
+The request is then sent to the relevant Buyer or Marketing Executive. If the requested budget matches their campaign requirements, they can send the relevant campaign back to the Fleet Manager.
+https://www.rule7media.com/edit-fleet-auction/6a6179860df1cf42a8dbdb78
+When I go into edit auction the Vehicle Details are displaying input fields but no field titles  ie Manufacturer/Model/ etc or Kms per day.
+The map is not loading
+If I toggle between Mercedes Van and Mitsubishi Outlander the Rego Plate Does not change even though they have different Rego Plates.
+       
+---Fixed
+In the edit auction facility I don’t see any ability to edit the discounts for length of campaign
+      
+---Fixed
+Revenue Calculator
+   
+---Fixed
+One on side of the revenue calculator calculates surface area as 9.33 sq metres but in the fluctuating revenue section it calculates it as 7.33 sq metres.
+When you alter the offered discounts it makes no change in the revenue calculator only if you alter the coverage rate.
+The revenue calculator is designed to encourage fleet managers to offer discounts for longer campaigns thereby increasing the platform revenue with less administration.
+The Mercedes Van is displaying less coverage area then the Mitsibushi Outlander when it should be other way around but im assuming as we are just working on test figures and this will change when full database uploaded
+If you make any non geographical changes in the Auction the Map Zooms out and you have to scroll again to see your location routes.
+https://www.rule7media.com/BuyerMarketingExecutive
+https://rule7media.com/search-results
+Same situation as Fleet Manager unable to drill down on displayed auctions. its not possible to drill down into any of those campaigns so User cannot take any further action to bid on the campaigns. As stated above Buyer or Marketing Executive should only be able to search Fleet Manager or Vehicle Owner Campaigns and  Not other Campaign  Listings and the same applies the other way round.
+If user then presses back button or Search Marketplace to  search a different area or vehicle type he then has to input all his details again which is a poor user experience. As said before once user is logged in these details should pre-populate and should stay visible until logged out to facilitate numerous searches.
+The “Details” button is already available on the displayed auction campaigns, and users can use it to drill down into the campaign details.
+https://www.rule7media.com/user-profile/my-campaign
+    
+---Fixed
+If I go to create a campaign in USA it still shows Aussie Dollar amounts and that is confirmed when finalising  the campaign. Each Country should have campaigns in own currency.
+Language Change 
+The language change facility does not work on any of the logged in dashboards
+     
+--Fixed
+Budget Requests 
+I do not see any Budget Request facility in the Buyer or Marketing Executive Dashboard
+View Campaigns 
+https://www.rule7media.com/campaign-details/6a62d5920df1cf42a8dbf89a
+I don’t see anywhere where Buyers or Marketing Executives can view campaign bids in their dashboard.
+Checkout Page
+Processing Fee  0% is this changeable in ADMIN or Stripe Dashboard ?
+    
+The 
+Processing Fee / Commission Rate
+ can be changed from the Admin Panel. Please go to 
+Admin → Commission
+ 
+ 
+https://www.rule7media.com/admin/commission
+ 
+and update the commission rate there.
+https://www.rule7media.com/our-products
+If I click on Start Shopping from the above image I am taken to this page. What is this page for I don’t see the purpose of it
+.
+    –Remove this page
+When I do a search for all Vehicles and it displays 3 results the images of the Van and Mitsubishis Outlander have been transposed 
+As above I cannot drill down into any of these auctions so cannot test the bidding functionality or the Stripe Checkout.
+     
+---Fixed
+https://www.rule7media.com/WrapperLandingPage
+SEO
+https://www.rule7media.com/AncillaryAdvertisers
+SEO has been re-implemented for the relevant pages, and the updated titles, descriptions, and canonical URLs are documented in the SEO Report. Please review the document and allow some time for Google to re-crawl and update its index.
+Stripe Integration
+Im changing this to LIVE so needs incorporated 
+https://www.rule7media.com/WrapperLandingPage
+Please open
+ 
+https://www.rule7media.com/
+ and perform a 
+Hard Refresh
+. If the old version is still visible, please clear your browser cache and then open the website again
+ 
+Forgot Password &amp; Server Errors
+The Forgot Password functionality and the server errors occurring in the forms are related to the SMTP configuration.
+For testing purposes, we have configured and used our own SMTP credentials, and we have verified that all forms are working correctly. We are not experiencing any server errors during testing.
+Please create and configure your own SMTP credentials, then update them through the Admin Panel and test again. Once your SMTP configuration is set up correctly, the Forgot Password emails and all other email-related server errors should be resolved.
+FRANCHISE FORMS 
+I don’t understand this  I have switched browsers and started to test the forms and the first one worked but It show a Gmail Send address and A Franchise Document to be attached.  The From Address should be 
+Franchiseenquiries@rule7media.com
+ and there should not be an attachment at this stage.
+For this, we will need the 
+SMTP configuration for franchiseenquiries@rule7media.com
+. Once the SMTP is configured, all relevant emails will be sent directly from 
+franchiseenquiries@rule7media.com
+.
+I did not receive any notification to the Support@rule7media as done previously so please fix this except direct it to  
+franchiseenquiries@rule7media.com
+Please rewrite auto email for all franchise forms as follows.
+   
+---Fixed
+Subject Line: Your Rule 7 Media Franchise Enquiry — Next Steps for [Territory]
+Hello [First Name],
+Thank you for requesting the Rule 7 Media Franchise Kit for [Territory].
+We are currently receiving a high level of interest in selected franchise territories and are now prioritising the strongest candidates for the next stage of review. As each territory is limited, we are moving quickly to identify applicants who have the experience, capacity and commitment to progress.
+If you believe you are well suited to operate a Rule 7 Media franchise in [Territory], please reply within 48 hours to   
+franchiseallocations@rule7media.com
+   with the 
+following information so we can assess your suitability and determine whether to move your enquiry forward:
+We also recognise that strong franchise operators do not always come from a traditional sales or marketing background. Rule 7 Media provides full support, proven systems and guidance; however, drive, determination, attention to detail and the ability to follow a structured process are equally important qualities we look for in suitable candidates.
+Relevant business, sales, marketing, media, advertising, franchising or management experience.
+Any qualifications, licences, industry knowledge or commercial background that may support your application.
+The number of hours per week you can realistically commit to developing the territory.
+Your expected timeframe for making a decision if invited to progress.
+Please note that submitting this information does not guarantee approval. It allows us to shortlist candidates who appear most aligned with the opportunity before available territories are allocated or placed on hold.
+In the interim you may want to browse our Franchise FAQ section to understand the pitfalls and benefits of undertaking a franchise opportunity.
+We look forward to receiving your response and will review suitable replies as a priority.
+Regards,
+Rule 7 Media Franchise Team
+413 Request Entity Too Large Error
+ 
+The 413 Request Entity Too Large error has been resolved.
+The GIF upload limit has been increased, and you can now upload animated GIFs up to 20 MB on the following page:
+https://www.rule7media.com/user-profile/add-ad_gif
+Please test again 
+Rule7Media SEO Title and Meta Description Report
+This report lists the SEO title and meta description selected for each Rule7Media page. The values are based on the supplied page files and the updated SEO data mapping.
+Summary
+Total page entries reviewed: 39
+Scope: SEO title tags, meta descriptions, and canonical page URLs only.
+Note:
+ The SEO titles and meta descriptions used in this report have been taken from the page designs/content provided by you. We have used the titles and descriptions specified for the respective pages and mapped them to the corresponding SEO data in the application. 
+If any SEO title or meta description is incorrect, please specify the exact page and provide the correct SEO title and/or meta description that should be used in its place. This will allow us to update the SEO mapping accurately without making assumptions.
+Detailed Page Entries
+1. Home Page (Logged in)
+Route key: 
+home
+SEO title: 
+Rule 7 Media | Innovative Media Buying &amp; ROI-Driven Ad Campaigns
+Meta description: 
+Rule 7 Media: Maximise advertising ROI with innovative media buying and cost-effective advertising channels. We provide budget-friendly marketing strategies and performance marketing solutions.
+Canonical URL: 
+https://www.rule7media.com/
+2. Landing Page (Public/Logged out)
+Route key: 
+landing
+SEO title: 
+Rule 7 Media | Revolutionise Your Advertising
+Meta description: 
+Rule 7 Media - Revolutionizing advertising through collaborative vehicle wraps and viral social engagement.
+Canonical URL: 
+https://www.rule7media.com/
+3. Subscriber Only Page
+Route key: 
+subscriberonly
+SEO title: 
+Premium Access | Rule 7 Media Auctions
+Meta description: 
+Exclusive Auction Access - Rule 7 Media. Join our premium network of verified partners.
+Canonical URL: 
+https://www.rule7media.com/subscriberonly
+4. Vision / Mission Statement
+Route key: 
+vision
+SEO title: 
+Mission Statement &amp; Vision: Car Wrap Marketing Agency | Rule7Media
+Meta description: 
+Rule7Media's mission is to revolutionize vehicle wrapping leads, fleet marketing efficiency, and first-mover franchise ownership worldwide.
+Canonical URL: 
+https://www.rule7media.com/missionstatement
+5. Register
+Route key: 
+register
+SEO title: 
+Register for Vehicle Wrapping Leads &amp; Franchise Network | Rule7Media
+Meta description: 
+Create your Rule7Media account. Access exclusive car wrap marketing agency tools, vehicle wrapping leads, and first-mover franchise opportunities.
+Canonical URL: 
+https://www.rule7media.com/register
+6. Login
+Route key: 
+login
+SEO title: 
+Login | Rule 7 Media
+Meta description: 
+Rule 7 Media: Transform vehicle fleets into high-impact mobile billboards via our innovative decreasing-bid auction platform.
+Canonical URL: 
+https://www.rule7media.com/login
+7. FAQ
+Route key: 
+faq
+SEO title: 
+FAQ | Rule7Media - Offline Advertising Intelligence
+Meta description: 
+Frequently Asked Questions - Rule7Media. Understanding the shift to offline advertising and mobile billboards.
+Canonical URL: 
+https://www.rule7media.com/faq
+8. Statistics / Explainer Videos
+Route key: 
+statistics
+SEO title: 
+Global Video Library | Rule 7 Media
+Meta description: 
+Rule 7 Media Global Video Resources - Marketing insights and collaborative campaign strategies in multiple languages.
+Canonical URL: 
+https://www.rule7media.com/Statistics
+9. CPM
+Route key: 
+cpm
+SEO title: 
+Rule 7 Media Insights | CPM Benchmarks &amp; Advertising Market Intelligence
+Meta description: 
+Explore Rule 7 Media insights, global CPM benchmarks, vehicle wrap advertising costs, outdoor media performance, and market intelligence for advertisers.
+Canonical URL: 
+https://www.rule7media.com/Cpm
+10. Ancillary Advertisers
+Route key: 
+ancillary
+SEO title: 
+Ancillary Advertisers: Fleet &amp; Wrap Supply Solutions | Rule7Media
+Meta description: 
+Reach targeted wrap shops and fleet managers. Join Rule7Media's network for ancillary advertisers, vehicle wrapping leads, and industry partnerships.
+Canonical URL: 
+https://www.rule7media.com/AncillaryAdvertisers
+11. Pricing Info / Pricing Methodology
+Route key: 
+pricingInfo
+SEO title: 
+Pricing Methodology &amp; Wrap Lead Structures | Rule7Media
+Meta description: 
+Explore transparent pricing models for vehicle wrapping leads, car wrap marketing campaigns, and first-mover franchise territory licensing.
+Canonical URL: 
+https://www.rule7media.com/pricing-info
+12. Business Model
+Route key: 
+businessModel
+SEO title: 
+Business Model: First-Mover Franchise Revenue | Rule7Media
+Meta description: 
+Discover Rule7Media's proven business model. Generate $150k+ in annual rewards with vehicle wrapping leads and first-mover franchise licensing.
+Canonical URL: 
+https://www.rule7media.com/businessmodel
+13. Franchise FAQ
+Route key: 
+franchiseFaq
+SEO title: 
+Franchise FAQ: First-Mover Advantage Wrapping | Rule7Media
+Meta description: 
+Frequently asked questions about owning a Rule7Media first-mover franchise, territory rights, vehicle wrapping leads generation, and support.
+Canonical URL: 
+https://www.rule7media.com/franchise-faq
+14. Countries Franchise
+Route key: 
+countriesFranchise
+SEO title: 
+UK Market Availability | Rule 7 Media
+Meta description: 
+Rule 7 Media: Strategic market availability and territory negotiation map for the United Kingdom.
+Canonical URL: 
+https://www.rule7media.com/countries-franchise
+15. Blog / Industry News
+Route key: 
+blog
+SEO title: 
+Vehicle Wrap Marketing &amp; Lead Generation Blog | Rule7Media
+Meta description: 
+Stay informed with expert articles on vehicle wrapping leads, car wrap marketing agency growth, OOH advertising, and first-mover franchise success.
+Canonical URL: 
+https://www.rule7media.com/blog
+16. Buyer Marketing Executive
+Route key: 
+buyerMarketing
+SEO title: 
+Rule 7 Media | Revolutionizing Out-of-Home Advertising
+Meta description: 
+Rule 7 Media: Transform vehicle fleets into high-impact mobile billboards via our innovative decreasing-bid auction platform. Cost-effective advertising channels for high digital marketing ROI.
+Canonical URL: 
+https://www.rule7media.com/BuyerMarketingExecutive
+17. Fleet / Vehicle Owner
+Route key: 
+fleetOwner
+SEO title: 
+AUCTION | Rule 7 Media - Fleet Monetization &amp; Management
+Meta description: 
+AUCTION by Rule 7 Media: Transform your fleet into a revenue engine. Fleet cost reduction strategies, increase fleet revenue, and reduce fleet insurance costs.
+Canonical URL: 
+https://www.rule7media.com/VehicleOwner
+18. Whitepaper
+Route key: 
+whitepaper
+SEO title: 
+Whitepaper: Vehicle Wrapping Leads &amp; First-Mover ROI | Rule7Media
+Meta description: 
+Read the official Rule7Media whitepaper on first-mover advantage wrapping, car wrap marketing efficiency, and vehicle wrapping lead generation models.
+Canonical URL: 
+https://www.rule7media.com/whitepaper
+19. About Us
+Route key: 
+about
+SEO title: 
+Rule7Media | Innovating the Future of Storytelling
+Meta description: 
+Rule7Media: A global powerhouse in digital strategy, film production, and innovative media solutions. Empowering brands since 1995.
+Canonical URL: 
+https://www.rule7media.com/about-us
+20. Terms &amp; Conditions
+Route key: 
+terms
+SEO title: 
+Terms &amp; Conditions | Rule7Media Platform &amp; Services
+Meta description: 
+Read our terms and conditions governing Rule7Media platform usage, vehicle wrapping lead services, and franchise agreement terms.
+Canonical URL: 
+https://www.rule7media.com/terms-Conditions
+21. Privacy Policy
+Route key: 
+privacy
+SEO title: 
+Privacy Policy | Rule7Media Data Protection
+Meta description: 
+Rule 7 Media - Privacy Policy. Your data security is our priority.
+Canonical URL: 
+https://www.rule7media.com/privacy-policy
+22. Careers
+Route key: 
+careers
+SEO title: 
+Global Careers | Rule7Media
+Meta description: 
+Rule7Media Careers - Join our global network of remote IT and Media professionals.
+Canonical URL: 
+https://www.rule7media.com/Careers
+23. Contact Us
+Route key: 
+contact
+SEO title: 
+Contact Us: Vehicle Wrapping Leads Support | Rule7Media
+Meta description: 
+Contact Rule7Media's support team for questions on vehicle wrapping leads, first-mover franchise inquiries, or fleet advertising options.
+Canonical URL: 
+https://www.rule7media.com/contact-us
+24. Franchise Landing
+Route key: 
+franchise
+SEO title: 
+Franchise Opportunity | Rule7Media Intelligence
+Meta description: 
+Rule7Media Franchise Opportunity - Multi-channel business model for resilient growth.
+Canonical URL: 
+https://www.rule7media.com/franchise
+25. First Mover / Success Story
+Route key: 
+firstmover
+SEO title: 
+First-Mover Success Story: Franchise Rewards | Rule7Media
+Meta description: 
+See how first-mover franchise owners achieve extraordinary growth with Rule7Media's vehicle wrapping leads and automated email sequences.
+Canonical URL: 
+https://www.rule7media.com/firstmover
+26. Pricing Options
+Route key: 
+pricing
+SEO title: 
+Pricing Plans &amp; Lead Subscriptions | Rule7Media
+Meta description: 
+Compare flexible pricing plans for wrap shops and advertisers. Gain continuous access to qualified vehicle wrapping leads.
+Canonical URL: 
+https://www.rule7media.com/pricing
+27. How It Works
+Route key: 
+howItWorks
+SEO title: 
+How It Works | Rule7Media
+Meta description: 
+How It Works - Rule7Media: Revolutionizing marketing through auction-style campaigns and mobile advertising.
+Canonical URL: 
+https://www.rule7media.com/how-it-works
+28. Savings Opportunities
+Route key: 
+savings
+SEO title: 
+Fleet Savings &amp; Cost Reduction Opportunities | Rule7Media
+Meta description: 
+Unlock significant fleet cost reduction strategies and increase revenue through vehicle wrap advertising partnerships.
+Canonical URL: 
+https://www.rule7media.com/Cpm
+29. Advertise With Us
+Route key: 
+advertise
+SEO title: 
+Advertise With Us: High-Impact Vehicle Wrapping | Rule7Media
+Meta description: 
+Promote your brand on thousands of moving vehicles. Reach high-intent audiences with Rule7Media's car wrap marketing agency.
+Canonical URL: 
+https://www.rule7media.com/AncillaryAdvertisers
+30. Live Auctions
+Route key: 
+liveAuctions
+SEO title: 
+Live Fleet Auctions: Buy &amp; Sell Wrapped Space | Rule7Media
+Meta description: 
+Participate in live auctions for fleet advertising inventory and vehicle wrapping contracts.
+Canonical URL: 
+https://www.rule7media.com/liveauction
+31. Our Products
+Route key: 
+ourProducts
+SEO title: 
+Products &amp; Tools for Wrap Shops &amp; Fleets | Rule7Media
+Meta description: 
+Browse Rule7Media's suite of fleet management tools, wrapping lead tools, analytics, and software solutions.
+Canonical URL: 
+https://www.rule7media.com/our-products
+32. Cookie Policy
+Route key: 
+cookiePolicy
+SEO title: 
+Cookie Policy | Rule7Media Privacy &amp; Tracking
+Meta description: 
+Understand how Rule7Media utilizes cookies to optimize user experience, secure accounts, and analyze wrap lead metrics.
+Canonical URL: 
+https://www.rule7media.com/cookie-policy
+33. Affiliate
+Route key: 
+affiliate
+SEO title: 
+Affiliate Program | Rule 7 Media
+Meta description: 
+Rule 7 Media Affiliate Program: Earn 22% commission for every new advertiser or partner you refer. Join our innovative media buying network today.
+Canonical URL: 
+https://www.rule7media.com/affiliate
+34. Wrapper Landing Page
+Route key: 
+wrapperLanding
+SEO title: 
+Gotts | Exclusive Global Vehicle Wrapping Network
+Meta description: 
+Not provided in source file
+Canonical URL: 
+https://www.rule7media.com/WrapperLandingPage
+35. Billboard Page
+Route key: 
+billboard
+SEO title: 
+Mobile Billboard Fleet Advertising | Rule7Media
+Meta description: 
+Turn fleet vehicles into high-impact mobile billboards with custom vehicle wrap marketing solutions.
+Canonical URL: 
+https://www.rule7media.com/Billboard
+36. Fleet Owner Subscription
+Route key: 
+fleetOwnerSub
+SEO title: 
+Fleet Owner Subscription &amp; Earnings Portal | Rule7Media
+Meta description: 
+Monetize your fleet with Rule7Media's subscription program for vehicle owners and commercial fleets.
+Canonical URL: 
+https://www.rule7media.com/fleetowner-subscription
+37. Wrapper Subscription
+Route key: 
+wrapperSub
+SEO title: 
+Wrapper Lead Subscription Program | Rule7Media
+Meta description: 
+Subscribe to receive guaranteed monthly vehicle wrapping leads and premium client booking requests for your wrap shop.
+Canonical URL: 
+https://www.rule7media.com/wrapper-subscription
+38. Forgot Password
+Route key: 
+forgotPassword
+SEO title: 
+Reset Password: Vehicle Wrapping Leads Portal | Rule7Media
+Meta description: 
+Recover your account password to regain access to Rule7Media's vehicle wrapping leads and client dashboard.
+Canonical URL: 
+https://www.rule7media.com/forgot-password
+39. Search Results
+Route key: 
+searchResults
+SEO title: 
+Rule 7 Media | Fleet Advertising Marketplace
+Meta description: 
+Rule 7 Media: Connecting Advertisers with Fleet Managers to maximise ROI and turn vehicle fleets into revenue-generating assets.
+Canonical URL: 
+https://www.rule7media.com/search-results
+SECTION 2 Web Developer Replies   Document Entitled Client Query Responses .
+Please open
+ 
+https://www.rule7media.com/
+ and perform a 
+Hard Refresh
+. If the old version is still visible, please clear your browser cache and then open the website again 
+Registration Success Videos 
+The videos displayed after successful registration for Wrapper, Fleet Manager, and Advertiser users can be managed from the 
+Admin Panel
+.
+Go to 
+Admin Panel → Statistics (Dropdown)
+. From there, you can add, remove, or update the videos as required.
+Header &amp; Footer
+We tested the Header and Footer on the frontend and did not find this issue. Please perform a **Hard Refresh** or clear your browser cache, then test again. We were unable to reproduce this issue from our side.
+Forgot Password &amp; Server Errors
+The Forgot Password functionality and the server errors occurring in the forms are related to the SMTP configuration.
+For testing purposes, we have configured and used our own SMTP credentials, and we have verified that all forms are working correctly. We are not experiencing any server errors during testing.
+Please create and configure your own SMTP credentials, then update them through the Admin Panel and test again. Once your SMTP configuration is set up correctly, the Forgot Password emails and all other email-related server errors should be resolved.
+413 Request Entity Too Large Error
+ 
+The 413 Request Entity Too Large error has been resolved.
+The GIF upload limit has been increased, and you can now upload animated GIFs up to 20 MB on the following page:
+https://www.rule7media.com/user-profile/add-ad_gif
+Please test again 
+Drop Collections
+If you use the 
+Drop Collections
+ option, it will delete the entire database collections. This will remove all data stored in those collections, so please make sure you have a backup before proceeding.
+Before performing this action, the admin must verify their email address (for example: 
+admin@admin.com
+) for security purposes.
+Policy Pages Availability 
+Yes, the Cookie Policy, Privacy Policy, and Terms &amp; Conditions are available for all users. They are accessible across all IP locations and work correctly for everyone. 
+Registration page
+Could you please clarify which Vehicle Type field you are referring to?
+ 
+On the registration page, we have added the fields exactly as provided in your specifications. If you are referring to a different vehicle type field, please let us know which one so we can review it.
+Search Page
+We have enhanced the search functionality by adding Name, Last Name, 
+Country, State, and City. Based on the user's basic details, these fields will be filled automatically where applicable.
+Regarding the blank page, the search results depend on the Post Code, Vehicle Type, City, and State selected by the user. If there is no matching data available for the selected criteria, the page will display no results (blank) because there are no matching records to show.
+Document Entitled New Update 
+https://www.rule7media.com/WrapperLandingPage
+Please open
+ 
+https://www.rule7media.com/
+ and perform a 
+Hard Refresh
+. If the old version is still visible, please clear your browser cache and then open the website again
+ 
+Forgot Password &amp; Server Errors
+The Forgot Password functionality and the server errors occurring in the forms are related to the SMTP configuration.
+For testing purposes, we have configured and used our own SMTP credentials, and we have verified that all forms are working correctly. We are not experiencing any server errors during testing.
+Please create and configure your own SMTP credentials, then update them through the Admin Panel and test again. Once your SMTP configuration is set up correctly, the Forgot Password emails and all other email-related server errors should be resolved.
+413 Request Entity Too Large Error
+ 
+The 413 Request Entity Too Large error has been resolved.
+The GIF upload limit has been increased, and you can now upload animated GIFs up to 20 MB on the following page:
+https://www.rule7media.com/user-profile/add-ad_gif
+Please test again 
+SEO 
+Form not working 
+https://www.rule7media.com/wrapper-subscription
+SEO
+SEO has been re-implemented for the relevant pages, and the updated titles, descriptions, and canonical URLs are documented in the SEO Report. Please review the document and allow some time for Google to re-crawl and update its index
+https://www.rule7media.com/subscriptionpaymentsuccess?session_id=cs_test_a1ZT9saMKR2OOD3WcNiZafBnfE1sJHi2Mk4RZDgwBT89qDM7XT1lcM00bJ&amp;email=wrapper30@gmail.com
+Successful registration shows Videos for Wrapper Fleet Manager and Advertiser, is there a way to change this ?
+Registration Success Videos 
+The videos displayed after successful registration for Wrapper, Fleet Manager, and Advertiser users can be managed from the 
+Admin Panel
+.
+Go to 
+Admin Panel → Statistics (Dropdown)
+. From there, you can add, remove, or update the videos as required.
+SEO is wrong 
+https://www.rule7media.com/user-profile/search
+We extracted the 
+SEO title
+ and 
+meta description
+ directly from the 
+Search Results page
+ that you shared. We have not created new metadata ourselves; we used the values already defined for that page.
+Title:
+Advanced Search – Rule7Media Marketplace | Fleet &amp; Ad Campaigns
+Description:
+Use Rule7Media’s advanced search to find premium advertising campaigns, vehicle auctions, and fleet opportunities. Tailored results by territory, vehicle type, and more.
+Keywords:
+Rule7Media, advanced search, advertising campaigns, vehicle auctions, fleet advertising, digital advertising platform, outdoor advertising, mobile advertising, fleet marketing, truck advertising, bus advertising, vehicle branding, auction marketplace, advertisers, fleet owners, campaign search, advertising marketplace, media buying, targeted advertising, digital marketing
+Form states I am a REGULAR USER  should be A VEHICLE WRAPPING BUSINESS
+As with the fault in other user types the form should prepopulate as User is already logged in  Also the vehicle drop down menu is wrong and does not use the same vehicle types as the other users.
+Clicking on Refine search brings us back to a blank input form which should stay prepopulated with users details and will be very annoying for users .
+I entered all vehicles for all states and it produced ZERO results even though Fleet Manager Search and Buyer and Marketing Search produced some results using exactly the same terms.
+Search Page
+We have enhanced the search functionality by adding Name, Last Name, Country, State, and City. Based on the user's basic details, these fields will be filled automatically where applicable.
+Regarding the blank page, the search results depend on the Post Code, Vehicle Type, City, and State selected by the user. If there is no matching data available for the selected criteria, the page will display no results (blank) because there are no matching records to show.
+However clicking on Live Auctions in Footer Menu does produce 1 Live Auction when the other user types produced 3 
+https://www.rule7media.com/liveauction
+   
+---Fixed
+The Number of Auctions and Bidding 24/7 Test is not necessary in the early stages as it indicates this is not a very active platform so please delete them for now.
+https://www.rule7media.com/single-fleet-auction-detail/6a6050b20df1cf42a8dbc6c3
+   
+---Fixed
+Unlike other USER Types I was able to  Drill down into the auction details for this one but I don’t see how REQUEST BUDGET feature is meant to work as they can only request a budget from the Buyer or Marketing Executive as they are the ones paying for the Wrap.
+I then see the USER details displayed for the Vehicle Owner WHICH IS STRICTLY PROHIBITED ON THE PLATFORM AS DESTROYS OUR REVENUE MODEL.
+This page bears no relevance to What A Vehicle Wrapper Should see .
+They are only interested in the Type of Vehicles, 
+The Coverage Area 
+Vehicles Required to be Wrapped at Weekends or Evenings
+Vehicle Images
+ and Advertisers Budget so they can tailor their quote to carry our that job as they have some idea of the Advertisers Total Campaign Spend
+https://www.rule7media.com/user-profile/add-ad_gif
+Upload Animated Gifs
+Request failed with Error 413 Status
+  
+---see 
+section 2 comment
+ page
+https://www.rule7media.com/user-profile/my-ad-statistics
+   
+--- see 
+section 2 comment
+ page
+ 
+Unable to test due to Gif Upload Failure 
+Logo and Home Hyperlinks still take to redundant Old Landing Page.
+https://www.rule7media.com/user-profile/forgot-password-userlogin
+Forgot Password facility does not work IM assuming this is the same for all user types.
+ 
+---
+ see 
+section 2 comment
+ page
+https://www.rule7media.com/user-profile/bids-items
+Unable to test as no facility to BID
+https://www.rule7media.com/user-profile/wrapper-orders
+Unable to test as no facility to bid.
+FOOTER 
+There seems to be an overrising problem between logged in and logged out status where logged in users are seeing OLD Headers and Footers whenever you click on any of the FOOTER or HEADER items 
+ 
+---
+ 
+see 
+section 2 comment
+ page
+https://www.rule7media.com/liveauction
+ 
+Should not bring up every national auction only those in area of Wrapper Business depending on the Pricing Plan they chose
+https://www.rule7media.com/franchise
+Country and Language Menus not working for ANY OF THE FRANCHISE PAGES which is very important.
+FRANCHISE PAGES 
+NO SEO On an y of these pages
+  
+----Fixed
+https://rule7media.com/countries-franchise
+Maps not working
+ 
+----Fixed
+Footer Missing
+Clicking on HOME in Franchise Header takes us to redundant Original Landing Page should take us to Franchise Home Page  
+https://rule7media.com/franchise
+The Header is wrong it should be consistent throughout Franchise Pages like this one 
+https://rule7media.com/franchise-faq
+The current header was implemented based on the header design/instruction previously provided by you for the Franchise pages.
+https://rule7media.com/login
+Still using Old Header and is displaying duplicate header
+https://www.rule7media.com/AncillaryAdvertisers
+SEO has been re-implemented for the relevant pages, and the updated titles, descriptions, and canonical URLs are documented in the SEO Report. Please review the document and allow some time for Google to re-crawl and update its index
+.
+SEO is wrong
+There seems to be an overrising problem between logged in and logged out status where logged in users are seeing OLD Headers and Footers whenever you click on any of the FOOTER or HEADER items 
+Logo in footer takes us to wrong redundant  landing page 
+https://rule7media.com/affiliate
+Is still using the Old Header 
+There seems to be an overrising problem between logged in and logged out status where logged in users are seeing OLD Headers and Footers whenever you click on any of the FOOTER or HEADER items 
+For logged-in users, the same common header that was already implemented for all users is currently being used. We had previously asked you for clarification regarding the header design and where the navigation items should be placed. For example, after login, the navigation currently includes Home, About, Contact, Statistics, etc. Please confirm where you would like these navigation options to be placed and how you would like the logged-in header to be designed, so we can implement it accordingly
+.
+Join the Programme Button  Should go to 
+https://www.refferq.com/
+  
+I will give you exact account details 
+     
+---Fixed
+https://rule7media.com/login
+Still using Old Header and is displaying duplicate
+Header &amp; Footer
+We tested the Header and Footer on the frontend and did not find this issue. Please perform a **Hard Refresh** or clear your browser cache, then test again. We were unable to reproduce this issue from our side.
+ADMIN 
+Left Hand Menu Not Fully  available on Mobile Devices with many headline items not appearing and the expandable SETTINGS ITEM not available at all.
+  
+---Fixed
+Dashboards -All Users 
+Mobile menus not displaying properly forcing users to scroll down on every feature in the dashboards
+   
+--Fixed
+https://www.rule7media.com/admin/users
+I do not see sort by Country Filter before users are sorted, which database does this write to.
+  
+---Fixed
+Please list all of the databases and confirm they are all importable to CRM platform
+https://www.rule7media.com/admin/users/edit/67e135adb65bc64a41871af5
+Our application utilizes MongoDB as the primary database, housing a robust set of collections that power the entire platform. Key collections include 
+users
+, 
+vehicles
+, 
+auctions
+, 
+bids
+, 
+orders
+, 
+transactions
+, and 
+subscriptions
+, 
+along with supporting data for 
+campaigns
+, 
+products
+, 
+fleetowners
+, 
+franchises
+, and 
+cities
+. Additional modules manage communications through 
+chats
+, 
+messages
+, 
+enquiries
+, and 
+notifications
+, while analytics are handled via 
+clicks
+ and 
+statistics
+. All data from these collections can be seamlessly exported, formatted into CSV or Excel, and imported into the CRM system following a structured migration process that includes a preliminary test import to ensure data integrity and accuracy.
+On the edit user facility I don’t see their Registered Account Number or password
+The Registered Account Number and password are not editable fields in the Admin Edit User section.
+ The account number is a system-generated identifier, and for security reasons, the user's password is not displayed or editable from the user edit form. If required, the password can only be changed through the appropriate password reset/change process
+.
+https://rule7media.com/admin/FleetAuctionApproval
+There seems to be a section for Fleet Auction Approval but no section for Buyer or Marketing Executive Campaigns Approvals 
+Yes, currently there is no separate approval section for 
+Buyer or Marketing Executive Campaigns
+, because the requirement provided was specifically for 
+Fleet Auction Approval
+. Separate campaign approval functionality was not requested or implemented.
+I noticed that when someone lists an Auction it lists expiry date as the Campaign Expiry date which could be 1 or 2 years  in the future . The idea just like  EBAY is that Auctions themselves have an EXPIRY Date set by the user which can be a few weeks or even a few days to encourage regular bidding and platform use through sense of urgency.
+I do not see any facility for a USER to relist and EXPIRED AUCTION
+Budget Requests 
+https://rule7media.com/admin/singlebudgetrequest/698561a26b55051437c61641
+Please explain how you see this feature working 
+The Budget Request flow will work like this:
+If a user wants to bid on a vehicle but the vehicle price is outside their current budget range, they can submit a Budget Request to the fleet owner.
+Based on the user's submitted budget, the system can recommend suitable vehicles from the fleet owner's available inventory that match the user's budget range.
+This will help users find vehicles according to their budget and allow fleet owners to suggest relevant options
+.
+https://rule7media.com/admin/orders
+There appears to be a feature to Assign Wrapper on 1 order but no the other 
+https://rule7media.com/admin/assign-wrapper/698eb24d4fc525194d555c08
+How does this Assign Wrapper Feature work as when I click on Assign Wrapper nothing happens does the Wrapper Receive an EMAIL and DOES ADMIN RECIEVE AND EMAIL AND DOES IT GO INTO A DATABASE.
+How are Buyer or Marketing Executive and Wrapper Payments Calculated and Processed.
+There Is no indication in the Assign Wrapper box what the actual ORDER is so making it difficult to assign the wrapper.
+Assign Wrapper: When Admin assigns a Wrapper to an order, that order is assigned to the selected Wrapper, and the Wrapper receives an email/notification with the relevant order information. The assignment is also recorded in the system/database..
+https://rule7media.com/admin/categories
+The functionality to edit both the category name and description is already available in the Admin Panel. You can edit the name and description of each vehicle category as required.
+Vehicle Descriptions need updated 
+https://rule7media.com/admin/franchise
+Where is the option for different languages in different territories 
+For different territories, the email templates can be manually updated and customized according to the required language/content.
+Do these emails dynamically update depending on USER input 
+Yes. The email templates used on the Franchise page (Enquiry, Franchise Kit, FAQ Form, and Risk Mitigation) can be updated.
+When a user submits any of these forms, an email is sent automatically. You can edit the email template according to your requirements and include whatever information you want the user to receive. This allows you to customize the email content, messaging, and details as needed
+.
+ Do they AUTOSEND and is there an HTML Option for composing.
+Where are the details then stored for CRM
+https://rule7media.com/admin/subscription-plans
+I created a new Pricing Plan to offer 3 month free trial then went through registration process but the option did not appear. I do not see any function to control this discount offer ie they still have to input credit card details but are not charged until expiry of free trial.
+You have created the plan details, but only the description has been added for this offer. The actual pricing plan and trial cycle need to be created and configured from the Stripe Dashboard.
+In Stripe, you need to create the plan, set the billing cycle, add the amount, and configure the free trial period (3 months). Once the plan is properly configured in Stripe, it will reflect during the registration process.
+Currently, the free trial option is not appearing because the pricing cycle and payment settings have not been configured in Stripe.
+0
+256976
+https://rule7media.com/admin/TopFleetAuctions
+Maps Not working
+     
+---Done
+https://rule7media.com/admin/update-address
+This facility exists to add address and email address. Does the email address update dynamically on consumer facing pages depending on USER IP Address and the CONTACT FORM on CONTACT US PAGE
+Yes, the email address and address information are connected with the Contact Us page. These details are displayed dynamically based on the user's country/IP location.
+The consumer-facing pages and the Contact Us form will show the relevant email address and address according to the user's location.
+https://rule7media.com/admin/Statistics
+Client to check Video Uploads and Thumbnails
+. Investigate how You Tube SEO is transferred to website  as each video has its own optimized SEO ?
+https://rule7media.com/admin/media-kit
+I don’t see facility to upload Media Kit in different languages as it states any new Media Kit will overwrite existing one ?
+Media Kit multilingual setup has been completed. Admin can now manage Media Kits for all 11 languages, with country/IP-based selection and language mapping for users.
+Does any downloads write to a database for email nurturing if so where is the database and what format is it for export to CRM
+https://rule7media.com/admin/blogs
+I cant remember does BLOG Page have Country and Language Drop Downs and will articles translate automatically depending on Language Chosen
+Each Blog Page should have SEO Facility which is very important for organic site traffic
+https://rule7media.com/admin/CpmTable
+I don’t see the facility to change currencies for each country .
+I cant seem to enter $1.25 to $2.88 for Wrap CPM in the Add category Section 
+For the CPM table, you only need to enter the amount value. There is no need to manually add the currency symbol.
+The currency symbol will automatically display based on the user's country/location. The system will detect the country and show the appropriate currency symbol accordingly.
+So you only need to enter the amount (for example, 1.25 or 2.88) in the Add Category section, and the currency will be handled automatically.
+Drop Collections
+If you use the 
+Drop Collections
+ option, it will delete the entire database collections. This will remove all data stored in those collections, so please make sure you have a backup before proceeding.
+Before performing this action, the admin must verify their email address (for example: 
+admin@admin.com
+) for security purposes.
+Policy Pages Availability 
+Yes, the Cookie Policy, Privacy Policy, and Terms &amp; Conditions are available for all users. They are accessible across all IP locations and work correctly for everyone. 
+Registration page
+Could you please clarify which Vehicle Type field you are referring to?
+ 
+On the registration page, we have added the fields exactly as provided in your specifications. If you are referring to a different vehicle type field, please let us know which one so we can review it
+.
+https://www.rule7media.com/admin/privacy-policy
+Please explain the mechanism on how each different countries Privacy Policy is displayed depending on USERS IP Address
+The Privacy Policy Page I sent you which is currently displaying in Australia has quite complex CSS and Fonts, will editing these policies preserve those elements or will it appear as basic text with single size font.
+https://www.rule7media.com/admin/terms
+Same questions as Privacy above
+https://www.rule7media.com/admin/cookie
+Im guessing this is a Universal Cookie Policy which will just translate depending on USERS IP Address.
+https://www.rule7media.com/admin/dropcollections
+Obviously as we have been testing so long we want to delete all of the test users and Video Wrapping Shops Animated Gifs and IM also  assuming it will also delete other things.
+As per your warning we message we need to be absolutely sure we dont delete vehicle database and other vital elements.
+Can you please confirm exactly what will be deleted and the ADMIN User email that is programmed in.
+https://rule7media.com/admin/email-settings
+IM assuming if we change the Email User Password with ZOHO we have to also change it in here ?
+Yes. If you change the Zoho email password, the updated password will also need to be changed in the Admin Panel SMTP/Email Settings. Otherwise, the system may not be able to send emails using the updated Zoho credentials.
+https://www.rule7media.com/register?role=fleet-owner
+Can you please explain what happens here as there are 30 or so different types of vehicles and only 3 options at registration.
+Registration page
+Could you please clarify which Vehicle Type field you are referring to?
+ 
+On the registration page, we have added the fields exactly as provided in your specifications. If you are referring to a different vehicle type field, please let us know which one so we can review it.
+hhh
+

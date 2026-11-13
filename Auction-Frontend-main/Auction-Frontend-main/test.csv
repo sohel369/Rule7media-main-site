@@ -1,0 +1,5 @@
+country,vehicle,yearOfManufacture,manufacturer,model,length,width,height,wheelbase,curbWeight,engineSize,cabwidth,cabheight,bonnetwidth,bonnetLength,images
+USA,Truck,2020,Ford,F-150,550.5,200.5,180.5,350.0,2000.0,5000.0,190.0,170.0,180.0,150.0,http://example.com/image1.jpg,http://example.com/image2.jpg
+India,Bus,2019,Tata,Starbus,900.0,250.0,300.0,600.0,5000.0,8000.0,240.0,280.0,230.0,200.0,http://example.com/image3.jpg
+Germany,Car,2021,BMW,X5,492.2,200.4,174.5,297.5,1800.0,3000.0,180.0,160.0,170.0,140.0,http://example.com/image4.jpg
+Japan,Van,2022,Toyota,HiAce,526.0,195.0,199.0,312.0,2100.0,3500.0,185.0,165.0,175.0,145.0,http://example.com/image5.jpg,http://example.com/image6.jpg

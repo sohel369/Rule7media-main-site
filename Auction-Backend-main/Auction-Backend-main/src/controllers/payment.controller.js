@@ -20,16 +20,6 @@ import sendPushNotification from "../firebase/firebaseAdmin.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
-// recluze
-// dsa 27
-// op
-// networking
-
-//paper crdeit
-//backend
-//frontened
-//stock semulator
-
 // @desc Add payment method
 // @route POST /api/v1/payments/add-payment-method
 // @access Private

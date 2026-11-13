@@ -733,47 +733,63 @@ async function checkPurchaseCompletion(userId, auctionId) {
   }
 }
 
-const changeStream = Auction.watch();
+try {
+  const changeStream = Auction.watch();
 
-changeStream.on('change', (change) => {
-  try {
-    if (change.operationType === 'insert') {
-      const auction = change.fullDocument;
-      const startCron = moment(auction.startTime).format('m H D M *');
-      const endCron = moment(auction.endTime).format('m H D M *');
+  changeStream.on('change', (change) => {
+    try {
+      if (change.operationType === 'insert') {
+        const auction = change.fullDocument;
+        const startCron = moment(auction.startTime).format('m H D M *');
+        const endCron = moment(auction.endTime).format('m H D M *');
 
-      cron.schedule(startCron, () => updateAuctionStatus(auction._id, 'active'));
-      cron.schedule(endCron, async () => {
-        await updateAuctionStatus(auction._id, 'over');
-        await selectAuctionWinner(auction._id);
-      });
+        cron.schedule(startCron, () => updateAuctionStatus(auction._id, 'active'));
+        cron.schedule(endCron, async () => {
+          await updateAuctionStatus(auction._id, 'over');
+          await selectAuctionWinner(auction._id);
+        });
+      }
+    } catch (err) {
+      console.error("Error in auction cronjobs:", err);
     }
-  } catch (err) {
-    console.error("Error in auction cronjobs:", err);
-  }
-});
+  });
 
-const fleetChangeStream = FleetOwner.watch();
+  changeStream.on('error', (err) => {
+    console.warn("⚠️ Auction changeStream error (requires replica set):", err.message);
+  });
+} catch (err) {
+  console.warn("⚠️ Could not initialize Auction changeStream:", err.message);
+}
 
-fleetChangeStream.on('change', (change) => {
-  try {
-    if (change.operationType === 'insert') {
-      const fleetAuction = change.fullDocument;
-      const startCron = moment(fleetAuction.startTime).format('m H D M *');
-      const endCron = moment(fleetAuction.endTime).format('m H D M *');
+try {
+  const fleetChangeStream = FleetOwner.watch();
 
-      cron.schedule(startCron, () => updateFleetAuctionStatus(fleetAuction._id, 'active'));
-      cron.schedule(endCron, async () => {
-        await updateFleetAuctionStatus(fleetAuction._id, 'over');
-        await selectFleetAuctionWinner(fleetAuction._id);
-      });
+  fleetChangeStream.on('change', (change) => {
+    try {
+      if (change.operationType === 'insert') {
+        const fleetAuction = change.fullDocument;
+        const startCron = moment(fleetAuction.startTime).format('m H D M *');
+        const endCron = moment(fleetAuction.endTime).format('m H D M *');
+
+        cron.schedule(startCron, () => updateFleetAuctionStatus(fleetAuction._id, 'active'));
+        cron.schedule(endCron, async () => {
+          await updateFleetAuctionStatus(fleetAuction._id, 'over');
+          await selectFleetAuctionWinner(fleetAuction._id);
+        });
+      }
+    } catch (err) {
+      console.error("Error in fleet auction cronjobs:", err);
     }
-  } catch (err) {
-    console.error("Error in fleet auction cronjobs:", err);
-  }
-});
+  });
 
-const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY);
+  fleetChangeStream.on('error', (err) => {
+    console.warn("⚠️ FleetOwner changeStream error (requires replica set):", err.message);
+  });
+} catch (err) {
+  console.warn("⚠️ Could not initialize FleetOwner changeStream:", err.message);
+}
+
+const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY || "");
 
 const validateEnvVars = () => {
   if (!process.env.STRIPE_SECRET_KEY) {

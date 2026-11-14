@@ -8,6 +8,14 @@ export default defineConfig({
     "process.env.node": JSON.stringify("production"),
   },
   publicDir: "public",
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
+  preview: {
+    host: true,
+    allowedHosts: true,
+  },
   build: {
     rollupOptions: {
       output: {

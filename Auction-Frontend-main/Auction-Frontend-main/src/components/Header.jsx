@@ -402,6 +402,13 @@ if (isAffiliatePage) {
       bgColor: "bg-orange-500/10",
       textColor: "text-orange-500",
     },
+    {
+      name: "Protected Territory Exclusivity",
+      path: "/firstmover",
+      icon: <Zap size={18} />,
+      bgColor: "bg-emerald-500/10",
+      textColor: "text-emerald-500",
+    },
   ];
 
   return (

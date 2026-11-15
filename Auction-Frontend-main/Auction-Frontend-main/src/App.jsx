@@ -157,6 +157,33 @@ const AppContent = () => {
 useEffect(() => {
   dispatch(fetchUserCountry());
 }, [dispatch]);
+
+// Anti-Theft / Content Protection: Prevent unauthorized right-click copying and page ripping
+useEffect(() => {
+  const handleContextMenu = (e) => {
+    if (location.pathname.startsWith('/admin') || ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+      return;
+    }
+    e.preventDefault();
+  };
+
+  const handleKeyDown = (e) => {
+    if (location.pathname.startsWith('/admin') || ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+    }
+  };
+
+  document.addEventListener('contextmenu', handleContextMenu);
+  document.addEventListener('keydown', handleKeyDown);
+
+  return () => {
+    document.removeEventListener('contextmenu', handleContextMenu);
+    document.removeEventListener('keydown', handleKeyDown);
+  };
+}, [location.pathname]);
   const handleAcceptCookies = (preferences) => {
     localStorage.setItem("cookiesAccepted", "true");
     localStorage.removeItem("cookiesDeclined");

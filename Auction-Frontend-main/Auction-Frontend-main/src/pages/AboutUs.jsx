@@ -397,6 +397,8 @@ const AboutUs = () => {
         </div>
 
         {/* Executive Section with Read More Button */}
+        {/* Led by Visionaries section safely hidden per client instruction */}
+        {false && (
         <section className="py-24 bg-[#020617]" id="team">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 reveal active">
@@ -479,6 +481,7 @@ const AboutUs = () => {
             </div>
           </div>
         </section>
+        )}
 
         <div className="relative w-full h-[500px]">
           <iframe

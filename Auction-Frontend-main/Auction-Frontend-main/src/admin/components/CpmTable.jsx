@@ -146,7 +146,7 @@ const CpmTable = () => {
       return false;
     }
 
-    if (!/^[\d\s.,\-]+$/.test(GoogleAdvertisingCPMRange)) {
+    if (!/^[\$]?[\d\s.,\-]+$/.test(String(GoogleAdvertisingCPMRange).trim())) {
       setToastMessage("CPM Range can only contain numbers, dash, dot, comma and spaces");
       setToastType("error");
       setShowToast(true);
@@ -160,8 +160,8 @@ const CpmTable = () => {
       return false;
     }
 
-    if (isNaN(VehicleWrapCPMCost) || VehicleWrapCPMCost < 0) {
-      setToastMessage("Wrap CPM should be a valid positive number");
+    if (!/^[\$]?[\d\s.,\-]+$/.test(String(VehicleWrapCPMCost).trim())) {
+      setToastMessage("Wrap CPM should be a valid number or range (e.g. 1.25 - 2.88)");
       setToastType("error");
       setShowToast(true);
       return false;
@@ -174,8 +174,8 @@ const CpmTable = () => {
       return false;
     }
 
-    if (isNaN(MeasurableSaving) || MeasurableSaving < 0) {
-      setToastMessage("Saving should be a valid positive number");
+    if (!/^[\d\s.,\-]+%?$/.test(String(MeasurableSaving).trim())) {
+      setToastMessage("Saving should be a valid percentage or range (e.g. 85 or 75 - 92)");
       setToastType("error");
       setShowToast(true);
       return false;
@@ -189,7 +189,13 @@ const CpmTable = () => {
     
     setIsSavingEdit(true);
     try {
-      await dispatch(updateCpm({ id, ...editFormData })).unwrap();
+      const saveData = {
+        id,
+        ...editFormData,
+        VehicleWrapCPMCost: String(editFormData.VehicleWrapCPMCost).trim(),
+        MeasurableSaving: String(editFormData.MeasurableSaving).trim(),
+      };
+      await dispatch(updateCpm(saveData)).unwrap();
       setEditingId(null);
       setEditFormData({});
       setToastMessage("Entry updated successfully");
@@ -212,21 +218,12 @@ const CpmTable = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "MeasurableSaving") {
-      const cleanedValue = parseFloat(value.replace("%", "")) || "";
-      setEditFormData({ ...editFormData, [name]: cleanedValue });
-    } else {
-      setEditFormData({ ...editFormData, [name]: value });
-    }
+    setEditFormData({ ...editFormData, [name]: value });
   };
 
   const handleNewChange = (e) => {
     const { name, value } = e.target;
-    const cleanedValue =
-      name === "MeasurableSaving"
-        ? parseFloat(value.replace("%", "")) || ""
-        : value;
-    setNewFormData({ ...newFormData, [name]: cleanedValue });
+    setNewFormData({ ...newFormData, [name]: value });
   };
 
   const handleCreate = async () => {
@@ -236,8 +233,8 @@ const CpmTable = () => {
     try {
       const createData = {
         ...newFormData,
-        MeasurableSaving: parseFloat(newFormData.MeasurableSaving) || 0,
-        VehicleWrapCPMCost: parseFloat(newFormData.VehicleWrapCPMCost) || 0,
+        MeasurableSaving: String(newFormData.MeasurableSaving).trim(),
+        VehicleWrapCPMCost: String(newFormData.VehicleWrapCPMCost).trim(),
       };
 
       await dispatch(createCpm(createData)).unwrap();
@@ -386,13 +383,11 @@ const CpmTable = () => {
                 Wrap CPM <span className="text-red-400">*</span>
               </label>
               <input
-                type="number"
+                type="text"
                 name="VehicleWrapCPMCost"
                 value={newFormData.VehicleWrapCPMCost}
                 onChange={handleNewChange}
-                placeholder="Enter number"
-                step="0.01"
-                min="0"
+                placeholder="e.g., 1.25 - 2.88 or 1.25"
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-theme-bg text-white"
                 required
               />
@@ -404,13 +399,11 @@ const CpmTable = () => {
               </label>
               <div className="relative">
                 <input
-                  type="number"
+                  type="text"
                   name="MeasurableSaving"
                   value={newFormData.MeasurableSaving}
                   onChange={handleNewChange}
-                  placeholder="e.g., 15.5"
-                  step="0.01"
-                  min="0"
+                  placeholder="e.g., 92 or 75 - 94"
                   className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-theme-bg text-white pr-10"
                   required
                 />
@@ -544,13 +537,13 @@ const CpmTable = () => {
                         </td>
                         <td className="p-3 border-b">{item.Industry}</td>
                         <td className="p-3 border-b">
-                          {currency}{item.GoogleAdvertisingCPMRange}
+                          {String(item.GoogleAdvertisingCPMRange || '').startsWith('$') ? item.GoogleAdvertisingCPMRange : `${currency || '$'}${item.GoogleAdvertisingCPMRange || ''}`}
                         </td>
                         <td className="p-3 border-b">
-                          {currency}{item.VehicleWrapCPMCost}
+                          {String(item.VehicleWrapCPMCost || '').startsWith('$') ? item.VehicleWrapCPMCost : `${currency || '$'}${item.VehicleWrapCPMCost || ''}`}
                         </td>
                         <td className="p-3 border-b">
-                          {item.MeasurableSaving}%
+                          {String(item.MeasurableSaving || '').includes('%') ? item.MeasurableSaving : `${item.MeasurableSaving || ''}%`}
                         </td>
                         <td className="p-3 border-b">
                           <button

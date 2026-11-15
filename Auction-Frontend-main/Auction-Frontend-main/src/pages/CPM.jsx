@@ -305,13 +305,13 @@ const CPM = () => {
                         {row.Industry}
                       </td>
                       <td className="p-6 text-slate-400">
-                        ${row.GoogleAdvertisingCPMRange}
+                        {String(row.GoogleAdvertisingCPMRange || '').startsWith('$') ? row.GoogleAdvertisingCPMRange : `$${row.GoogleAdvertisingCPMRange || ''}`}
                       </td>
                       <td className="p-6 text-blue-300">
-                        ${row.VehicleWrapCPMCost}
+                        {String(row.VehicleWrapCPMCost || '').startsWith('$') ? row.VehicleWrapCPMCost : `$${row.VehicleWrapCPMCost || ''}`}
                       </td>
                       <td className="p-6 font-bold text-emerald-400 text-right">
-                        {row.MeasurableSaving}%
+                        {String(row.MeasurableSaving || '').endsWith('%') ? row.MeasurableSaving : `${row.MeasurableSaving || ''}%`}
                       </td>
                     </tr>
                   ))
@@ -362,13 +362,13 @@ const CPM = () => {
                         {row.Industry}
                       </td>
                       <td className="p-6 text-slate-400">
-                        ${row.GoogleAdvertisingCPMRange}
+                        {String(row.GoogleAdvertisingCPMRange || '').startsWith('$') ? row.GoogleAdvertisingCPMRange : `$${row.GoogleAdvertisingCPMRange || ''}`}
                       </td>
                       <td className="p-6 text-blue-300">
-                        ${row.VehicleWrapCPMCost}
+                        {String(row.VehicleWrapCPMCost || '').startsWith('$') ? row.VehicleWrapCPMCost : `$${row.VehicleWrapCPMCost || ''}`}
                       </td>
                       <td className="p-6 font-bold text-emerald-400 text-right">
-                        {row.MeasurableSaving}%
+                        {String(row.MeasurableSaving || '').endsWith('%') ? row.MeasurableSaving : `${row.MeasurableSaving || ''}%`}
                       </td>
                     </tr>
                   ))

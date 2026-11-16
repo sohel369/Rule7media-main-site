@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactCountryFlag from "react-country-flag";
 import { fetchUserCountry, setCountry } from "../store/countary/countrySlice";
 import { Globe, ShieldCheck } from "lucide-react";
-import { clearNonEnglishSourceTranslateCookies } from "../utils/googleTranslate";
+import {
+  clearNonEnglishSourceTranslateCookies,
+  WORLD_LANGUAGES,
+  INCLUDED_LANGUAGES_STRING,
+  getStoredLanguage,
+  setStoredLanguage,
+} from "../utils/googleTranslate";
 
 const countries = [
   "United States",
@@ -41,32 +47,11 @@ const countryToCodeMap = {
   Brazil: "BR",
 };
 
-const TRANSLATE_LANGUAGES = [
-  { code: "en", name: "English" },
-  { code: "hi", name: "Hindi" },
-  { code: "es", name: "Spanish" },
-  { code: "zh-CN", name: "Chinese" },
-  { code: "ja", name: "Japanese" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "pt", name: "Portuguese" },
-  { code: "id", name: "Indonesian" },
-  { code: "th", name: "Thai" },
-  { code: "vi", name: "Vietnamese" },
-];
-
-// Helper to get active language from cookie
-const getActiveLanguage = () => {
-  if (typeof document === "undefined") return "en";
-  const match = document.cookie.match(/googtrans=\/([a-zA-Z-]+)\/([a-zA-Z-]+)/);
-  return match && match[1] === "en" ? match[2] : "en";
-};
-
 const FranchiseTopBar = () => {
   const dispatch = useDispatch();
   const country = useSelector((state) => state.country.country);
   const googleTranslateRef = useRef(null);
-  const [currentLang, setCurrentLang] = useState(getActiveLanguage());
+  const [currentLang, setCurrentLang] = useState(getStoredLanguage());
 
   useEffect(() => {
     if (!country) {
@@ -86,7 +71,7 @@ const FranchiseTopBar = () => {
           new window.google.translate.TranslateElement(
             {
               pageLanguage: "en",
-              includedLanguages: "en,hi,id,ja,zh-CN,es,fr,de,th,vi,pt",
+              includedLanguages: INCLUDED_LANGUAGES_STRING,
               layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
               autoDisplay: false,
             },
@@ -122,20 +107,14 @@ const FranchiseTopBar = () => {
   const handleLanguageChange = (e) => {
     const langCode = e.target.value;
     setCurrentLang(langCode);
+    setStoredLanguage(langCode);
 
-    // 1. Set Google Translate cookies
-    const domain = window.location.hostname;
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain};`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${domain};`;
-
-    // 2. Trigger combo if present in DOM
+    // Trigger combo if present in DOM
     const combo = document.querySelector(".goog-te-combo");
     if (combo) {
       combo.value = langCode;
       combo.dispatchEvent(new Event("change", { bubbles: true }));
     } else {
-      // Reload to apply translation immediately if widget hasn't attached yet
       window.location.reload();
     }
   };
@@ -186,9 +165,9 @@ const FranchiseTopBar = () => {
               title="Select Language"
             >
               <option value="en" className="bg-[#1a2637] text-white">Select Language</option>
-              {TRANSLATE_LANGUAGES.map((l) => (
+              {WORLD_LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code} className="bg-[#1a2637] text-white">
-                  {l.name}
+                  {l.name} ({l.native})
                 </option>
               ))}
             </select>
@@ -210,7 +189,7 @@ const FranchiseTopBar = () => {
 export const FranchiseMobileControls = () => {
   const dispatch = useDispatch();
   const country = useSelector((state) => state.country.country);
-  const [currentLang, setCurrentLang] = useState(getActiveLanguage());
+  const [currentLang, setCurrentLang] = useState(getStoredLanguage());
 
   useEffect(() => {
     if (!country) {
@@ -221,11 +200,7 @@ export const FranchiseMobileControls = () => {
   const handleLanguageChange = (e) => {
     const langCode = e.target.value;
     setCurrentLang(langCode);
-
-    const domain = window.location.hostname;
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain};`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${domain};`;
+    setStoredLanguage(langCode);
 
     const combo = document.querySelector(".goog-te-combo");
     if (combo) {
@@ -270,7 +245,7 @@ export const FranchiseMobileControls = () => {
           <div>
             <div className="text-[10px] text-slate-400 uppercase font-semibold">Select Language</div>
             <div className="text-xs font-bold text-white">
-              {TRANSLATE_LANGUAGES.find((l) => l.code === currentLang)?.name || "English"}
+              {WORLD_LANGUAGES.find((l) => l.code === currentLang)?.name || "English"}
             </div>
           </div>
         </div>
@@ -280,7 +255,7 @@ export const FranchiseMobileControls = () => {
           onChange={handleLanguageChange}
           className="bg-slate-800 text-slate-200 text-xs font-semibold px-3 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-rose-500 cursor-pointer"
         >
-          {TRANSLATE_LANGUAGES.map((l) => (
+          {WORLD_LANGUAGES.map((l) => (
             <option key={l.code} value={l.code} className="bg-slate-900 text-white">
               {l.name}
             </option>

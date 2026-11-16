@@ -39,7 +39,12 @@ import { BsCart3 } from "react-icons/bs";
 import { fetchUserCountry, setCountry } from "../store/countary/countrySlice";
 import ReactCountryFlag from "react-country-flag";
 import "./header.css";
-import { clearNonEnglishSourceTranslateCookies } from "../utils/googleTranslate";
+import {
+  clearNonEnglishSourceTranslateCookies,
+  INCLUDED_LANGUAGES_STRING,
+  getStoredLanguage,
+  setStoredLanguage,
+} from "../utils/googleTranslate";
 import { getCartItems, getWinningBid } from "../store/cart/cartSlice";
 import { getContactInfo } from "../store/contact/contactSlice";
 import AbandonedCartBanner from "./AbandonedCartBanner.jsx";
@@ -224,7 +229,7 @@ if (isAffiliatePage) {
           new window.google.translate.TranslateElement(
             {
               pageLanguage: "en",
-              includedLanguages: "en,hi,id,ja,zh-CN,es,fr,de,th",
+              includedLanguages: INCLUDED_LANGUAGES_STRING,
               layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
               autoDisplay: false,
             },

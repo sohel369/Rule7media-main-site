@@ -1,13 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_BASE ="https://www.rule7media.com/api";
-//const API_BASE ="http://localhost:8000";
+const getApiBase = () => {
+  if (typeof window !== "undefined") {
+    if (window.location.hostname.includes("railway.app")) {
+      return "https://rule7media-main-site-production.up.railway.app";
+    }
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      return "http://localhost:8000";
+    }
+  }
+  return "https://www.rule7media.com";
+};
+
 // Country -> currency symbol
 const CURRENCY_MAP = {
-India: "₹",
+  India: "₹",
   Australia: "A$",
   France: "€",
   Spain: "€",
+  Germany: "€",
+  Vietnam: "₫",
   "United States": "$",
   Canada: "C$",
   Japan: "¥",
@@ -15,9 +27,10 @@ India: "₹",
   Thailand: "฿",
   Indonesia: "Rp",
   "United Kingdom": "£",
+  Bangladesh: "৳",
 };
 
-export const getCurrencySymbol = (country) => CURRENCY_MAP[country] || "A$";
+export const getCurrencySymbol = (country) => CURRENCY_MAP[country] || "$";
 
 // Browser ka public IP (VPN ke saath bhi sahi milta hai)
 const getBrowserIp = async () => {
@@ -35,7 +48,7 @@ export const fetchUserCountry = createAsyncThunk(
   "country/fetchUserCountry",
   async () => {
     try {
-      let url = `${API_BASE}/api/user-country`;
+      let url = `${getApiBase()}/api/user-country`;
 
       const ip = await getBrowserIp();
       if (ip) url += `?ip=${ip}`;
@@ -44,11 +57,23 @@ export const fetchUserCountry = createAsyncThunk(
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      return { country: data.country || "Australia", ip: data.ip || null };
+      if (data && data.country) {
+        return { country: data.country, ip: data.ip || ip };
+      }
     } catch (err) {
-      console.error("❌ fetchUserCountry failed:", err.message);
-      return { country: "Australia", ip: null };
+      console.warn("Backend user-country lookup failed, falling back to direct lookup:", err.message);
     }
+
+    // Direct client fallback to ensure international visitors (Vietnam, Germany, etc.) are never misclassified
+    try {
+      const res = await fetch("https://ipwho.is/", { signal: AbortSignal.timeout(3000) });
+      const data = await res.json();
+      if (data && data.success && data.country) {
+        return { country: data.country, ip: data.ip || null };
+      }
+    } catch {}
+
+    return { country: "Australia", ip: null };
   }
 );
 

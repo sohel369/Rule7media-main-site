@@ -45,6 +45,7 @@ import {
   getStoredLanguage,
   setStoredLanguage,
 } from "../utils/googleTranslate";
+import { ALL_COUNTRIES, COUNTRY_TO_CODE } from "../utils/regionsAndCountries";
 import { getCartItems, getWinningBid } from "../store/cart/cartSlice";
 import { getContactInfo } from "../store/contact/contactSlice";
 import AbandonedCartBanner from "./AbandonedCartBanner.jsx";
@@ -309,32 +310,8 @@ if (isAffiliatePage) {
     if (selectedCountry) dispatch(setCountry(selectedCountry));
   };
 
-  const countries = [
-    "United States",
-    "Canada",
-    "Australia",
-    "China",
-    "Japan",
-    "India",
-    "Thailand",
-    "Indonesia",
-    "Spain",
-    "France",
-    "United Kingdom",
-  ];
-  const countryToCodeMap = {
-    "United States": "US",
-    Canada: "CA",
-    Australia: "AU",
-    China: "CN",
-    Japan: "JP",
-    India: "IN",
-    Thailand: "TH",
-    Indonesia: "ID",
-    Spain: "ES",
-    France: "FR",
-    "United Kingdom": "GB",
-  };
+  const countries = ALL_COUNTRIES;
+  const countryToCodeMap = COUNTRY_TO_CODE;
 
   const isSpecialPage =
     (location.pathname === "/BuyerMarketSubsriptionPaymentSuccess" &&

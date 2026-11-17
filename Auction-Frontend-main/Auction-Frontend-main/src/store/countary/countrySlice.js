@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { COUNTRY_TO_CURRENCY } from "../../utils/regionsAndCountries";
 
 const getApiBase = () => {
   if (typeof window !== "undefined") {
@@ -12,25 +13,8 @@ const getApiBase = () => {
   return "https://www.rule7media.com";
 };
 
-// Country -> currency symbol
-const CURRENCY_MAP = {
-  India: "₹",
-  Australia: "A$",
-  France: "€",
-  Spain: "€",
-  Germany: "€",
-  Vietnam: "₫",
-  "United States": "$",
-  Canada: "C$",
-  Japan: "¥",
-  China: "¥",
-  Thailand: "฿",
-  Indonesia: "Rp",
-  "United Kingdom": "£",
-  Bangladesh: "৳",
-};
-
-export const getCurrencySymbol = (country) => CURRENCY_MAP[country] || "$";
+// Country -> currency symbol (mapped from all 8 global regions)
+export const getCurrencySymbol = (country) => COUNTRY_TO_CURRENCY[country] || "$";
 
 // Browser ka public IP (VPN ke saath bhi sahi milta hai)
 const getBrowserIp = async () => {

@@ -635,7 +635,7 @@ if (isAffiliatePage) {
                 )}
               </>
             ) : (
-              // PRIVATE HEADER (Logged in)
+              // PRIVATE HEADER (Logged in - Consistent with Public Navigation)
               <>
                 <Link
                   to="/"
@@ -647,36 +647,142 @@ if (isAffiliatePage) {
                 >
                   Home
                 </Link>
-                <Link
-                  to="/about-us"
-                  className={`px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all ${
-                    isActiveRoute("/about-us")
-                      ? "text-red-500 border-b-2 border-red-500"
-                      : "text-slate-300 hover:text-red-500"
-                  }`}
+
+                {/* Collaborative */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setCollabOpen(true)}
+                  onMouseLeave={() => setCollabOpen(false)}
                 >
-                  About
-                </Link>
-                <Link
-                  to="/contact-us"
-                  className={`px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all ${
-                    isActiveRoute("/contact-us")
-                      ? "text-red-500 border-b-2 border-red-500"
-                      : "text-slate-300 hover:text-red-500"
-                  }`}
+                  <button className="px-4 py-2 text-sm font-bold text-slate-300 hover:text-red-500 flex items-center gap-1 uppercase tracking-wider">
+                    Collaborative{" "}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${collabOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {collabOpen && (
+                    <div className="absolute top-full left-0 w-64 pt-4">
+                      <div className="bg-[#161B26] rounded-2xl shadow-2xl border border-slate-800 p-2">
+                        {collaborativeItems.map((item) =>
+                          item.path.startsWith("http") ? (
+                            <a
+                              key={item.name}
+                              href={item.path}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500 transition-all"
+                            >
+                              <div
+                                className={`w-8 h-8 ${item.bgColor} ${item.textColor} rounded-lg flex items-center justify-center`}
+                              >
+                                {item.icon}
+                              </div>
+                              {item.name}
+                            </a>
+                          ) : (
+                            <Link
+                              key={item.name}
+                              to={item.path}
+                              className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500 transition-all"
+                            >
+                              <div
+                                className={`w-8 h-8 ${item.bgColor} ${item.textColor} rounded-lg flex items-center justify-center`}
+                              >
+                                {item.icon}
+                              </div>
+                              {item.name}
+                            </Link>
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Benefits */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setBenefitsOpen(true)}
+                  onMouseLeave={() => setBenefitsOpen(false)}
                 >
-                  Contact
-                </Link>
-                <Link
-                  to="/Statistics"
-                  className={`px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all ${
-                    isActiveRoute("/Statistics")
-                      ? "text-red-500 border-b-2 border-red-500"
-                      : "text-slate-300 hover:text-red-500"
-                  }`}
+                  <button className="px-4 py-2 text-sm font-bold text-slate-300 hover:text-red-500 flex items-center gap-1 uppercase tracking-wider">
+                    Benefits{" "}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${benefitsOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {benefitsOpen && (
+                    <div className="absolute top-full left-0 w-72 pt-4">
+                      <div className="bg-[#161B26] rounded-2xl shadow-2xl border border-slate-800 p-2">
+                        {benefitsItems.map((item) => (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500 transition-all"
+                          >
+                            <div
+                              className={`w-8 h-8 ${item.bgColor} ${item.textColor} rounded-lg flex items-center justify-center`}
+                            >
+                              {item.icon}
+                            </div>
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Opportunities */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setOpportunitiesOpen(true)}
+                  onMouseLeave={() => setOpportunitiesOpen(false)}
                 >
-                  Statistics
-                </Link>
+                  <button className="px-4 py-2 text-sm font-bold text-slate-300 hover:text-red-500 flex items-center gap-1 uppercase tracking-wider">
+                    Opportunities{" "}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${opportunitiesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {opportunitiesOpen && (
+                    <div className="absolute top-full right-0 w-64 pt-4">
+                      <div className="bg-[#161B26] rounded-2xl shadow-2xl border border-slate-800 p-2">
+                        {opportunitiesItems.map((item) =>
+                          item.path.startsWith("http") ? (
+                            <a
+                              key={item.name}
+                              href={item.path}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500 transition-all"
+                            >
+                              <div
+                                className={`w-8 h-8 ${item.bgColor} ${item.textColor} rounded-lg flex items-center justify-center`}
+                              >
+                                {item.icon}
+                              </div>
+                              {item.name}
+                            </a>
+                          ) : (
+                            <Link
+                              key={item.name}
+                              to={item.path}
+                              className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500 transition-all"
+                            >
+                              <div
+                                className={`w-8 h-8 ${item.bgColor} ${item.textColor} rounded-lg flex items-center justify-center`}
+                              >
+                                {item.icon}
+                              </div>
+                              {item.name}
+                            </Link>
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 {/* {(user?.userType === "advertiser" || user?.userType === "buyer") && (
                   <Link to="/our-products" className={`px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all ${
         isActiveRoute("/our-products") 

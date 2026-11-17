@@ -38,10 +38,8 @@ export const submitFranchise = async (req, res) => {
       timeline,
       formType,
     });
-const settings = await EmailSettings.findOne().lean();
-
-
-    const adminEmail = settings.user;
+    const settings = await EmailSettings.findOne().lean();
+    const adminEmail = settings?.user || process.env.EMAIL_USER || "info@rule7media.com";
     const userEmail = email;
 
     let adminSubject = "";

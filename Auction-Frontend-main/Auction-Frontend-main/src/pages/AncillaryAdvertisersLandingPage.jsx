@@ -12,7 +12,9 @@ import {
   User,
   Youtube,
   Instagram,
+  Clapperboard,
 } from "lucide-react";
+import FranchiseTopBar, { FranchiseMobileControls } from "../components/FranchiseTopBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { downloadKit, fetchAvailableKits } from "../store/mediakit/mediaKitSlice";
@@ -319,15 +321,18 @@ const AncillaryAdvertisersLandingPage = () => {
     <>
       <SEO {...seoData.ancillary} />
       <div className="bg-[#0f172a] text-slate-200 antialiased min-h-screen">
+        {/* Global Country & Language Top Bar */}
+        <FranchiseTopBar />
+
         {/* Navigation */}
         <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0f172a]/80 backdrop-blur-md">
           <div className="container mx-auto flex h-20 items-center justify-between px-6">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                <Layers size={24} />
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-red-500/30 group-hover:rotate-12 transition-transform">
+                <Clapperboard className="w-6 h-6" />
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white">
-                Rule 7 <span className="text-blue-500">Media</span>
+              <span className="text-2xl font-extrabold tracking-tight text-white">
+                Rule7<span className="text-red-600">Media</span>
               </span>
             </Link>
 
@@ -336,30 +341,19 @@ const AncillaryAdvertisersLandingPage = () => {
             </nav>
 
             <div className="flex items-center gap-4">
-              <a
-                href="https://digital-ocean-production-01ee.up.railway.app/login"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/login"
                 className="hidden text-sm font-semibold text-slate-300 sm:block hover:text-white"
               >
                 Sign In
-              </a>
+              </Link>
 
-              {/* <Link
-               href="https://digital-ocean-production-01ee.up.railway.app/login"
-                //to="/register?role=seller"
-                className="hidden lg:block rounded-full bg-blue-600 px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] active:scale-95 text-center"
+              <Link
+                to="/register?role=advertiser"
+                className="hidden lg:block rounded-full bg-red-600 px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-red-500"
               >
                 Create an Account
-              </Link> */}
-<a
-  href="https://digital-ocean-production-01ee.up.railway.app/login"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="hidden lg:block rounded-full bg-blue-600 px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-500"
->
-  Create an Account
-</a>
+              </Link>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="lg:hidden text-slate-300 hover:text-white p-2"
@@ -372,29 +366,27 @@ const AncillaryAdvertisersLandingPage = () => {
           {/* Mobile Navigation Menu */}
           {mobileMenuOpen && (
             <div className="lg:hidden absolute top-20 left-0 w-full bg-[#0f172a] border-b border-white/10 px-6 py-8 space-y-6 shadow-2xl">
+              <FranchiseMobileControls />
               <nav className="flex flex-col space-y-4">
                 {navLinks.map((link, index) =>
                   renderNavLink(link, index, true),
                 )}
               </nav>
               <div className="pt-6 border-t border-white/10 flex flex-col gap-4">
-                <a
-                  href="https://digital-ocean-production-01ee.up.railway.app/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full rounded-full bg-blue-600 py-4 text-center font-bold text-white"
+                <Link
+                  to="/register?role=advertiser"
+                  className="w-full rounded-full bg-red-600 py-4 text-center font-bold text-white"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                 Create an Account
-                </a>
-               <a
-  href="https://digital-ocean-production-01ee.up.railway.app/login"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-full text-center font-semibold text-slate-300"
-  onClick={() => setMobileMenuOpen(false)}
->
-  Sign In
-</a>
+                  Create an Account
+                </Link>
+                <Link
+                  to="/login"
+                  className="w-full text-center font-semibold text-slate-300"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
               </div>
             </div>
           )}

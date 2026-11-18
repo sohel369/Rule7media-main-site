@@ -143,7 +143,7 @@ const Protected = () => {
 const AdminProtected = () => {
   const { token, user } = useAuth();
 
-  if (!token || !user) {
+  if (!token || !user || user.userType !== "admin") {
     return <Navigate to="/admin/login" replace />;
   }
 

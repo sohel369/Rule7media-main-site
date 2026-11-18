@@ -16,7 +16,7 @@ router.route("/notify-admin").post(notifyAdmin);
 router.route("/verify-session/:sessionId").get(verifyUser, verifySession);
 router.route("/status").post(verifyUser, getSubscriptionStatus);
 router.route("/check-subscription").get(verifyUser, checkSubscriptionStatus);
-router.route("/products").get(verifyUser, getSubscriptionPlanes);
+router.route("/products").get(getSubscriptionPlanes);
 router.route("/subscription-checkout").post(verifyUser, subscriptionCheckout);
 router.route("/cancel-subscription").post(verifyUser, cancelSubscription);
 

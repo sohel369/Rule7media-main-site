@@ -45,7 +45,10 @@ const PricingOptions = () => {
   const { country } = useSelector((state) => state.country);
   const { user, isLoading } = useSelector((state) => state.auth);
   const userEmail = user?.email || "";
+  const queryParams = new URLSearchParams(location.search);
+  const queryType = queryParams.get("type")?.toLowerCase() || "";
   const userType = user?.userType?.toLowerCase() || "";
+  const effectiveUserType = queryType || userType || "wrapper";
 
   const [current, setCurrent] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -68,10 +71,13 @@ const PricingOptions = () => {
     wrapper: "Wrapper",
   };
 
-  const filteredPlanes = subscriptionPlanes.filter(
-    (plan) =>
-      plan.statement_descriptor === userTypeToStatementDescriptor[userType],
-  );
+  const targetDescriptor = userTypeToStatementDescriptor[effectiveUserType] || "Wrapper";
+
+  const filteredPlanes = Array.isArray(subscriptionPlanes) && subscriptionPlanes.length > 0
+    ? (subscriptionPlanes.filter((plan) => plan.statement_descriptor === targetDescriptor).length > 0
+        ? subscriptionPlanes.filter((plan) => plan.statement_descriptor === targetDescriptor)
+        : subscriptionPlanes)
+    : [];
 
   const { userplans, loading, error } = useSelector(
     (state) => state.subscriptionPlan,
@@ -105,16 +111,17 @@ const PricingOptions = () => {
   }, [upgradeMessage, upgradeError, dispatch]);
 
   useEffect(() => {
-    if (
-      !isLoading &&
-      !subLoading &&
-      !loading &&
-      userType &&
-      filteredPlanes.length > 0
-    ) {
+    if (!subLoading) {
       setIsPageLoading(false);
     }
-  }, [isLoading, subLoading, loading, userType, filteredPlanes]);
+  }, [subLoading, subscriptionPlanes]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const reorderedPlanes = (() => {
     if (filteredPlanes.length === 0) return filteredPlanes;
@@ -218,19 +225,6 @@ const PricingOptions = () => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    if (
-      plansLoaded &&
-      filteredPlanes.length === 0 &&
-      !subLoading &&
-      !subError
-    ) {
-      const retryFetch = setTimeout(() => {
-        dispatch(fetchSubscriptionPlanes());
-      }, 2000);
-      return () => clearTimeout(retryFetch);
-    }
-  }, [plansLoaded, filteredPlanes.length, subLoading, subError, dispatch]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);

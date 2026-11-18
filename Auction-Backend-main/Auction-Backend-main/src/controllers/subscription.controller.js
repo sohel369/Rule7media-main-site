@@ -38,25 +38,69 @@ export const notifyAdmin = async (req, res) => {
       .json({ success: false, message: "Missing email or countryCode" });
   }
 
-  try {
-    const transporter = await getEmailTransporter();
-    const fromAddress = await getFromAddress();
+  // Respond immediately so user experience is snappy
+  res.status(200).json({ success: true, message: "Subscribed successfully." });
 
-    const mailOptions = {
-      from: fromAddress,
-      to: fromAddress,
-      subject: `New Subscription from ${email} on Rule7Media website`,
-      html: `<p><strong>Email:</strong> ${email}</p>`,
-    };
+  // Fire-and-forget: send confirmation emails to both admin and subscriber
+  setImmediate(async () => {
+    try {
+      const transporter = await getEmailTransporter();
+      const fromAddress = await getFromAddress();
 
-    await transporter.sendMail(mailOptions);
-    res
-      .status(200)
-      .json({ success: true, message: "Admin notified via email." });
-  } catch (err) {
-    console.error("Email sending error:", err);
-    res.status(500).json({ success: false, message: "Failed to send email." });
-  }
+      // 1. Admin Notification
+      const adminMailOptions = {
+        from: fromAddress,
+        to: fromAddress,
+        subject: `New Newsletter Subscription: ${email} (${countryCode})`,
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #1e293b;">
+            <h2 style="color: #e11d48;">New Subscription Received</h2>
+            <p>A new subscriber has joined the Rule 7 Media newsletter:</p>
+            <ul>
+              <li><strong>Subscriber Email:</strong> ${email}</li>
+              <li><strong>Country Code:</strong> ${countryCode}</li>
+              <li><strong>Subscribed At:</strong> ${new Date().toUTCString()}</li>
+            </ul>
+          </div>
+        `,
+      };
+
+      // 2. Subscriber Welcome Confirmation
+      const userMailOptions = {
+        from: fromAddress,
+        to: email,
+        subject: `Welcome to Rule 7 Media — Subscription Confirmed`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+            <div style="text-align: center; margin-bottom: 24px;">
+              <h1 style="color: #e11d48; margin: 0; font-size: 26px;">Rule 7 Media</h1>
+              <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Exclusive Franchise & Advertising Network</p>
+            </div>
+            <h3 style="color: #0f172a;">You're in! Welcome to the Rule 7 Media Network.</h3>
+            <p style="color: #334155; line-height: 1.6;">
+              Thank you for subscribing. You will now receive our exclusive weekly industry perspectives, vehicle wrapping franchise updates, and high-ROI marketing strategies directly in your inbox.
+            </p>
+            <div style="background: #f8fafc; border-left: 4px solid #e11d48; padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;">
+              <p style="margin: 0; color: #334155; font-size: 14px;">
+                <strong>Stay ahead of the curve:</strong> Explore our live auctions, market analytics, and exclusive protected territories at <a href="https://www.rule7media.com" style="color: #e11d48; text-decoration: none;">rule7media.com</a>.
+              </p>
+            </div>
+            <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+              If you did not request this subscription, you can disregard this email.<br>
+              © ${new Date().getFullYear()} Rule 7 Media. All rights reserved.
+            </p>
+          </div>
+        `,
+      };
+
+      await Promise.allSettled([
+        transporter.sendMail(adminMailOptions),
+        transporter.sendMail(userMailOptions),
+      ]);
+    } catch (err) {
+      console.error("Subscription email sending error:", err.message);
+    }
+  });
 };
 
 

@@ -45,6 +45,14 @@ const ContactUs = () => {
         contact[0]
       : null;
 
+  // Dynamic country desk email fallback based on visitor's detected country
+  const detectedCountryName = country || "Australia";
+  const dynamicDeskEmail =
+    currentCountryContact?.email ||
+    (detectedCountryName.toLowerCase() === "united states"
+      ? "USA@rule7media.com"
+      : `${detectedCountryName.replace(/\s+/g, "")}@rule7media.com`);
+
   useEffect(() => {
     if (!country) {
       dispatch(fetchUserCountry());
@@ -304,10 +312,10 @@ const ContactUs = () => {
                     Email Desk
                   </h3>
                   <a
-                    href={`mailto:${currentCountryContact?.email || "Australia@rule7media.com"}`}
+                    href={`mailto:${dynamicDeskEmail}`}
                     className="text-gray-400 text-sm hover:text-purple-400 transition-colors underline decoration-purple-500/40 hover:decoration-purple-400 underline-offset-4 block break-all"
                   >
-                    {currentCountryContact?.email || "Australia@rule7media.com"}
+                    {dynamicDeskEmail}
                   </a>
                 </div>
               </div>

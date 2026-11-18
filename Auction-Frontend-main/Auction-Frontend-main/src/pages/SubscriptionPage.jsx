@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const SubscriptionPage = () => {
   const navigate = useNavigate();
@@ -138,34 +140,11 @@ const SubscriptionPage = () => {
         `}
       </style>
 
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 glass top-4 left-1/2 -translate-x-1/2 max-w-6xl mx-auto rounded-2xl px-6 py-4 flex items-center justify-between shadow-2xl">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 accent-gradient rounded-lg flex items-center justify-center font-extrabold text-xl text-white">
-            R7
-          </div>
-          <span className="font-bold text-xl tracking-tight text-slate-200 uppercase">
-            RULE 7 MEDIA
-          </span>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link
-            to="/contact-us"
-            className="hidden sm:block text-sm font-bold text-slate-400 hover:text-rose-500 transition-colors"
-          >
-            Support
-          </Link>
-          <button
-            onClick={handleSubscribeClick}
-            className="accent-gradient px-6 py-2.5 rounded-xl text-sm font-bold text-white glow-hover transition-all"
-          >
-            Subscribe Now
-          </button>
-        </div>
-      </nav>
+      {/* Site Header */}
+      <Header />
 
       {/* Main Content */}
-      <main className="pt-40 pb-20 px-6">
+      <main className="pt-28 pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           {/* Icon Badge */}
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-rose-500/10 border border-rose-500/20 mb-8 animate-pulse">
@@ -369,22 +348,8 @@ const SubscriptionPage = () => {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="py-10 border-t border-white/5 bg-black/40">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs font-bold text-slate-600 uppercase tracking-widest">
-            © 2026 RULE 7 MEDIA. SECURE ENVIRONMENT.
-          </p>
-          <div className="flex gap-6 text-xs font-black uppercase tracking-widest text-slate-500">
-            <Link to="/terms-conditions" className="hover:text-rose-500">
-              Security Terms
-            </Link>
-            <Link to="/privacy-policy" className="hover:text-rose-500">
-              Privacy Policy
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Official Footer */}
+      <Footer />
     </div>
   );
 };

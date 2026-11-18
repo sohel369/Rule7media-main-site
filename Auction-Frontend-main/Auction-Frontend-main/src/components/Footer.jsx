@@ -24,6 +24,7 @@ import enLocale from "i18n-iso-countries/langs/en.json";
 import countries from "i18n-iso-countries";
 import { setCountry } from "../store/countary/countrySlice";
 import { Line } from "react-chartjs-2";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -64,23 +65,28 @@ const Footer = () => {
     }
   }, [dispatch, country]);
 
+  const [isFooterSubmitting, setIsFooterSubmitting] = useState(false);
+
   const handleSubscribe = () => {
     if (email && countryCode) {
+      setIsFooterSubmitting(true);
       dispatch(subscribeUser({ email, countryCode }));
     }
   };
 
   useEffect(() => {
-    if (success) {
-      alert("Subscribed successfully!");
+    if (success && isFooterSubmitting) {
+      toast.success("Subscribed successfully!");
       setEmail("");
+      setIsFooterSubmitting(false);
       dispatch(resetSubscription());
     }
-    if (error) {
-      alert(`Error: ${error}`);
+    if (error && isFooterSubmitting) {
+      toast.error(`Error: ${error}`);
+      setIsFooterSubmitting(false);
       dispatch(resetSubscription());
     }
-  }, [success, error, dispatch]);
+  }, [success, error, isFooterSubmitting, dispatch]);
 
   const navigation = [
     { name: "Case Studies", link: "/firstmover " },

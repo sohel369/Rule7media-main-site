@@ -619,17 +619,23 @@ const getSellerPayouts = async (req, res) => {
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  if (!password && !email) {
+  if (!password || !email) {
     res
       .status(400)
       .json(new ApiResponse(400, "Email and password are required"));
     return;
   }
 
-
-  // Password verification
-
-  const user = await User.findOne({ email });
+  // Password verification with case-insensitive and trimmed email search
+  const cleanEmail = (email || "").trim();
+  const safeRegex = cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const user = await User.findOne({
+    $or: [
+      { email: cleanEmail },
+      { email: cleanEmail.toLowerCase() },
+      { email: { $regex: new RegExp(`^${safeRegex}$`, "i") } },
+    ],
+  });
   if (!user) {
     res.status(404).json(new ApiResponse(404, "User not found"));
     return;

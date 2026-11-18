@@ -124,21 +124,22 @@ const PricingOptions = () => {
   }, []);
 
   const reorderedPlanes = (() => {
-    if (filteredPlanes.length === 0) return filteredPlanes;
+    if (!Array.isArray(filteredPlanes) || filteredPlanes.length === 0) return [];
 
-    const newArray = [...filteredPlanes];
+    const newArray = [...filteredPlanes].filter((p) => p && typeof p === "object");
 
     const getDuration = (plan) => {
       let duration = 3;
-      if (plan.description) {
-        if (plan.description.includes("12-month")) return 12;
-        if (plan.description.includes("6-month")) return 6;
-        if (plan.description.includes("3-month")) return 3;
+      if (plan?.description && typeof plan.description === "string") {
+        if (plan.description.includes("12-month") || plan.description.includes("12 month")) return 12;
+        if (plan.description.includes("6-month") || plan.description.includes("6 month")) return 6;
+        if (plan.description.includes("3-month") || plan.description.includes("3 month")) return 3;
       }
-      if (plan.prices[0]?.recurring?.interval_count) {
-        const intervalCount = plan.prices[0].recurring.interval_count;
+      const firstPrice = plan?.prices?.[0];
+      if (firstPrice?.recurring?.interval_count) {
+        const intervalCount = firstPrice.recurring.interval_count;
         if (
-          plan.prices[0].recurring.interval === "year" &&
+          firstPrice.recurring.interval === "year" &&
           intervalCount === 1
         ) {
           return 12;
@@ -153,13 +154,13 @@ const PricingOptions = () => {
   })();
 
   const getMatchingUserPlan = (stripePlan) => {
-    if (!userplans || !Array.isArray(userplans) || userplans.length === 0) {
+    if (!stripePlan || !userplans || !Array.isArray(userplans) || userplans.length === 0) {
       return null;
     }
 
     // Method 1: Match by planCode
     const matchedByPlanCode = userplans.find((userPlan) => {
-      return userPlan.planCode === stripePlan.planCode;
+      return userPlan?.planCode && stripePlan?.planCode && userPlan.planCode === stripePlan.planCode;
     });
 
     if (matchedByPlanCode) {
@@ -168,10 +169,9 @@ const PricingOptions = () => {
 
     // Method 2: Match by description keywords
     const matchedByDescription = userplans.find((userPlan) => {
-      if (!stripePlan.description) return false;
+      if (!stripePlan?.description || typeof stripePlan.description !== "string") return false;
 
       const stripeDesc = stripePlan.description.toLowerCase();
-      const userPlanName = (userPlan.name || "").toLowerCase();
 
       // Check for duration keywords
       const durations = {
@@ -194,8 +194,8 @@ const PricingOptions = () => {
       }
 
       // Extract duration from user plan
-      let userPlanDuration = userPlan.planDuration || 3;
-      const userPlanDesc = (userPlan.description || "").toLowerCase();
+      let userPlanDuration = userPlan?.planDuration || 3;
+      const userPlanDesc = (userPlan?.description || "").toLowerCase();
       for (const [key, duration] of Object.entries(durations)) {
         if (userPlanDesc.includes(key)) {
           userPlanDuration = duration;
@@ -270,22 +270,23 @@ const PricingOptions = () => {
   };
 
   const handleCheckout = (plan) => {
-    const priceObj = plan.prices[0];
+    const priceObj = Array.isArray(plan?.prices) && plan.prices.length > 0 ? plan.prices[0] : null;
 
-    if (!priceObj || !plan.id || !userEmail) {
+    if (!priceObj || !plan?.id) {
       setErrorMessage(
-        "Unable to process this plan. Price, ID, or Email missing.",
+        "Unable to process this plan. Plan details or price are missing.",
       );
-      console.error("Validation failed:", {
-        priceObj,
-        planId: plan.id,
-        userEmail,
-      });
       return;
     }
 
-    let planDuration;
-    if (plan.description) {
+    if (!user || !userEmail) {
+      toast.info("Please log in or register to select a plan.");
+      navigate("/login?redirect=/pricing");
+      return;
+    }
+
+    let planDuration = 3;
+    if (plan?.description && typeof plan.description === "string") {
       if (
         plan.description.includes("12-month") ||
         plan.description.includes("12 month")
@@ -448,7 +449,7 @@ const PricingOptions = () => {
 
     // Get card duration from description
     let cardDuration = 3;
-    if (plan?.description) {
+    if (plan?.description && typeof plan.description === "string") {
       if (
         plan.description.includes("12-month") ||
         plan.description.includes("12 month")
@@ -487,7 +488,7 @@ const PricingOptions = () => {
 
     // Get card duration
     let cardDuration = 3;
-    if (plan?.description) {
+    if (plan?.description && typeof plan.description === "string") {
       if (
         plan.description.includes("12-month") ||
         plan.description.includes("12 month")
@@ -512,92 +513,104 @@ const PricingOptions = () => {
   };
 
   const renderPlan = (plan, index) => {
-    const priceObj = plan.prices[0];
-    const price = priceObj ? priceObj.unit_amount / 100 : "N/A";
-    const billingCycle = priceObj?.recurring?.interval || "one-time";
-    const matchingUserPlan = getMatchingUserPlan(plan, index);
+    try {
+      if (!plan) return null;
+      const priceObj = Array.isArray(plan?.prices) && plan.prices.length > 0 ? plan.prices[0] : null;
+      const price = priceObj?.unit_amount ? priceObj.unit_amount / 100 : "N/A";
+      const billingCycle = priceObj?.recurring?.interval || "one-time";
+      const matchingUserPlan = getMatchingUserPlan(plan, index);
 
-    const currentPlan = isCurrentPlan(priceObj, plan);
-    const upgradePlan = isUpgradePlan(plan, priceObj);
+      const currentPlan = isCurrentPlan(priceObj, plan);
+      const upgradePlan = isUpgradePlan(plan, priceObj);
 
-    return (
-      <div className="bg-gray-900 rounded-xl border border-purple-500 p-6 shadow-xl relative flex flex-col h-full">
-        {/* Current Plan Badge */}
-        {currentPlan && (
-          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-            <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
-              Current Plan
-            </span>
-          </div>
-        )}
+      const planCode = matchingUserPlan?.planCode || null;
+      const planName = matchingUserPlan?.name || plan?.name || "Subscription Plan";
+      const planDesc = formatDescription(matchingUserPlan?.description || plan?.description || "");
 
-        {/* Upgrade Available Badge */}
-        {upgradePlan && !currentPlan && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-            <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-              Upgrade Available
-            </span>
-          </div>
-        )}
+      return (
+        <div className="bg-gray-900 rounded-xl border border-purple-500 p-6 shadow-xl relative flex flex-col h-full">
+          {/* Current Plan Badge */}
+          {currentPlan && (
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+              <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                Current Plan
+              </span>
+            </div>
+          )}
 
-        {/* Discount Badge */}
-        {matchingUserPlan?.discountLabel && (
-          <span className="absolute -top-1 -right-4 px-4 py-2 text-white font-bold text-lg bg-green-500 rounded-full shadow-lg transform rotate-12">
-            Save {matchingUserPlan.discountLabel}%
-          </span>
-        )}
+          {/* Upgrade Available Badge */}
+          {upgradePlan && !currentPlan && (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+              <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                Upgrade Available
+              </span>
+            </div>
+          )}
 
-        <h2 className="text-xl font-bold mb-2 text-white">
-          {matchingUserPlan?.planCode && (
-            <span className="inline-block px-4 py-2 text-white text-lg font-semibold bg-orange-500 rounded-full border border-orange-600">
-              {matchingUserPlan.planCode}
+          {/* Discount Badge */}
+          {matchingUserPlan?.discountLabel && (
+            <span className="absolute -top-1 -right-4 px-4 py-2 text-white font-bold text-lg bg-green-500 rounded-full shadow-lg transform rotate-12">
+              Save {matchingUserPlan.discountLabel}%
             </span>
           )}
-        </h2>
 
-        {/* Plan Name */}
-        {matchingUserPlan?.planCode && (
+          {planCode && (
+            <h2 className="text-xl font-bold mb-2 text-white">
+              <span className="inline-block px-4 py-2 text-white text-lg font-semibold bg-orange-500 rounded-full border border-orange-600">
+                {planCode}
+              </span>
+            </h2>
+          )}
+
+          {/* Plan Name */}
           <h2 className="text-xl font-bold mb-2 text-white">
-            {" "}
-            {matchingUserPlan.name}
+            {planName}
           </h2>
-        )}
 
-        {/* Description */}
-        <p className="text-purple-400 font-medium mb-3 whitespace-normal break-words">
-          {formatDescription(matchingUserPlan.description)}
-        </p>
-
-        {/* Price Display */}
-        <div className="text-2xl font-bold text-white mb-4">
-          {price !== "N/A" ? `$${price}` : "Price not available"}
-          <span className="text-sm text-gray-400 ml-2">
-            /{billingCycle === "year" ? "year" : "month"}
-          </span>
-        </div>
-
-        {/* Features List */}
-        <ul className="text-sm space-y-2 mb-4 flex-1">
-          {matchingUserPlan?.marketingFeatures ? (
-            matchingUserPlan.marketingFeatures.map((feature, idx) => (
-              <li key={idx} className="flex items-start">
-                <span className="text-green-400 mr-2">✓</span>
-                {feature}
-              </li>
-            ))
-          ) : matchingUserPlan ? (
-            <li className="text-gray-400">
-              No features available for this plan
-            </li>
-          ) : loading ? (
-            <li className="text-gray-400">Loading features...</li>
-          ) : (
-            <li className="text-gray-400">Features not available</li>
+          {/* Description */}
+          {planDesc && (
+            <p className="text-purple-400 font-medium mb-3 whitespace-normal break-words">
+              {planDesc}
+            </p>
           )}
-        </ul>
 
-        {/* Action Buttons */}
-        <div className="mt-auto">
+          {/* Price Display */}
+          <div className="text-2xl font-bold text-white mb-4">
+            {price !== "N/A" ? `$${price}` : "Price not available"}
+            <span className="text-sm text-gray-400 ml-2">
+              /{billingCycle === "year" ? "year" : "month"}
+            </span>
+          </div>
+
+          {/* Features List */}
+          <ul className="text-sm space-y-2 mb-4 flex-1">
+            {Array.isArray(matchingUserPlan?.marketingFeatures) && matchingUserPlan.marketingFeatures.length > 0 ? (
+              matchingUserPlan.marketingFeatures.map((feature, idx) => (
+                <li key={idx} className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  {feature}
+                </li>
+              ))
+            ) : Array.isArray(plan?.marketing_features) && plan.marketing_features.length > 0 ? (
+              plan.marketing_features.map((feature, idx) => (
+                <li key={idx} className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  {feature?.name || (typeof feature === "string" ? feature : "")}
+                </li>
+              ))
+            ) : matchingUserPlan ? (
+              <li className="text-gray-400">
+                No features available for this plan
+              </li>
+            ) : loading ? (
+              <li className="text-gray-400">Loading features...</li>
+            ) : (
+              <li className="text-gray-400">Features not available</li>
+            )}
+          </ul>
+
+          {/* Action Buttons */}
+          <div className="mt-auto">
           {hasActiveSubscription ? (
             currentPlan ? (
               <div className="text-center py-3">
@@ -648,6 +661,10 @@ const PricingOptions = () => {
         </div>
       </div>
     );
+    } catch (err) {
+      console.error("renderPlan error:", err);
+      return null;
+    }
   };
 
   return (

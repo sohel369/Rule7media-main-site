@@ -35,20 +35,27 @@ const ContactUs = () => {
     success: false,
   });
 
-  // Find appropriate contact info based on country
-  const currentCountryContact =
-    Array.isArray(contact) && contact.length > 0
+  // 1) Find exact match for user's country in MongoDB
+  const exactCountryContact =
+    Array.isArray(contact) && country
       ? contact.find(
           (item) => item.country?.toLowerCase() === country?.toLowerCase(),
-        ) ||
-        contact.find((item) => item.country?.toLowerCase() === "australia") ||
+        )
+      : null;
+
+  // 2) Fallback to Australia contact or first item for address/phone
+  const fallbackContact =
+    Array.isArray(contact) && contact.length > 0
+      ? contact.find((item) => item.country?.toLowerCase() === "australia") ||
         contact[0]
       : null;
 
-  // Dynamic country desk email fallback based on visitor's detected country
+  const currentCountryContact = exactCountryContact || fallbackContact;
+
+  // 3) Dynamic Desk Email based on visitor's detected country
   const detectedCountryName = country || "Australia";
   const dynamicDeskEmail =
-    currentCountryContact?.email ||
+    exactCountryContact?.email ||
     (detectedCountryName.toLowerCase() === "united states"
       ? "USA@rule7media.com"
       : `${detectedCountryName.replace(/\s+/g, "")}@rule7media.com`);

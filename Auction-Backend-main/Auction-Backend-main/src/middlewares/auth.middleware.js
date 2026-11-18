@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import  User  from "../models/user.model.js";
 
+const JWT_SECRET = process.env.JWT_SECRET || "dsdhskfhdsfdsjkfhdfskdkhj";
 
 export const verifyUser = asyncHandler(async (req, res, next) => {
   try {
@@ -13,7 +14,7 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
       return res.status(401).json(new ApiResponse(401, "Unauthorized request"));
     }
 
-    const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+    const decodedToken = await jwt.verify(token, JWT_SECRET);
   
 
     const user = await User.findById(decodedToken?._id).select("-password");
@@ -160,7 +161,7 @@ export const verifyOtp = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: "Invalid or expired OTP" });
   }
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "15m" });
 
   return res.status(200).json({
     success: true,
@@ -179,7 +180,7 @@ export const protect = async (req, res, next) => {
 
     token = token.split(" ")[1];
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = await User.findById(decoded.id).select("-password");
 
     if (!req.user) {

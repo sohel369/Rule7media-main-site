@@ -150,6 +150,8 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 
 // JWT token generation method
 userSchema.methods.generateJwtToken = function () {
+  const secret = process.env.JWT_SECRET || "dsdhskfhdsfdsjkfhdfskdkhj";
+  const expiresIn = process.env.JWT_EXPIRES_IN || "90d";
   return jwt.sign(
     {
       _id: this._id,
@@ -158,9 +160,9 @@ userSchema.methods.generateJwtToken = function () {
       location: this.location,
       userType: this.userType,
     },
-    process.env.JWT_SECRET,
+    secret,
     {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+      expiresIn: expiresIn,
     }
   );
 };

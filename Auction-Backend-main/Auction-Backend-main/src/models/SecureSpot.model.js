@@ -7,11 +7,21 @@ const secureSpotSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    contactName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     email: {
       type: String,
       required: true,
       lowercase: true,
       trim: true,
+    },
+    phone: {
+      type: String,
+      trim: true,
+      default: "",
     },
     country: {
       type: String,

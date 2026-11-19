@@ -22,7 +22,9 @@ const WrapperLandingPage = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [formData, setFormData] = useState({
     businessName: "",
+    contactName: "",
     email: "",
+    phone: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -60,7 +62,9 @@ const WrapperLandingPage = () => {
 
       const res = await axiosInstance.post("/franchise/secure-spot", {
         businessName: formData.businessName,
+        contactName: formData.contactName,
         email: formData.email,
+        phone: formData.phone,
         country: country || "Unknown",
       });
 
@@ -69,7 +73,7 @@ const WrapperLandingPage = () => {
           "Thank you for your enquiry. We will advise on the availability of your chosen territory shortly.",
         );
 
-        setFormData({ businessName: "", email: "" });
+        setFormData({ businessName: "", contactName: "", email: "", phone: "" });
       } else {
         toast.error(res.data?.message || "Something went wrong");
       }
@@ -396,9 +400,18 @@ const WrapperLandingPage = () => {
                     name="businessName"
                     value={formData.businessName}
                     onChange={handleChange}
-                    placeholder="Business Name"
-                    className="w-full px-8 py-5 rounded-2xl bg-black border border-white/10 text-white font-bold focus:ring-4 focus:ring-amber-500/50 text-lg transition-all"
+                    placeholder="Shop / Business Name *"
+                    className="w-full px-6 py-4 rounded-2xl bg-black border border-white/10 text-white font-semibold focus:ring-4 focus:ring-amber-500/50 text-base transition-all"
                     required
+                  />
+
+                  <input
+                    type="text"
+                    name="contactName"
+                    value={formData.contactName}
+                    onChange={handleChange}
+                    placeholder="Contact Name (Optional)"
+                    className="w-full px-6 py-4 rounded-2xl bg-black border border-white/10 text-white font-semibold focus:ring-4 focus:ring-amber-500/50 text-base transition-all"
                   />
 
                   <input
@@ -406,9 +419,18 @@ const WrapperLandingPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email Address"
-                    className="w-full px-8 py-5 rounded-2xl bg-black border border-white/10 text-white font-bold focus:ring-4 focus:ring-amber-500/50 text-lg transition-all"
+                    placeholder="Business Email Address *"
+                    className="w-full px-6 py-4 rounded-2xl bg-black border border-white/10 text-white font-semibold focus:ring-4 focus:ring-amber-500/50 text-base transition-all"
                     required
+                  />
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Direct Phone / Mobile (Optional)"
+                    className="w-full px-6 py-4 rounded-2xl bg-black border border-white/10 text-white font-semibold focus:ring-4 focus:ring-amber-500/50 text-base transition-all"
                   />
 
                   <button

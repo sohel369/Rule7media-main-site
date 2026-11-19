@@ -303,10 +303,10 @@ const ContactUs = () => {
                     Direct Line
                   </h3>
                   <a
-                    href={`tel:${(currentCountryContact?.phone || "0123456789").replace(/\s+/g, "")}`}
+                    href={`tel:${(currentCountryContact?.phone || "+61 449 532 492").replace(/\s+/g, "")}`}
                     className="text-gray-400 text-sm hover:text-blue-400 transition-colors underline decoration-blue-500/40 hover:decoration-blue-400 underline-offset-4 inline-block"
                   >
-                    {currentCountryContact?.phone || "0123456789"}
+                    {currentCountryContact?.phone || "+61 449 532 492"}
                   </a>
                   <p className="text-xs text-gray-500 mt-2">
                     Mon-Fri, 9am - 6pm AEST

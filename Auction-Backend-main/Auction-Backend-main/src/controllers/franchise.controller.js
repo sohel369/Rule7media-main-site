@@ -324,7 +324,7 @@ export const deleteFranchise = async (req, res) => {
 
 export const createSecureSpot = async (req, res) => {
   try {
-    const { businessName, email, country } = req.body;
+    const { businessName, contactName, email, phone, country } = req.body;
 
     // ✅ Validation
     if (!businessName || !email) {
@@ -342,12 +342,15 @@ export const createSecureSpot = async (req, res) => {
     // ✅ Save in DB
     const newLead = await SecureSpot.create({
       businessName,
+      contactName: contactName || "",
       email,
-      country,
+      phone: phone || "",
+      country: country || "Unknown",
     });
-const settings = await EmailSettings.findOne().lean();
+
+    const settings = await EmailSettings.findOne().lean();
     // ✅ Admin email
-    const adminEmail = settings.user;;
+    const adminEmail = settings?.user || process.env.EMAIL_USER || "info@rule7media.com";
 
     // ✅ Common Email Template
     const emailTemplate = (title, content) => `
@@ -412,7 +415,9 @@ const settings = await EmailSettings.findOne().lean();
         "New Lead Received",
         `
         <p><b>Business Name:</b> ${businessName}</p>
+        ${contactName ? `<p><b>Contact Person:</b> ${contactName}</p>` : ""}
         <p><b>Email:</b> ${email}</p>
+        ${phone ? `<p><b>Phone:</b> ${phone}</p>` : ""}
         <p><b>Country:</b> ${country || "N/A"}</p>
 
         <div style="margin-top:20px; padding:15px; background:#10b98110; border:1px solid #10b98130; border-radius:8px;">

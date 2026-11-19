@@ -7,6 +7,7 @@ import {
   FaArrowRight,
   FaShieldAlt,
   FaLock,
+  FaPhone,
 } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import Truck from "../assets/truck2.png";
@@ -203,6 +204,21 @@ const Footer = () => {
               Redefining Contextual Advertising Solutions. Driven by First Party
               Data. Powered by Human Curated Ad Channels.
             </p>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm text-gray-300">
+              <a
+                href="tel:+61449532492"
+                className="inline-flex items-center gap-3 text-white hover:text-red-500 transition-colors group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-red-600/20 border border-red-500/40 flex items-center justify-center group-hover:bg-red-600 transition-colors">
+                  <FaPhone className="text-red-500 group-hover:text-white text-xs transition-colors" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-wider text-gray-400">Direct Line & Support</span>
+                  <span className="font-bold tracking-wide text-sm">+61 449 532 492</span>
+                </div>
+              </a>
+            </div>
           </div>
 
           {/* RIGHT SECTION - 3 parts (divided into 4 columns) */}

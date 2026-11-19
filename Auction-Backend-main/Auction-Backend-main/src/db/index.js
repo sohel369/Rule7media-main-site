@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import "../models/bid.model.js";
 import "../models/city.model.js";
-import { User } from "../models/user.model.js";
+import User from "../models/user.model.js";
 
 const connectDB = async () => {
   try {

@@ -67,7 +67,6 @@ const FranchiseTopBar = () => {
       }, 100);
       return () => clearInterval(interval);
     }
-    ensureEnglishOptionInTranslate("franchise_google_translate_element");
   }, []);
 
   const handleCountryChange = (e) => {

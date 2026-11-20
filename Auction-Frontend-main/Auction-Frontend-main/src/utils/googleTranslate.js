@@ -110,7 +110,11 @@ export const ensureEnglishOptionInTranslate = (containerId) => {
     const select = container.querySelector(".goog-te-combo");
     if (!select || !select.options || select.options.length === 0) return false;
 
-    // Explicitly show English as the first option
+    // Check if already set to avoid any unnecessary DOM mutations
+    if (select.options[0].text === "English" && select.dataset.englishHooked === "true") {
+      return true;
+    }
+
     if (select.options[0].value === "" || select.options[0].text.toLowerCase().includes("select")) {
       select.options[0].text = "English";
       select.options[0].label = "English";
@@ -133,21 +137,11 @@ export const ensureEnglishOptionInTranslate = (containerId) => {
     return true;
   };
 
-  if (!tryUpdate()) {
-    let attempts = 0;
-    const interval = setInterval(() => {
-      attempts += 1;
-      if (tryUpdate() || attempts > 50) {
-        clearInterval(interval);
-      }
-    }, 150);
-  }
-
-  const container = document.getElementById(containerId);
-  if (container && window.MutationObserver) {
-    const observer = new MutationObserver(() => {
-      tryUpdate();
-    });
-    observer.observe(container, { childList: true, subtree: true });
-  }
+  let attempts = 0;
+  const interval = setInterval(() => {
+    attempts += 1;
+    if (tryUpdate() || attempts > 20) {
+      clearInterval(interval);
+    }
+  }, 250);
 };

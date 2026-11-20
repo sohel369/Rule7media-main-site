@@ -258,7 +258,6 @@ if (isAffiliatePage) {
       }, 100);
       return () => clearInterval(interval);
     }
-    ensureEnglishOptionInTranslate("google_translate_element");
   }, []);
 
   useEffect(() => {

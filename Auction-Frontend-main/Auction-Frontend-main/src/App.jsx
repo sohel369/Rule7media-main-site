@@ -9,10 +9,10 @@ import {
 import { HelmetProvider } from "react-helmet-async";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
-import Home from "./pages/Home";
-import LandingPage from "./pages/LandingPage";
+const Register = lazy(() => import("./pages/auth/Register"));
+const Login = lazy(() => import("./pages/auth/Login"));
+const Home = lazy(() => import("./pages/Home"));
+const LandingPage = lazy(() => import("./pages/LandingPage"));
 const ContactUs = lazy(() => import("./pages/ContactUs"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 import { ToastContainer } from "react-toastify";

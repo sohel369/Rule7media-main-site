@@ -43,16 +43,7 @@ const Footer = () => {
 
   useEffect(() => {
     if (!country) {
-      fetch("https://ipapi.co/json/")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.country_name) {
-            dispatch(setCountry(data.country_name));
-          }
-        })
-        .catch(() => {
-          dispatch(setCountry("Australia"));
-        });
+      dispatch(fetchUserCountry());
     }
   }, [country, dispatch]);
 

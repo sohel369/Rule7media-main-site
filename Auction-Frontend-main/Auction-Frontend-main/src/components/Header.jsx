@@ -44,6 +44,7 @@ import {
   INCLUDED_LANGUAGES_STRING,
   getStoredLanguage,
   setStoredLanguage,
+  ensureEnglishOptionInTranslate,
 } from "../utils/googleTranslate";
 import { ALL_COUNTRIES, COUNTRY_TO_CODE } from "../utils/regionsAndCountries";
 import { getCartItems, getWinningBid } from "../store/cart/cartSlice";
@@ -236,6 +237,7 @@ if (isAffiliatePage) {
             },
             "google_translate_element"
           );
+          ensureEnglishOptionInTranslate("google_translate_element");
         }
       }
     };
@@ -256,6 +258,7 @@ if (isAffiliatePage) {
       }, 100);
       return () => clearInterval(interval);
     }
+    ensureEnglishOptionInTranslate("google_translate_element");
   }, []);
 
   useEffect(() => {

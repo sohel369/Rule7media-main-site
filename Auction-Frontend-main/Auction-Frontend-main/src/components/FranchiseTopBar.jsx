@@ -9,6 +9,7 @@ import {
   INCLUDED_LANGUAGES_STRING,
   getStoredLanguage,
   setStoredLanguage,
+  ensureEnglishOptionInTranslate,
 } from "../utils/googleTranslate";
 import { ALL_COUNTRIES, COUNTRY_TO_CODE } from "../utils/regionsAndCountries";
 
@@ -45,6 +46,7 @@ const FranchiseTopBar = () => {
             },
             "franchise_google_translate_element"
           );
+          ensureEnglishOptionInTranslate("franchise_google_translate_element");
         }
       }
     };
@@ -65,6 +67,7 @@ const FranchiseTopBar = () => {
       }, 100);
       return () => clearInterval(interval);
     }
+    ensureEnglishOptionInTranslate("franchise_google_translate_element");
   }, []);
 
   const handleCountryChange = (e) => {

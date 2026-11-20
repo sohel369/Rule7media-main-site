@@ -100,3 +100,54 @@ export const clearNonEnglishSourceTranslateCookies = () => {
     document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${domain};`;
   });
 };
+
+export const ensureEnglishOptionInTranslate = (containerId) => {
+  if (typeof document === "undefined") return;
+
+  const tryUpdate = () => {
+    const container = document.getElementById(containerId);
+    if (!container) return false;
+    const select = container.querySelector(".goog-te-combo");
+    if (!select || !select.options || select.options.length === 0) return false;
+
+    // Explicitly show English as the first option
+    if (select.options[0].value === "" || select.options[0].text.toLowerCase().includes("select")) {
+      select.options[0].text = "English";
+      select.options[0].label = "English";
+    }
+
+    if (!select.dataset.englishHooked) {
+      select.dataset.englishHooked = "true";
+      select.addEventListener("change", (e) => {
+        if (e.target.value === "" || e.target.value === "en") {
+          clearNonEnglishSourceTranslateCookies();
+          localStorage.setItem("r7_selected_language", "en");
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+          if (window.location.hostname.includes(".")) {
+            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=.${window.location.hostname};`;
+          }
+          window.location.reload();
+        }
+      });
+    }
+    return true;
+  };
+
+  if (!tryUpdate()) {
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts += 1;
+      if (tryUpdate() || attempts > 50) {
+        clearInterval(interval);
+      }
+    }, 150);
+  }
+
+  const container = document.getElementById(containerId);
+  if (container && window.MutationObserver) {
+    const observer = new MutationObserver(() => {
+      tryUpdate();
+    });
+    observer.observe(container, { childList: true, subtree: true });
+  }
+};

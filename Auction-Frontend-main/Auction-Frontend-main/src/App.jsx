@@ -137,6 +137,7 @@ const AppContent = () => {
     user?.subscription?.status?.toLowerCase()?.trim() === "active";
   const isLandingPage =
     location.pathname === "/" && (!user || !hasActiveSubscription);
+  const isAdminRoute = location.pathname.startsWith("/admin");
   const shouldShowLayout = !isHiddenLayoutPage && !isLandingPage && user;
 
  
@@ -217,7 +218,11 @@ useEffect(() => {
       {/*{user && user.userType === "admin" ? <AdminHeader /> : <Header />} */}
       <Suspense fallback={<div className="h-16" />}>
         {shouldShowLayout &&
-          (user.userType === "admin" ? <AdminHeader /> : <Header />)}
+          (user?.userType === "admin" && isAdminRoute ? (
+            <AdminHeader />
+          ) : (
+            <Header />
+          ))}
       </Suspense>
       <Suspense fallback={<div className="flex h-[30vh] items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-800 border-t-rose-500"></div></div>}>
             <Routes>
@@ -697,7 +702,7 @@ useEffect(() => {
             </Suspense>
       <Suspense fallback={<div className="h-16" />}>
         {shouldShowLayout &&
-          (user.userType === "admin" ? (
+          (user?.userType === "admin" && isAdminRoute ? (
             <AdminFooter />
           ) : (
             <Footer setIsChatOpen={setIsChatOpen} />

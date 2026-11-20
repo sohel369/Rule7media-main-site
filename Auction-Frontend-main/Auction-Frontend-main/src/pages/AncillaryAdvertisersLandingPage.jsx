@@ -155,7 +155,6 @@ const AncillaryAdvertisersLandingPage = () => {
         isBold: true,
         isBlue: true,
       },
-      { path: "/about-us", label: "Meet the Team" },
       { path: "/about-us#global-offices", label: "Global Offices" },
     ],
     support: [

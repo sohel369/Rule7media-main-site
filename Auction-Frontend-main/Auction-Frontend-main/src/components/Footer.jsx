@@ -90,10 +90,9 @@ const Footer = () => {
   }, [success, error, isFooterSubmitting, dispatch]);
 
   const navigation = [
-    { name: "Case Studies", link: "/firstmover " },
+    { name: "Case Studies", link: "/firstmover" },
     { name: "White Paper", link: "/whitepaper" },
     { name: "Global Offices", link: "/about-us#global-offices" },
-    { name: "Meet the Team", link: "/about-us" },
     { name: "How it Works", link: "/how-it-works" },
     { name: "Live Auctions", link: "/liveauction" },
     { name: "Pricing Methodology", link: "/pricing-info" },

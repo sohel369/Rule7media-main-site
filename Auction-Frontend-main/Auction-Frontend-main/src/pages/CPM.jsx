@@ -552,11 +552,6 @@ const CPM = () => {
                 </li>
                 <li>
                   <Link to={"/about-us"} className="hover:text-blue-400">
-                    Meet the Team
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/about-us"} className="hover:text-blue-400">
                     Global Offices
                   </Link>
                 </li>

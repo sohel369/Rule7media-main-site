@@ -740,14 +740,6 @@ const Careers = () => {
                   </li>
                   <li>
                     <a
-                      href="/about-us"
-                      className="text-slate-400 hover:text-red-500 text-sm transition-colors font-medium"
-                    >
-                      Meet the Team
-                    </a>
-                  </li>
-                  <li>
-                    <a
                       href=""
                       className="text-slate-400 hover:text-red-500 text-sm transition-colors font-medium"
                     >

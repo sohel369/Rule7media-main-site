@@ -244,7 +244,15 @@ useEffect(() => {
             </>
           }
         />
-        <Route path="/search" element={<Navigate to="/user-profile/search" replace />} />
+        <Route
+          path="/search"
+          element={
+            <>
+              <SEO {...seoData.searchResults} />
+              <AdvancedSearchPage />
+            </>
+          }
+        />
         <Route
           path="/whitepaper"
           element={

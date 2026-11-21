@@ -1066,7 +1066,7 @@ const SearchResults = () => {
 
 useEffect(() => {
   if (!searchData) {
-    navigate("/search");
+    navigate("/user-profile/search");
     return;
   }
   dispatch(searchMarketplace(searchData));
@@ -1522,7 +1522,7 @@ const renderCard = (item) => {
             )}
           </div>
           <button
-            onClick={() => navigate("/user-profile/search")}
+            onClick={() => navigate("/user-profile/search", { state: { previousSearch: searchData } })}
             className="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-semibold text-slate-200 transition-all hover:border-rose-500/30"
           >
             ← Refine Search
@@ -1557,7 +1557,7 @@ const renderCard = (item) => {
               Try adjusting your filters or broadening your search criteria.
             </p>
             <button
-              onClick={() => navigate("/search")}
+              onClick={() => navigate("/user-profile/search", { state: { previousSearch: searchData } })}
               className="mt-6 px-8 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl transition-all"
             >
               Back to Search

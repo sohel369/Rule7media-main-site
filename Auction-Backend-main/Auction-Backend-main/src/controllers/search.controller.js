@@ -12,37 +12,41 @@ import { asyncHandler } from "../utils/asyncHandler.js";
  */
 
 const buildLocationFilter = ({ country, state, postCodes }) => {
-  const locationFilter = {};
+  const andClauses = [];
 
   if (country && country.toString().trim()) {
-    locationFilter["$or"] = [
-      { "location.country": { $regex: `^${country.toString().trim()}$`, $options: "i" } },
-      { "country": { $regex: `^${country.toString().trim()}$`, $options: "i" } },
-    ];
+    andClauses.push({
+      $or: [
+        { "location.country": { $regex: `^${country.toString().trim()}$`, $options: "i" } },
+        { "country": { $regex: `^${country.toString().trim()}$`, $options: "i" } },
+      ],
+    });
   }
 
   if (state && state.toString().trim()) {
     const stateFilter = { $regex: state.toString().trim(), $options: "i" };
-    const clause = [{ "location.state": stateFilter }, { "state": stateFilter }];
-    locationFilter["$or"] = locationFilter["$or"] ? [...locationFilter["$or"], ...clause] : clause;
+    andClauses.push({
+      $or: [{ "location.state": stateFilter }, { "state": stateFilter }],
+    });
   }
 
   if (Array.isArray(postCodes) && postCodes.length > 0) {
     const codes = postCodes.filter((c) => c && c.toString().trim()).map((c) => c.toString().trim());
     if (codes.length > 0) {
-      const clause = [
-        { "location.zip": { $in: codes } },
-        { "zip": { $in: codes } },
-        { "postCode": { $in: codes } },
-        { "postCodes": { $in: codes } },
-        { "zipCodesCovered": { $in: codes } },
-        { "location.zipCodes": { $in: codes } },
-      ];
-      locationFilter["$or"] = locationFilter["$or"] ? [...locationFilter["$or"], ...clause] : clause;
+      andClauses.push({
+        $or: [
+          { "location.zip": { $in: codes } },
+          { "zip": { $in: codes } },
+          { "postCode": { $in: codes } },
+          { "postCodes": { $in: codes } },
+          { "zipCodesCovered": { $in: codes } },
+          { "location.zipCodes": { $in: codes } },
+        ],
+      });
     }
   }
 
-  return locationFilter["$or"]?.length ? locationFilter : {};
+  return andClauses.length ? { $and: andClauses } : {};
 };
 
 const buildVehicleTypeFilter = (vehicleType, fieldNames = ["vehicleType"]) => {

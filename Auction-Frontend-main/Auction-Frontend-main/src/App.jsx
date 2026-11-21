@@ -239,21 +239,12 @@ useEffect(() => {
           path="/"
           element={
             <>
-              {user &&
-              user?.subscription?.status?.toLowerCase()?.trim() === "active" ? (
-                <>
-                  <SEO {...seoData.home} />
-                  <Home />
-                </>
-              ) : (
-                <>
-                  <SEO {...seoData.landing} />
-                  <LandingPage />
-                </>
-              )}
+              <SEO {...seoData.landing} />
+              <LandingPage />
             </>
           }
         />
+        <Route path="/search" element={<Navigate to="/user-profile/search" replace />} />
         <Route
           path="/whitepaper"
           element={

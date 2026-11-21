@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllCategories } from "../store/category/categorySlice.js";
 import { fetchVehicles } from "../store/vehicle/vehicleSlice";
@@ -17,8 +17,11 @@ import worldData from "../countries+states+cities.json";
 
 const AdvancedSearchPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
+
+  const previousSearch = location.state?.previousSearch;
 
   // Redux state
   const { categories } = useSelector((state) => state.category);
@@ -29,16 +32,16 @@ const AdvancedSearchPage = () => {
   const vehicles = vehiclesState.list || [];
 
   // Form state
-  const [userType, setUserType] = useState("fleetOwner");
-  const [searchType, setSearchType] = useState("campaign");
-  const [firstName, setFirstName] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [country, setCountry] = useState(userCountry || "");
-  const [state, setState] = useState("");
+  const [userType, setUserType] = useState(previousSearch?.userType || "fleetOwner");
+  const [searchType, setSearchType] = useState(previousSearch?.searchType || "campaign");
+  const [firstName, setFirstName] = useState(previousSearch?.firstName || "");
+  const [lastname, setlastname] = useState(previousSearch?.lastname || "");
+  const [email, setEmail] = useState(previousSearch?.email || "");
+  const [country, setCountry] = useState(previousSearch?.country || userCountry || "");
+  const [state, setState] = useState(previousSearch?.state || "");
   const [postCode, setPostCode] = useState("");
-  const [zipCodes, setZipCodes] = useState([]);
-  const [background, setBackground] = useState("");
+  const [zipCodes, setZipCodes] = useState(previousSearch?.postCodes || []);
+  const [background, setBackground] = useState(previousSearch?.background || "");
 
   // Dropdown states
   const [countries, setCountries] = useState([]);
@@ -110,8 +113,25 @@ const AdvancedSearchPage = () => {
     }
   }, [userCountry]);
 
-  // ✅ PRE-POPULATE FORM WITH USER DATA
+  // ✅ PRE-POPULATE FORM WITH PREVIOUS SEARCH OR USER DATA
   useEffect(() => {
+    if (previousSearch) {
+      if (previousSearch.userType) setUserType(previousSearch.userType);
+      if (previousSearch.searchType) setSearchType(previousSearch.searchType);
+      if (previousSearch.firstName) setFirstName(previousSearch.firstName);
+      if (previousSearch.lastname) setlastname(previousSearch.lastname);
+      if (previousSearch.email) setEmail(previousSearch.email);
+      if (previousSearch.country) {
+        setCountry(previousSearch.country);
+        updateStatesForCountry(previousSearch.country);
+      }
+      if (previousSearch.state) setState(previousSearch.state);
+      if (previousSearch.postCodes) setZipCodes(previousSearch.postCodes);
+      if (previousSearch.background) setBackground(previousSearch.background);
+      if (previousSearch.vehicleType) setSelectedVehicles(previousSearch.vehicleType);
+      return;
+    }
+
     if (user) {
       // Set user type - WRAPPER gets special treatment
       let resolvedUserType = "regular";
@@ -606,7 +626,7 @@ const AdvancedSearchPage = () => {
               rows={5}
               value={background}
               onChange={(e) => setBackground(e.target.value)}
-              placeholder="Tell us about your background, desired territory, or any specific requirements..."
+              placeholder="e.g. Multi Vehicle Operator Covering Local and Interstate (or tell us about your background, desired territory, or any specific requirements...)"
               className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-slate-200 focus:outline-none focus:border-rose-500/50 transition-all resize-none"
             />
 

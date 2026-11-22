@@ -487,7 +487,6 @@ const Register = () => {
 
   return (
     <>
-      <Header />
       <div className="flex min-h-screen w-full items-center justify-center bg-black text-[#7386a8] py-10">
         {showConfirmation && <SuccessConfirmation />}
         {currentStep > 1 && !isSubmitted}

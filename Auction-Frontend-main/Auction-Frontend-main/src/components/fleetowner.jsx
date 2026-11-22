@@ -28,6 +28,10 @@ import { FaCalculator } from "react-icons/fa";
 import RevenueCalculator from "./RevenueCalculator";
 import { FooterLeaderboard, HeaderLeaderboard } from "./AdSlots";
 
+const MAP_LIBRARIES = ["places", "directions"];
+const FALLBACK_VEHICLE_IMG =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="100%" height="100%" fill="%231e293b"/><text x="50%" y="50%" fill="%2394a3b8" font-size="16" text-anchor="middle" dominant-baseline="middle">Vehicle Image</text></svg>';
+
 const FleetOwnerForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -1401,8 +1405,7 @@ if (startDate >= endDate) {
                         alt={`vehicle ${currentImageIndex + 1}`}
                         className="max-w-full max-h-full object-contain"
                         onError={(e) => {
-                          e.target.src =
-                            "https://via.placeholder.com/400x300?text=Image+Not+Found";
+                          e.target.src = FALLBACK_VEHICLE_IMG;
                         }}
                       />
                     </div>
@@ -1482,8 +1485,7 @@ if (startDate >= endDate) {
                             alt={`thumbnail ${index + 1}`}
                             className="w-full h-full object-cover"
                             onError={(e) => {
-                              e.target.src =
-                                "https://via.placeholder.com/80?text=Img";
+                              e.target.src = FALLBACK_VEHICLE_IMG;
                             }}
                           />
                         </button>
@@ -1524,7 +1526,7 @@ if (startDate >= endDate) {
                 {googleMapsApiKey ? (
                   <LoadScript
                     googleMapsApiKey={googleMapsApiKey}
-                    libraries={["directions"]}
+                    libraries={MAP_LIBRARIES}
                   >
                     <GoogleMap
                       mapContainerStyle={containerStyle}

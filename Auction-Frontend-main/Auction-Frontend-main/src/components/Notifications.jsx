@@ -71,10 +71,13 @@ const Notifications = () => {
 
   return (
     <div className="overflow-auto flex flex-col w-full px-7 py-4 bg-theme-bg text-body-text-color rounded-2xl">
+      {/* Top Header Leaderboard Ad - Fully Centered */}
+      <div className="w-full flex justify-center mb-4">
+        <HeaderLeaderboard />
+      </div>
+
       <div className="flex items-center justify-between mb-5 border-b border-border-info-color pb-3">
         <h2 className="text-white font-bold text-xl">Notifications</h2>
-
-        <HeaderLeaderboard />
       </div>
       {hasUnreadNotifications && (
         <button
@@ -151,7 +154,9 @@ const Notifications = () => {
           prevPage={prevPage}
         />
       )}
-      <FooterLeaderboard />
+      <div className="w-full flex justify-center mt-8 mb-4">
+        <FooterLeaderboard />
+      </div>
     </div>
   );
 };

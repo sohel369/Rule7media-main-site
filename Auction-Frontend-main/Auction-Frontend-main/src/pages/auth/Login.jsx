@@ -54,7 +54,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-black flex flex-col">
         {/* ===== HEADER LEADERBOARD ===== */}
         <div className="pt-6 pb-4">

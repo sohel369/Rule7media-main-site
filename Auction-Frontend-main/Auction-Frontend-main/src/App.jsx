@@ -253,6 +253,8 @@ useEffect(() => {
             </>
           }
         />
+        <Route path="/notifications" element={<Navigate to="/user-profile/notifications" replace />} />
+        <Route path="/add-auction" element={<Navigate to="/user-profile/add-auction" replace />} />
         <Route
           path="/whitepaper"
           element={

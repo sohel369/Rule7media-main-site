@@ -99,6 +99,37 @@ const Protected = () => {
   useEffect(() => {
     if (!statusChecked || !user) return;
 
+    // General account and profile pages that any logged-in user can access regardless of subscription:
+    const ALLOWED_ALWAYS = [
+      "/user-profile/notifications",
+      "/notifications",
+      "/user-profile/profile",
+      "/user-profile/account-settings",
+      "/user-profile/change-password",
+      "/user-profile/Cancel-Subscription",
+      "/user-profile/search",
+      "/search",
+      "/user-profile/payment-method",
+      "/user-profile/add-auction",
+      "/user-profile/add-vehicle-dimensions",
+      "/user-profile/myorder",
+      "/user-profile/wrapper-orders",
+      "/Billboard",
+      "/fleetowner-subscription",
+      "/wrapper-subscription",
+      "/pricing",
+      "/pricing-info",
+    ];
+
+    if (
+      ALLOWED_ALWAYS.some(
+        (route) =>
+          location.pathname === route || location.pathname.startsWith(route)
+      )
+    ) {
+      return;
+    }
+
     const effectiveStatus =
       subscriptionStatus?.status || user.subscription?.status;
 
@@ -187,6 +218,37 @@ const SellerRoutes = () => {
   useEffect(() => {
     if (!statusChecked || !user) return;
 
+    // General account and profile pages that any logged-in user can access regardless of subscription:
+    const ALLOWED_ALWAYS = [
+      "/user-profile/notifications",
+      "/notifications",
+      "/user-profile/profile",
+      "/user-profile/account-settings",
+      "/user-profile/change-password",
+      "/user-profile/Cancel-Subscription",
+      "/user-profile/search",
+      "/search",
+      "/user-profile/payment-method",
+      "/user-profile/add-auction",
+      "/user-profile/add-vehicle-dimensions",
+      "/user-profile/myorder",
+      "/user-profile/wrapper-orders",
+      "/Billboard",
+      "/fleetowner-subscription",
+      "/wrapper-subscription",
+      "/pricing",
+      "/pricing-info",
+    ];
+
+    if (
+      ALLOWED_ALWAYS.some(
+        (route) =>
+          location.pathname === route || location.pathname.startsWith(route)
+      )
+    ) {
+      return;
+    }
+
     const effectiveStatus =
       subscriptionStatus?.status || user.subscription?.status;
 
@@ -250,6 +312,37 @@ const AdminRoutes = () => {
 
   useEffect(() => {
     if (!statusChecked || !user) return;
+
+    // General account and profile pages that any logged-in user can access regardless of subscription:
+    const ALLOWED_ALWAYS = [
+      "/user-profile/notifications",
+      "/notifications",
+      "/user-profile/profile",
+      "/user-profile/account-settings",
+      "/user-profile/change-password",
+      "/user-profile/Cancel-Subscription",
+      "/user-profile/search",
+      "/search",
+      "/user-profile/payment-method",
+      "/user-profile/add-auction",
+      "/user-profile/add-vehicle-dimensions",
+      "/user-profile/myorder",
+      "/user-profile/wrapper-orders",
+      "/Billboard",
+      "/fleetowner-subscription",
+      "/wrapper-subscription",
+      "/pricing",
+      "/pricing-info",
+    ];
+
+    if (
+      ALLOWED_ALWAYS.some(
+        (route) =>
+          location.pathname === route || location.pathname.startsWith(route)
+      )
+    ) {
+      return;
+    }
 
     const effectiveStatus =
       subscriptionStatus?.status || user.subscription?.status;

@@ -139,8 +139,14 @@ const Notifications = () => {
           ))}
         </div>
       ) : (
-        <div className="flex items-center justify-center h-[500px]">
-          <h1 className="text-white">No Notifications</h1>
+        <div className="flex flex-col items-center justify-center py-20 px-4 text-center my-6 border border-border-info-color/40 rounded-2xl bg-theme-bg2/40">
+          <div className="w-16 h-16 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4">
+            <FaRegClock size={28} />
+          </div>
+          <h3 className="text-white text-lg font-semibold mb-1">No Notifications Yet</h3>
+          <p className="text-gray-400 text-sm max-w-md">
+            You will receive instant alerts here when new bids are placed, budget requests are sent, or auction updates occur.
+          </p>
         </div>
       )}
 

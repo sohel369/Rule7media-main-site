@@ -9,6 +9,7 @@ import {
   deleteVehicle,
   fetchVehiclesbyfleetOwner,
   updateVehicle,
+  updateVehiclebyfleetower,
   uploadVehicleCSVByFleetOwner,
   deleteVehiclbyfleetower,
 } from "../store/vehicle/vehicleSlice";
@@ -424,21 +425,29 @@ const AddVehicleDimensions = () => {
 
   const handleImageSelect = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      toast.error("You can only upload up to 5 images");
+    const existingCount = autoSelectedImages.length;
+    if (existingCount + selectedImages.length + files.length > 8) {
+      toast.error("You can upload up to 8 images in total");
       return;
     }
-    setSelectedImages(files);
-    const previewUrls = files.map((file) => URL.createObjectURL(file));
-    setImagePreviewUrls(previewUrls);
+    const updatedImages = [...selectedImages, ...files];
+    setSelectedImages(updatedImages);
+    const newPreviewUrls = files.map((file) => URL.createObjectURL(file));
+    setImagePreviewUrls((prev) => [...prev, ...newPreviewUrls]);
   };
 
   const removeImage = (index) => {
+    if (imagePreviewUrls[index]) {
+      URL.revokeObjectURL(imagePreviewUrls[index]);
+    }
     const newImages = selectedImages.filter((_, i) => i !== index);
     const newPreviewUrls = imagePreviewUrls.filter((_, i) => i !== index);
-    URL.revokeObjectURL(imagePreviewUrls[index]);
     setSelectedImages(newImages);
     setImagePreviewUrls(newPreviewUrls);
+  };
+
+  const removeAutoSelectedImage = (index) => {
+    setAutoSelectedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const clearImages = () => {
@@ -448,6 +457,9 @@ const AddVehicleDimensions = () => {
   };
 
   const resetForm = () => {
+    clearImages();
+    setAutoSelectedImages([]);
+    setIsEditMode(false);
     setFormData({
       _id: null,
 
@@ -691,6 +703,7 @@ const AddVehicleDimensions = () => {
 
   const openEditModal = (vehicle) => {
     setIsEditMode(true);
+    clearImages();
     setFormData({
       ...vehicle,
       registrationPlate: vehicle.registrationPlate || "",
@@ -791,6 +804,15 @@ const AddVehicleDimensions = () => {
       return;
     }
 
+    const totalImagesCount =
+      (selectedImages?.length || 0) + (autoSelectedImages?.length || 0);
+    if (totalImagesCount < 3) {
+      toast.error(
+        "At least 3 images are required: Rear View, Side View, and Two-Dimensional (2D) Schematic.",
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -821,13 +843,19 @@ const AddVehicleDimensions = () => {
 
       if (autoSelectedImages.length > 0) {
         autoSelectedImages.forEach((imageUrl, index) => {
-          submitFormData.append(`images[${index}]`, imageUrl);
+          submitFormData.append(`existingImages[${index}]`, imageUrl);
+        });
+      }
+
+      if (selectedImages && selectedImages.length > 0) {
+        selectedImages.forEach((imageFile) => {
+          submitFormData.append("images", imageFile);
         });
       }
 
       if (isEditMode) {
         await dispatch(
-          updateVehicle({ id: formData._id, data: submitFormData }),
+          updateVehiclebyfleetower({ id: formData._id, data: submitFormData }),
         ).unwrap();
         toast.success("Vehicle updated successfully!");
       } else {
@@ -1983,42 +2011,185 @@ const AddVehicleDimensions = () => {
                 </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-4">
-                {autoSelectedImages.length > 0 && (
-                  <div className="border-2 border-dashed border-bg-theme-bg2 rounded-lg p-4 bg-theme-bg2 bg-opacity-10">
-                    <h4 className="text-md font-semibold mb-2 text-white">
-                      Auto-Selected Vehicle Images
-                    </h4>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                      {autoSelectedImages.map((url, index) => (
-                        <div key={index} className="relative">
-                          <img
-                            src={url}
-                            alt={`Auto-selected ${index + 1}`}
-                            className="w-full h-24 object-cover rounded-lg border-2 border-blue-500"
-                            onError={(e) => {
-                              e.target.src =
-                                "https://via.placeholder.com/150x100?text=Image+Not+Found";
-                            }}
-                          />
-                          <div className="absolute top-1 right-1 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
-                            {index + 1}
-                          </div>
-                        </div>
-                      ))}
+                {/* Required Images & Guidelines Section (Kevin requirement: min 3 images with Rear, Side, 2D guide) */}
+                <div className="border border-blue-500/40 rounded-xl p-4 bg-blue-950/20 backdrop-blur-sm">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
+                    <div>
+                      <h4 className="text-base font-semibold text-white flex items-center gap-2">
+                        <span>Required Vehicle Images</span>
+                        <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-medium">
+                          Min 3 Required
+                        </span>
+                      </h4>
+                      <p className="text-xs text-gray-300 mt-0.5">
+                        A vehicle must include at least 3 images: Rear View, Side View, and Two-Dimensional (2D) schematic.
+                      </p>
+                    </div>
+                    <div
+                      className="text-xs px-3 py-1 rounded-full font-semibold border flex items-center gap-1.5 whitespace-nowrap"
+                      style={{
+                        backgroundColor:
+                          autoSelectedImages.length + selectedImages.length >= 3
+                            ? "rgba(34, 197, 94, 0.2)"
+                            : "rgba(234, 179, 8, 0.2)",
+                        borderColor:
+                          autoSelectedImages.length + selectedImages.length >= 3
+                            ? "rgba(34, 197, 94, 0.5)"
+                            : "rgba(234, 179, 8, 0.5)",
+                        color:
+                          autoSelectedImages.length + selectedImages.length >= 3
+                            ? "#4ade80"
+                            : "#facc15",
+                      }}
+                    >
+                      <span>
+                        Total: {autoSelectedImages.length + selectedImages.length} / 3 images
+                      </span>
+                      {autoSelectedImages.length + selectedImages.length >= 3
+                        ? "✓ Verified"
+                        : "⚠️ Needs 3"}
                     </div>
                   </div>
-                )}
-                {/* 
-{!isEditMode && formData.vehicle && autoSelectedImages.length === 0 && (
-  <div className="border-2 border-dashed border-yellow-300 rounded-lg p-4 bg-yellow-50 bg-opacity-10">
-    <h4 className="text-md font-semibold mb-2 text-yellow-400">
-      No Images Available
-    </h4>
-    <p className="text-sm text-yellow-300">
-      No images available for the selected vehicle template. The vehicle will be saved without images.
-    </p>
-  </div>
-)} */}
+
+                  {/* 3 Sample Guidelines Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                    <div className="bg-theme-bg2/70 border border-white/10 rounded-lg p-2.5 flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-md bg-blue-600/30 border border-blue-400/40 flex items-center justify-center text-blue-400 font-bold text-sm shrink-0">
+                        1
+                      </div>
+                      <div className="overflow-hidden">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">
+                          Side View
+                        </div>
+                        <div className="text-[11px] text-gray-400 leading-tight">
+                          Full side profile of vehicle body
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-theme-bg2/70 border border-white/10 rounded-lg p-2.5 flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-md bg-purple-600/30 border border-purple-400/40 flex items-center justify-center text-purple-400 font-bold text-sm shrink-0">
+                        2
+                      </div>
+                      <div className="overflow-hidden">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">
+                          Rear View
+                        </div>
+                        <div className="text-[11px] text-gray-400 leading-tight">
+                          Rear doors / tailgate ad area
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-theme-bg2/70 border border-white/10 rounded-lg p-2.5 flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-md bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-400 font-bold text-sm shrink-0">
+                        3
+                      </div>
+                      <div className="overflow-hidden">
+                        <div className="text-xs font-bold text-white uppercase tracking-wider">
+                          2D Dimension
+                        </div>
+                        <div className="text-[11px] text-gray-400 leading-tight">
+                          Two-dimensional schematic / template
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Upload Images Facility */}
+                  <div className="mb-3">
+                    <label className="cursor-pointer bg-theme-bg2 hover:bg-theme-bg2/80 border-2 border-dashed border-blue-500/50 rounded-xl p-4 text-center transition duration-200 block">
+                      <FiUpload className="mx-auto mb-1 text-2xl text-blue-400" />
+                      <span className="text-blue-400 font-medium text-sm block">
+                        Click to upload photos (Side, Rear, 2D Schematic)
+                      </span>
+                      <span className="text-xs text-gray-400 block mt-0.5">
+                        Accepts JPG, PNG, WEBP files
+                      </span>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleImageSelect}
+                        className="hidden"
+                        disabled={isSubmitting}
+                      />
+                    </label>
+                  </div>
+
+                  {/* Previews of newly uploaded files */}
+                  {imagePreviewUrls.length > 0 && (
+                    <div className="mb-3">
+                      <div className="text-xs font-semibold text-green-400 mb-1.5 flex items-center gap-1">
+                        <span>New Files Selected for Upload ({imagePreviewUrls.length}):</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+                        {imagePreviewUrls.map((url, index) => (
+                          <div
+                            key={index}
+                            className="relative group rounded-lg overflow-hidden border border-green-500/50"
+                          >
+                            <img
+                              src={url}
+                              alt={`New Preview ${index + 1}`}
+                              className="w-full h-20 object-cover"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeImage(index)}
+                              className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs transition shadow-md"
+                              title="Remove image"
+                            >
+                              <FiX size={12} />
+                            </button>
+                            <div className="absolute bottom-1 left-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
+                              New {index + 1}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Previews of current / auto-selected vehicle images */}
+                  {autoSelectedImages.length > 0 && (
+                    <div>
+                      <div className="text-xs font-semibold text-blue-300 mb-1.5 flex items-center justify-between">
+                        <span>Existing / Saved Images ({autoSelectedImages.length}):</span>
+                        <span className="text-[11px] text-gray-400">Click red cross to remove</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+                        {autoSelectedImages.map((url, index) => (
+                          <div
+                            key={index}
+                            className="relative group rounded-lg overflow-hidden border border-blue-500/50"
+                          >
+                            <img
+                              src={url}
+                              alt={`Existing ${index + 1}`}
+                              className="w-full h-20 object-cover"
+                              onError={(e) => {
+                                e.target.src =
+                                  "https://via.placeholder.com/150x100?text=Image+Not+Found";
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeAutoSelectedImage(index)}
+                              className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs transition shadow-md"
+                              title="Remove existing image"
+                            >
+                              <FiX size={12} />
+                            </button>
+                            <div className="absolute bottom-1 left-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
+                              Saved {index + 1}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white">
                   {/* <div>
                 <label className="block text-sm font-medium mb-2">Country</label>

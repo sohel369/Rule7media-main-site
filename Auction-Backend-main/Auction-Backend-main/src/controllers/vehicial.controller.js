@@ -542,9 +542,37 @@ const cleanRegistrationPlate = registrationPlate.trim().toUpperCase();
     }
 
     // Handle image uploads
-   let imageUrls = [];
-    
-    // Option 1: Images from uploaded files
+    let imageUrls = [];
+
+    // Parse any existing URLs passed in body
+    let existingUrlList = [];
+    if (req.body.existingImages) {
+      existingUrlList = Array.isArray(req.body.existingImages)
+        ? req.body.existingImages
+        : typeof req.body.existingImages === "object"
+          ? Object.values(req.body.existingImages)
+          : [req.body.existingImages];
+    } else if (images) {
+      existingUrlList = Array.isArray(images)
+        ? images
+        : typeof images === "object"
+          ? Object.values(images)
+          : [images];
+    }
+
+    if (existingUrlList.length > 0) {
+      const validUrls = existingUrlList.filter((url) => {
+        try {
+          new URL(url);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+      imageUrls = [...validUrls];
+    }
+
+    // Images from newly uploaded files
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {
         const imgUrlCloudinary = await uploadOnCloudinary(file.path);
@@ -556,44 +584,21 @@ const cleanRegistrationPlate = registrationPlate.trim().toUpperCase();
         imageUrls.push(imgUrlCloudinary.url);
       }
     }
-    // Option 2: Images from request body (auto-selected URLs)
-    else if (images && Array.isArray(images) && images.length > 0) {
-      // Validate that all images are valid URLs
-      const validUrls = images.filter(url => {
-        try {
-          new URL(url);
-          return true;
-        } catch {
-          return false;
-        }
-      });
-      
-      if (validUrls.length > 0) {
-        imageUrls = validUrls;
-      } else {
-        // If no valid URLs, try to get images from the approved vehicle template
-        const approvedVehicle = await Vehicle.findOne({
-          country,
-          vehicle,
-          model,
-          manufacturer,
-          isApproved: true
-        });
-        
-        if (approvedVehicle && approvedVehicle.images && approvedVehicle.images.length > 0) {
-          imageUrls = approvedVehicle.images;
-        }
-      }
-    } else {
+
+    // Fallback to template images if none provided
+    if (imageUrls.length === 0) {
       const approvedVehicle = await Vehicle.findOne({
-     
         vehicle,
         model,
         manufacturer,
-        isApproved: true
+        isApproved: true,
       });
-      
-      if (approvedVehicle && approvedVehicle.images && approvedVehicle.images.length > 0) {
+
+      if (
+        approvedVehicle &&
+        approvedVehicle.images &&
+        approvedVehicle.images.length > 0
+      ) {
         imageUrls = approvedVehicle.images;
       }
     }
@@ -714,26 +719,51 @@ if (req.body.registrationPlate) {
     }
 
     // Handle image uploads
+    let newImageUrls = [];
     if (req.files && req.files.length > 0) {
-      const imageUrls = [];
       for (const file of req.files) {
         const uploaded = await uploadOnCloudinary(file.path);
         if (!uploaded?.url) {
           return res.status(500).json({ message: "Image upload failed" });
         }
-        imageUrls.push(uploaded.url);
+        newImageUrls.push(uploaded.url);
       }
-      updates.images = imageUrls;
     }
- if (registrationPlate) {
-      const cleanRegistrationPlate = registrationPlate.trim().toUpperCase();
+
+    // Retain existing images if provided
+    let existingImages = [];
+    if (req.body.existingImages) {
+      if (Array.isArray(req.body.existingImages)) {
+        existingImages = req.body.existingImages;
+      } else if (typeof req.body.existingImages === "object") {
+        existingImages = Object.values(req.body.existingImages);
+      } else if (typeof req.body.existingImages === "string") {
+        existingImages = [req.body.existingImages];
+      }
+    } else if (req.body.images && !req.files?.length) {
+      if (Array.isArray(req.body.images)) {
+        existingImages = req.body.images;
+      } else if (typeof req.body.images === "object") {
+        existingImages = Object.values(req.body.images);
+      } else if (typeof req.body.images === "string") {
+        existingImages = [req.body.images];
+      }
+    }
+
+    const combinedImages = [...existingImages, ...newImageUrls].filter(Boolean);
+    if (combinedImages.length > 0) {
+      updates.images = combinedImages;
+    }
+
+    if (req.body.registrationPlate) {
+      const cleanRegistrationPlate = req.body.registrationPlate.trim().toUpperCase();
       
       // If registration plate is being changed, check for duplicates
-      if (cleanRegistrationPlate !== existingVehicle.registrationPlate) {
+      if (cleanRegistrationPlate !== vehicle.registrationPlate) {
         const duplicateVehicle = await Vehicle.findOne({
           registrationPlate: { $regex: new RegExp(`^${cleanRegistrationPlate}$`, 'i') },
-          _id: { $ne: id }, // Current vehicle ko exclude karein
-          addedBy: existingVehicle.addedBy // Same fleet owner ke liye check
+          _id: { $ne: vehicleId }, // Current vehicle ko exclude karein
+          addedBy: vehicle.addedBy // Same fleet owner ke liye check
         });
 
         if (duplicateVehicle) {

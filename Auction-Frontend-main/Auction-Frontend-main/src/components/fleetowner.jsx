@@ -1188,6 +1188,22 @@ const FleetOwnerForm = () => {
       })),
     }));
   };
+
+  const removeZipCode = (zipToRemove) => {
+    const newZipCodes = zipCodes.filter((z) => z !== zipToRemove);
+    const newLocations = locations.filter((loc) => loc.zip !== zipToRemove);
+    setZipCodes(newZipCodes);
+    setLocations(newLocations);
+    setFormData((prev) => ({
+      ...prev,
+      zipCodes: newZipCodes,
+      locations: newLocations.map((loc) => ({
+        name: loc.name || "",
+        zip: loc.zip || "",
+        location: loc.location,
+      })),
+    }));
+  };
   const markers = useCallback(() => {
     const allMarkers = [];
 
@@ -1852,8 +1868,41 @@ if (startDate >= endDate) {
                   readOnly
                   value={zipCodes.join(", ")}
                   placeholder="Selected zip codes will appear here..."
-                  className="w-full px-3 py-2 bg-theme-bg border rounded-md mt-2"
+                  className="w-full px-3 py-2 bg-theme-bg border rounded-md mt-2 text-white"
                 />
+
+                {/* Persistent Confirmed Postcodes Card (Kevin feedback: keep confirmation fixed) */}
+                {zipCodes.length > 0 && (
+                  <div className="mt-2.5 p-3 rounded-xl border border-emerald-500/40 bg-emerald-950/20 backdrop-blur-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                      <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Route Active: {zipCodes.length} Postcode(s) Confirmed & Fixed</span>
+                      </span>
+                      <span className="text-[11px] text-gray-300">
+                        Targeted for advertiser discovery
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {zipCodes.map((zip, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-emerald-600/30 text-emerald-200 border border-emerald-500/40"
+                        >
+                          <span>✓ {zip}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeZipCode(zip)}
+                            className="text-emerald-300 hover:text-red-400 ml-0.5 text-xs font-sans transition"
+                            title="Remove postcode"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="relative md:col-span-3 mt-2 mb-4">
@@ -1899,19 +1948,31 @@ if (startDate >= endDate) {
 
               {locations.length > 0 && (
                 <div className="md:col-span-3 mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-white flex items-center gap-1.5">
+                      <span>Confirmed Route Stops ({locations.length})</span>
+                      <span className="text-emerald-400 text-[11px] font-normal">
+                        — Fixed on Route Map
+                      </span>
+                    </span>
+                  </div>
                   <ul className="space-y-2">
                     {locations.map((loc, index) => (
                       <li
                         key={index}
-                        className="flex items-center justify-between p-2 rounded-md bg-theme-bg"
+                        className="flex items-center justify-between p-2.5 rounded-lg bg-theme-bg border border-white/10 hover:border-blue-500/40 transition"
                       >
-                        <span>
-                          {loc.name} (Zip: {loc.zip || "N/A"})
+                        <span className="flex items-center gap-2 text-sm text-white">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                          <span>{loc.name}</span>
+                          <span className="px-2 py-0.5 rounded bg-blue-600/30 text-blue-300 text-xs font-mono font-bold">
+                            Zip: {loc.zip || "N/A"}
+                          </span>
                         </span>
                         <button
                           type="button"
                           onClick={() => removeLocation(index)}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-red-400 hover:text-red-300 text-xs px-2.5 py-1 rounded bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition"
                         >
                           Remove
                         </button>

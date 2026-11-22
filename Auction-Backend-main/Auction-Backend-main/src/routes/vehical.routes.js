@@ -22,7 +22,7 @@ router.post("/fleetOwner/:fleetOwnerId",upload.array('images', 5),  createVehicl
 router.get("/fleetOwner/:fleetOwnerId", getVehiclesByFleetOwner);
 
 // Update vehicle
-router.put("/fleetOwner/:id", updateVehicleByFleetOwner);
+router.put("/fleetOwner/:id", upload.array('images', 5), updateVehicleByFleetOwner);
 
 // Delete vehicle
 router.delete("/fleetOwner/:id", deleteVehicleByFleetOwner);

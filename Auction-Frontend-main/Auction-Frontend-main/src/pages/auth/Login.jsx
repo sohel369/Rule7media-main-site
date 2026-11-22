@@ -36,8 +36,6 @@ const Login = () => {
       toast.success(message, { autoClose: 1000 });
       if (user.userType === "admin") {
         navigate("/admin/users");
-      } else if (user.userType === "advertiser") {
-        navigate("/Billboard");
       } else {
         navigate("/user-profile/profile");
       }

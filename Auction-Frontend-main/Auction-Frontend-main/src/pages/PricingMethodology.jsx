@@ -103,7 +103,6 @@ if (!logInUser) {
   };
   return (
     <>
-      {!isLoggedIn && <Header />}
       <MediaKitDownloadModal
         isOpen={isMediaKitModalOpen}
         onClose={() => setIsMediaKitModalOpen(false)}
@@ -710,7 +709,6 @@ if (!logInUser) {
         }
       `}</style>
       </div>
-      {!isLoggedIn && <Footer />}
     </>
   );
 };

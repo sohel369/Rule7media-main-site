@@ -77,7 +77,9 @@ const Register = () => {
     (state) => state.auth,
   );
   useEffect(() => {
-    const role = searchParams.get("role");
+    let role = searchParams.get("role");
+    if (role === "wrapper") role = "wrapping-shop";
+    if (role === "fleet" || role === "fleetowner") role = "fleet-owner";
 
     if (role && roleConfigs[role]) {
       setSelectedRole(role);
@@ -92,7 +94,7 @@ const Register = () => {
       setShowRoleModal(false);
       setCurrentStep(2);
     }
-  }, []);
+  }, [searchParams]);
 
   const roleConfigs = {
     advertiser: {

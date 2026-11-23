@@ -268,7 +268,7 @@ const WrapperSubscription = () => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4 md:mb-8">
-              <div className="bg-slate-800 rounded-xl p-6 text-center border border-blue-700/50">
+              <div className="bg-slate-800 rounded-xl p-6 text-center border border-gray-700 hover:border-blue-500 transition-all duration-300">
                 <div className="bg-yellow-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +296,7 @@ const WrapperSubscription = () => {
                 </p>
               </div>
 
-              <div className="bg-slate-800 rounded-xl p-6 text-center border border-blue-700/50">
+              <div className="bg-slate-800 rounded-xl p-6 text-center border border-gray-700 hover:border-blue-500 transition-all duration-300">
                 <div className="bg-yellow-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -322,7 +322,7 @@ const WrapperSubscription = () => {
                 </p>
               </div>
 
-              <div className="bg-slate-800 rounded-xl p-6 text-center border border-blue-700/50">
+              <div className="bg-slate-800 rounded-xl p-6 text-center border border-gray-700 hover:border-blue-500 transition-all duration-300">
                 <div className="bg-yellow-500/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +351,7 @@ const WrapperSubscription = () => {
           </div>
 
           {/* CTA Section */}
-          <div className="bg-slate-800 rounded-2xl p-8 w-full max-w-3xl text-center border border-purple-700/50 mb-8">
+          <div className="bg-slate-800 rounded-2xl p-8 w-full max-w-3xl text-center border border-gray-700 hover:border-blue-500 transition-all duration-300 mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
               Ready to Grow Your Business?
             </h2>

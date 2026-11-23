@@ -135,10 +135,9 @@ const AppContent = () => {
     location.pathname.startsWith("/blog");
   const hasActiveSubscription =
     user?.subscription?.status?.toLowerCase()?.trim() === "active";
-  const isLandingPage =
-    location.pathname === "/" && (!user || !hasActiveSubscription);
+  const isLandingPage = location.pathname === "/";
   const isAdminRoute = location.pathname.startsWith("/admin");
-  const shouldShowLayout = !isHiddenLayoutPage && !isLandingPage && user;
+  const shouldShowLayout = !isHiddenLayoutPage && !isLandingPage;
 
  
 

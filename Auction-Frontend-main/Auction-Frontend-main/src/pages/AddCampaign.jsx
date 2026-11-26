@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -36,13 +36,6 @@ const CreateCampaign = () => {
   const { currentCampaign } = useSelector((state) => state.campaigns);
   const { country, currency: userCurrency } = useSelector((state) => state.country);
 
-  // Dynamic currency based on selected campaign target country
-  const campaignCurrency = useMemo(() => {
-    if (formData.country) {
-      return getCurrencySymbol(formData.country);
-    }
-    return userCurrency || "$";
-  }, [formData.country, userCurrency]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -55,6 +48,14 @@ const CreateCampaign = () => {
     startAt: "",
     endAt: "",
   });
+
+  // Dynamic currency based on selected campaign target country
+  const campaignCurrency = useMemo(() => {
+    if (formData.country) {
+      return getCurrencySymbol(formData.country);
+    }
+    return userCurrency || "$";
+  }, [formData.country, userCurrency]);
 
   const [existingImages, setExistingImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);

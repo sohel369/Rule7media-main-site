@@ -277,7 +277,7 @@ const Sidebar = () => {
           />
         )}
 
-        {user?.userType === "fleetOwner" && (
+        {["fleetOwner", "buyer", "advertiser"].includes(user?.userType) && (
           <NavItem
             to="/user-profile/fleet-budget-request"
             icon={<FaMoneyBillWave size={18} />}

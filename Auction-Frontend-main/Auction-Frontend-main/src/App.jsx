@@ -447,12 +447,7 @@ useEffect(() => {
         />
         <Route
           path="/our-products"
-          element={
-            <>
-              <SEO {...seoData.ourProducts} />
-              <OurProducts />
-            </>
-          }
+          element={<Navigate to="/search" replace />}
         />
         <Route
           path="/about-us"

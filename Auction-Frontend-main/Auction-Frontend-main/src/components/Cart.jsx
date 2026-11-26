@@ -991,10 +991,10 @@ const Cart = () => {
                     Looks like you haven't added any products to your cart yet.
                   </p>
                   <Link
-                    to="/our-products"
+                    to="/search"
                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-theme-color hover:bg-theme-color/90"
                   >
-                    Start Shopping
+                    Search Marketplace
                   </Link>
                 </div>
               ) : null}

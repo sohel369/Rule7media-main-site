@@ -39,7 +39,7 @@ export const submitFranchise = async (req, res) => {
       formType,
     });
     const settings = await EmailSettings.findOne().lean();
-    const adminEmail = settings?.user || process.env.EMAIL_USER || "info@rule7media.com";
+    const adminEmail = "franchiseenquiries@rule7media.com";
     const userEmail = email;
 
     let adminSubject = "";
@@ -202,12 +202,12 @@ export const submitFranchise = async (req, res) => {
     setImmediate(async () => {
       try {
         const transporter = await getEmailTransporter();
-        const fromAddress = await getFromAddress();
+        const franchiseFrom = `"Rule 7 Media Franchise" <franchiseenquiries@rule7media.com>`;
 
         // Send to admin
         if (adminSubject && adminHtml) {
           await transporter.sendMail({
-            from: fromAddress,
+            from: franchiseFrom,
             to: adminEmail,
             subject: adminSubject,
             html: adminHtml,
@@ -218,7 +218,7 @@ export const submitFranchise = async (req, res) => {
         if (userSubject && userHtml) {
           try {
             await transporter.sendMail({
-              from: fromAddress,
+              from: franchiseFrom,
               to: userEmail,
               subject: userSubject,
               html: userHtml,

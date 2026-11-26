@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchUserCountry } from "../store/countary/countrySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/auth/authSlice";
+import { checkSubscriptionStatus } from "../store/subscription/subscriptionSlice";
+import { FaUser, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Footer from "./Footer";
 const BillboardSlider = () => {
@@ -14,6 +16,12 @@ const BillboardSlider = () => {
   const [showAbandonPage, setShowAbandonPage] = useState(false);
   const { country, currency } = useSelector((state) => state.country);
   const { user } = useSelector((state) => state.auth);
+  const subscriptionStatus = useSelector(
+    (state) => state.subscription?.subscriptionStatus,
+  );
+  const isSubscribed =
+    user?.subscription?.status === "active" ||
+    subscriptionStatus?.status === "active";
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -21,10 +29,10 @@ const BillboardSlider = () => {
     });
   }, [current]);
   useEffect(() => {
-    if (!country) {
-      dispatch(fetchUserCountry());
+    if (user) {
+      dispatch(checkSubscriptionStatus());
     }
-  }, [dispatch, country]);
+  }, [dispatch, user]);
   const handleLogout = async () => {
     try {
       await dispatch(logout());
@@ -520,6 +528,24 @@ const BillboardSlider = () => {
                 </p>
               </div>
             </div>
+            {/* Active Subscription Notice Banner */}
+            {isSubscribed && (
+              <div className="bg-gradient-to-r from-emerald-950/80 to-green-950/80 border border-emerald-500/50 rounded-xl p-4 md:p-6 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <FaCheckCircle className="text-emerald-400 text-2xl shrink-0" />
+                  <div>
+                    <h4 className="text-white font-bold text-base md:text-lg">You Have an Active Subscription!</h4>
+                    <p className="text-emerald-200/80 text-xs md:text-sm">You have full access to create campaigns and view marketplace listings.</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => navigate("/user-profile/profile")}
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all text-sm shrink-0"
+                >
+                  Go to Dashboard
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -547,7 +573,17 @@ const BillboardSlider = () => {
                 </span>
               </button>
 
-              {user ? (
+              {isSubscribed ? (
+                <button
+                  onClick={() => navigate("/user-profile/profile")}
+                  className="group relative px-8 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 rounded-xl font-bold text-white transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  <span className="flex items-center gap-2">
+                    <FaUser className="w-5 h-5" />
+                    Go to Dashboard
+                  </span>
+                </button>
+              ) : user ? (
                 <button
                   onClick={() => navigate("/pricing")}
                   className="group relative px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 rounded-xl font-bold text-white transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"

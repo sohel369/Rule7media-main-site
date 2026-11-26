@@ -55,7 +55,9 @@ const PricingOptions = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [processingPlanId, setProcessingPlanId] = useState(null);
   const [plansLoaded, setPlansLoaded] = useState(false);
-  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(
+    user?.subscription?.status === "active" || subscriptionStatus?.status === "active"
+  );
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedPriceId, setSelectedPriceId] = useState(null);
@@ -90,7 +92,9 @@ const PricingOptions = () => {
         const subscriptionData = action.payload?.subscription || action.payload;
 
         const status = subscriptionData?.status;
-        setHasActiveSubscription(status === "active" || status === "trialing");
+        if (status === "active" || status === "trialing") {
+          setHasActiveSubscription(true);
+        }
 
         if (subscriptionData) {
         }
@@ -285,6 +289,12 @@ const PricingOptions = () => {
       return;
     }
 
+    if (hasActiveSubscription) {
+      toast.info("You already have an active subscription! Redirecting to Dashboard...", { autoClose: 2000 });
+      navigate("/user-profile/profile");
+      return;
+    }
+
     let planDuration = 3;
     if (plan?.description && typeof plan.description === "string") {
       if (
@@ -333,9 +343,24 @@ const PricingOptions = () => {
 
     setErrorMessage(null);
     setProcessingPlanId(plan.id);
-    dispatch(createsubscriptionCheckoutSession(payload)).finally(() => {
-      setProcessingPlanId(null);
-    });
+    dispatch(createsubscriptionCheckoutSession(payload))
+      .unwrap()
+      .then((url) => {
+        if (url) window.location.href = url;
+      })
+      .catch((err) => {
+        if (
+          (typeof err === "string" && err.toLowerCase().includes("already has an active subscription")) ||
+          (err?.message && err.message.toLowerCase().includes("already has an active subscription"))
+        ) {
+          setHasActiveSubscription(true);
+          toast.success("Active subscription verified! Redirecting to Dashboard...");
+          setTimeout(() => navigate("/user-profile/profile"), 1200);
+        }
+      })
+      .finally(() => {
+        setProcessingPlanId(null);
+      });
   };
 
   const handleUpgradeClick = (plan, priceId) => {
@@ -637,10 +662,10 @@ const PricingOptions = () => {
               </button>
             ) : (
               <button
-                disabled
-                className="w-full px-5 py-3 rounded-full font-bold bg-gray-600 text-gray-400 text-center cursor-not-allowed"
+                onClick={() => navigate("/user-profile/profile")}
+                className="w-full px-5 py-3 rounded-full font-bold bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-center transition-all shadow-md"
               >
-                Upgrade Unavailable
+                Go to Dashboard
               </button>
             )
           ) : (
@@ -742,6 +767,33 @@ const PricingOptions = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-purple-400">
             {hasActiveSubscription ? "Upgrade Your Plan" : "Choose Your Plan"}
           </h1>
+
+          {/* Active Subscription Notice Banner */}
+          {hasActiveSubscription && (
+            <div className="mb-6 p-5 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-green-950/80 to-emerald-950/80 border border-emerald-500/50 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 font-bold shrink-0">
+                  ✓
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-base md:text-lg">
+                    You Have an Active Subscription
+                  </h3>
+                  <p className="text-emerald-200/80 text-xs md:text-sm">
+                    Your account is fully activated. You have full access to create campaigns and view marketplace listings.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => navigate("/user-profile/profile")}
+                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-sm font-bold rounded-xl shadow-lg transition-all shrink-0"
+                >
+                  Go to Dashboard
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Explainer Video Series & Methodology Link Banner */}
           <div className="mb-8 p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 via-blue-950/60 to-purple-950/60 border border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-sm">

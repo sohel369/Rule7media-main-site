@@ -818,6 +818,14 @@ if (isAffiliatePage) {
                     </span>
                   )}
                 </Link>
+                {/* Prominent Dashboard Button */}
+                <Link
+                  to="/user-profile/profile"
+                  className="ml-3 px-3.5 py-1.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs md:text-sm font-bold rounded-xl shadow-md hover:shadow-red-900/40 transition-all flex items-center gap-1.5 uppercase tracking-wider shrink-0"
+                >
+                  <FaUser size={13} />
+                  <span>Dashboard</span>
+                </Link>
                 <div className="relative ml-4">
                   <button
                     onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -841,7 +849,7 @@ if (isAffiliatePage) {
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 text-sm font-semibold text-slate-300 hover:text-red-500"
                         onClick={() => setSidebarOpen(false)}
                       >
-                        <FaUser /> Profile
+                        <FaUser /> Dashboard / Profile
                       </Link>
                       {user.userType === "seller" && (
                         <Link
@@ -1031,6 +1039,13 @@ if (isAffiliatePage) {
               </div>
             ) : (
               <div className="flex flex-col space-y-2">
+                <Link
+                  to="/user-profile/profile"
+                  className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold rounded-xl shadow-md mx-2 text-sm uppercase tracking-wider"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FaUser /> Go to Dashboard
+                </Link>
                 <Link
                   to="/"
                   className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-300 hover:text-red-500"

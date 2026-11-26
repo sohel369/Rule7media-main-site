@@ -578,7 +578,54 @@ export const checkSubscriptionStatus = asyncHandler(async (req, res) => {
 
     const user = await User.findById(userId).lean();
 
-    if (!user || !user.subscription || !user.subscription.stripeSubscriptionId) {
+    let stripeSubId = user?.subscription?.stripeSubscriptionId;
+
+    // 🔹 If stripeSubscriptionId missing in user.subscription, check Stripe customer directly
+    if (!stripeSubId && user) {
+      let customerId = user.stripeCustomerId;
+      if (!customerId && user.email) {
+        try {
+          const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+          if (customers.data.length > 0) {
+            customerId = customers.data[0].id;
+            await User.findByIdAndUpdate(userId, { stripeCustomerId: customerId });
+          }
+        } catch (e) {
+          console.error("Stripe customer search failed:", e);
+        }
+      }
+
+      if (customerId) {
+        try {
+          const activeSubs = await stripe.subscriptions.list({
+            customer: customerId,
+            status: "active",
+            limit: 1,
+          });
+
+          if (activeSubs.data.length > 0) {
+            const activeSub = activeSubs.data[0];
+            stripeSubId = activeSub.id;
+            const planDuration = parseInt(
+              activeSub.metadata?.parsedPlanDuration || activeSub.metadata?.planDuration || 3
+            );
+
+            await User.findByIdAndUpdate(userId, {
+              $set: {
+                "subscription.stripeSubscriptionId": activeSub.id,
+                "subscription.status": "active",
+                "subscription.durationMonths": planDuration,
+                "subscription.subscribedAt": new Date(activeSub.start_date * 1000),
+              },
+            });
+          }
+        } catch (e) {
+          console.error("Stripe active subscription lookup failed:", e);
+        }
+      }
+    }
+
+    if (!user || !stripeSubId) {
       return res.status(200).json({
         success: true,
         subscription: { status: "inactive" },
@@ -586,9 +633,7 @@ export const checkSubscriptionStatus = asyncHandler(async (req, res) => {
     }
 
     // 🔹 Fetch subscription details from Stripe
-    const subscription = await stripe.subscriptions.retrieve(
-      user.subscription.stripeSubscriptionId
-    );
+    const subscription = await stripe.subscriptions.retrieve(stripeSubId);
 
     // 🔹 Extract duration ONLY from metadata or DB
     let durationMonths =
@@ -905,8 +950,22 @@ export const subscriptionCheckout = asyncHandler(async (req, res) => {
     status: "active",
   });
   if (activeSubs.data.length > 0) {
+    const activeSub = activeSubs.data[0];
+    const planDuration = parseInt(
+      activeSub.metadata?.parsedPlanDuration || activeSub.metadata?.planDuration || 3
+    );
+    await User.findByIdAndUpdate(userId, {
+      $set: {
+        "subscription.stripeSubscriptionId": activeSub.id,
+        "subscription.status": "active",
+        "subscription.durationMonths": planDuration,
+        "subscription.subscribedAt": new Date(activeSub.start_date * 1000),
+      },
+    });
+
     return res.status(400).json({
       success: false,
+      alreadyActive: true,
       message: "Customer already has an active subscription.",
     });
   }

@@ -103,15 +103,35 @@ Rule7 Media Risk Management Team`,
 
 // ─── Fill template placeholders ──────────────────────────────────────────────
 const fillTemplate = (template, item) => {
+  const firstName = (item.firstName || "").trim();
+  const lastName = (item.lastName || "").trim();
+  const country = (item.country || "").trim();
+  const state = (item.state || "").trim();
+  const rawTerritories = (item.territories || "").trim();
+  const territory = (item.territory || "").trim();
+  const region = (item.region || "").trim();
+  const timeline = (item.timeline || "").trim();
+
+  let formattedTerritoryPhrase = rawTerritories;
+  if (/^single$/i.test(rawTerritories)) {
+    formattedTerritoryPhrase = "a single territory";
+  } else if (rawTerritories) {
+    formattedTerritoryPhrase = `${rawTerritories} territories`;
+  }
+
+  const locationStr = [country, state].filter(Boolean).join(", ");
+
   return template
-    .replace(/{firstName}/g, item.firstName || "")
-    .replace(/{lastName}/g, item.lastName || "")
-    .replace(/{country}/g, item.country || "")
-    .replace(/{state}/g, item.state || "")
-    .replace(/{territories}/g, item.territories || "")
-    .replace(/{territory}/g, item.territory || "")
-    .replace(/{region}/g, item.region || "")
-    .replace(/{timeline}/g, item.timeline || "");
+    .replace(/{firstName}/g, firstName)
+    .replace(/{lastName}/g, lastName)
+    .replace(/{country},\s*{state}/g, locationStr)
+    .replace(/{country}/g, country)
+    .replace(/{state}/g, state)
+    .replace(/{territories}\s*territories/g, formattedTerritoryPhrase)
+    .replace(/{territories}/g, rawTerritories)
+    .replace(/{territory}/g, territory)
+    .replace(/{region}/g, region)
+    .replace(/{timeline}/g, timeline);
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────

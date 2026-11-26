@@ -133,6 +133,19 @@ const generateOTP = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
+const PRESERVED_MODELS = [
+    'Vehicle',
+    'ProductCategory',
+    'PricingPlan',
+    'SubscriptionPlan',
+    'ContactInfo',
+    'Term',
+    'Privacy',
+    'Cookie',
+    'City',
+    'EmailSettings',
+];
+
 // Get all models dynamically
 const getAllModels = async () => {
     const modelsPath = path.join(__dirname, '../models');
@@ -148,11 +161,13 @@ const getAllModels = async () => {
                 const module = await import(`file://${path.join(modelsPath, file)}`);
                 const model = module.default;
                 if (model && model.modelName && typeof model.deleteMany === 'function') {
-                    models.push({
-                        name: model.modelName,
-                        model: model,
-                        collection: model.collection.collectionName
-                    });
+                    if (!PRESERVED_MODELS.includes(model.modelName)) {
+                        models.push({
+                            name: model.modelName,
+                            model: model,
+                            collection: model.collection.collectionName
+                        });
+                    }
                 }
             } catch (err) {
                 console.error(`Error loading model ${file}:`, err.message);

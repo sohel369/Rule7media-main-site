@@ -54,7 +54,9 @@ const EditFleetAuction = () => {
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   // Default center and map container style
-  const defaultCenter = { lat: 20.5937, lng: 78.9629 };
+  const defaultCenter = { lat: -25.2744, lng: 133.7751 }; // Centered on Australia
+  const [mapCenter, setMapCenter] = useState(defaultCenter);
+  const [mapZoom, setMapZoom] = useState(6);
   const containerStyle = {
     width: "100%",
     height: "400px",
@@ -169,13 +171,22 @@ const EditFleetAuction = () => {
       <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={
-            locations.length > 0
-              ? { lat: locations[0].lat, lng: locations[0].lng }
-              : defaultCenter
-          }
-          zoom={locations.length === 1 ? 12 : 5}
+          center={mapCenter}
+          zoom={mapZoom}
           onLoad={onMapLoad}
+          onZoomChanged={() => {
+            if (mapRef.current) {
+              setMapZoom(mapRef.current.getZoom());
+            }
+          }}
+          onDragEnd={() => {
+            if (mapRef.current) {
+              const c = mapRef.current.getCenter();
+              if (c) {
+                setMapCenter({ lat: c.lat(), lng: c.lng() });
+              }
+            }
+          }}
           options={{
             zoomControl: true,
             streetViewControl: false,
@@ -579,7 +590,7 @@ const EditFleetAuction = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-4 mb-6 lg:mb-0">
             <div className="bg-theme-bg2 p-4 rounded-lg h-full">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Vehicle Images{" "}
                 <span className="text-xs text-gray-400">
                   (Optional - Update if needed)
@@ -728,7 +739,7 @@ const EditFleetAuction = () => {
 
               {/* Route Map Section - Directly integrated */}
               <div className="bg-theme-bg2 p-4 rounded-lg mt-6">
-                <h3 className="text-lg font-semibold mb-4 text-white-700">
+                <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                   Route Map ({locations.length} locations)
                 </h3>
 
@@ -765,7 +776,7 @@ const EditFleetAuction = () => {
 
           <div className="lg:col-span-8 space-y-6">
             <div className="bg-theme-bg2 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Select Your Vehicle <span className="text-red-500">*</span>
               </h3>
               <select
@@ -786,12 +797,12 @@ const EditFleetAuction = () => {
             </div>
 
             <div className="bg-theme-bg2 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Basic Information
               </h3>
               <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-white-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
                     Company Name
                   </label>
                   <input
@@ -802,7 +813,7 @@ const EditFleetAuction = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
                     Account Number
                   </label>
                   <input
@@ -813,7 +824,7 @@ const EditFleetAuction = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
                     Suburb
                   </label>
                   <input
@@ -827,13 +838,13 @@ const EditFleetAuction = () => {
             </div>
 
             <div className="bg-theme-bg2 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Location Information
               </h3>
 
               <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mt-6">
                 <div>
-                  <label className="block text-sm font-medium text-white-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
                     Country
                   </label>
                   <select
@@ -911,7 +922,7 @@ const EditFleetAuction = () => {
               </div>
 
               <div className="mt-6">
-                <label className="block text-sm font-medium text-white-700 mb-1">
+                <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
                   Search Location to Add
                 </label>
                 <div className="relative">
@@ -992,7 +1003,7 @@ const EditFleetAuction = () => {
             </div>
 
             <div className="bg-theme-bg2 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Auction Time
               </h3>
               <div className="grid grid-cols-2 gap-4">
@@ -1096,7 +1107,7 @@ const EditFleetAuction = () => {
     </div>
   </div>
 </div>
-            <h3 className="text-lg font-semibold mb-4 text-white-700">
+            <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
               Registration Plate Number
             </h3>
             <input
@@ -1108,7 +1119,7 @@ const EditFleetAuction = () => {
             />
 
             <div className="bg-theme-bg2 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4 text-white-700">
+              <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
                 Vehicle Availability <span className="text-red-500">*</span>
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1143,7 +1154,7 @@ const EditFleetAuction = () => {
             </div>
 
           <div className="bg-theme-bg2 p-4 rounded-lg">
-  <h3 className="text-lg font-semibold mb-4 text-white-700">
+  <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
     Pricing Information
   </h3>
 
@@ -1875,7 +1886,7 @@ export default EditFleetAuction;
 //         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 //           <div className="lg:col-span-4 mb-6 lg:mb-0">
 //             <div className="bg-theme-bg2 p-4 rounded-lg h-full">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Vehicle Images{" "}
 //                 <span className="text-xs text-gray-400">
 //                   (Optional - Update if needed)
@@ -2023,7 +2034,7 @@ export default EditFleetAuction;
 //               )}
 
 //               <div className="bg-theme-bg2 p-4 rounded-lg mt-6">
-//                 <h3 className="text-lg font-semibold mb-4 text-white-700">
+//                 <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                   Route Map
 //                 </h3>
 //                 {auction && (
@@ -2047,7 +2058,7 @@ export default EditFleetAuction;
 
 //           <div className="lg:col-span-8 space-y-6">
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Select Your Vehicle <span className="text-red-500">*</span>
 //               </h3>
 //               <select
@@ -2068,12 +2079,12 @@ export default EditFleetAuction;
 //             </div>
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Basic Information
 //               </h3>
 //               <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
 //                 <div>
-//                   <label className="block text-sm font-medium text-white-700 mb-1">
+//                   <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
 //                     Company Name
 //                   </label>
 //                   <input
@@ -2084,7 +2095,7 @@ export default EditFleetAuction;
 //                   />
 //                 </div>
 //                 <div>
-//                   <label className="block text-sm font-medium text-white-700 mb-1">
+//                   <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
 //                     Account Number
 //                   </label>
 //                   <input
@@ -2095,7 +2106,7 @@ export default EditFleetAuction;
 //                   />
 //                 </div>
 //                 <div>
-//                   <label className="block text-sm font-medium text-white-700 mb-1">
+//                   <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
 //                     Suburb
 //                   </label>
 //                   <input
@@ -2109,13 +2120,13 @@ export default EditFleetAuction;
 //             </div>
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Location Information
 //               </h3>
 
 //               <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mt-6">
 //                 <div>
-//                   <label className="block text-sm font-medium text-white-700 mb-1">
+//                   <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
 //                     Country
 //                   </label>
 //                   <select
@@ -2193,7 +2204,7 @@ export default EditFleetAuction;
 //               </div>
 
 //               <div className="mt-6">
-//                 <label className="block text-sm font-medium text-white-700 mb-1">
+//                 <label className="block text-sm font-medium text-slate-200 font-semibold mb-1">
 //                   Search Location to Add
 //                 </label>
 //                 <div className="relative">
@@ -2274,7 +2285,7 @@ export default EditFleetAuction;
 //             </div>
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Auction Time
 //               </h3>
 //               <div className="grid grid-cols-2 gap-4">
@@ -2306,7 +2317,7 @@ export default EditFleetAuction;
 //             </div>
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Vehicle Details
 //               </h3>
 //               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -2336,7 +2347,7 @@ export default EditFleetAuction;
 //                 />
 //               </div>
 //             </div>
-//             <h3 className="text-lg font-semibold mb-4 text-white-700">
+//             <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //               Registration Plate Number
 //             </h3>
 //             <input
@@ -2348,7 +2359,7 @@ export default EditFleetAuction;
 //             />
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Vehicle Availability <span className="text-red-500">*</span>
 //               </h3>
 //               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -2383,7 +2394,7 @@ export default EditFleetAuction;
 //             </div>
 
 //             <div className="bg-theme-bg2 p-4 rounded-lg">
-//               <h3 className="text-lg font-semibold mb-4 text-white-700">
+//               <h3 className="text-lg font-semibold mb-4 text-slate-200 font-semibold">
 //                 Pricing Information
 //               </h3>
 //               <div className="grid gap-4 grid-cols-1 md:grid-cols-2">

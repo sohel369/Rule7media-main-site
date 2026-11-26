@@ -16,6 +16,7 @@ import axios from "axios";
 import AddressSelector from "../components/AddressSelector";
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import { getAllCategories } from "../store/category/categorySlice.js";
+import { getCurrencySymbol } from "../store/countary/countrySlice";
 import {
   HeaderLeaderboard,
   FooterLeaderboard,
@@ -33,7 +34,15 @@ const CreateCampaign = () => {
   const { categories } = useSelector((state) => state.category);
 
   const { currentCampaign } = useSelector((state) => state.campaigns);
-  const { country, currency } = useSelector((state) => state.country);
+  const { country, currency: userCurrency } = useSelector((state) => state.country);
+
+  // Dynamic currency based on selected campaign target country
+  const campaignCurrency = useMemo(() => {
+    if (formData.country) {
+      return getCurrencySymbol(formData.country);
+    }
+    return userCurrency || "$";
+  }, [formData.country, userCurrency]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -609,6 +618,7 @@ const CreateCampaign = () => {
       data.append("country", formData.country);
       data.append("state", formData.state);
       data.append("city", formData.city);
+      data.append("currency", campaignCurrency);
 
       // Fix: Ensure target is properly structured
       const targetData = {
@@ -901,7 +911,7 @@ const CreateCampaign = () => {
 
                 <div>
                   <label className="block mb-2 font-medium">
-                    Budget {currency}
+                    Budget ({campaignCurrency})
                   </label>
                   <input
                     type="number"
@@ -913,7 +923,7 @@ const CreateCampaign = () => {
                       setFormData({ ...formData, budget: e.target.value })
                     }
                     className="w-full px-6 py-3 rounded border border-gray-700 bg-[#0E294D] outline-none"
-                    placeholder={`e.g. ${currency} 100`}
+                    placeholder={`e.g. ${campaignCurrency} 1000`}
                   />
                 </div>
 

@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import ImageSlider from "../components/ImageSlider";
 import { FooterLeaderboard, HeaderLeaderboard } from "../components/AdSlots";
+import { getCurrencySymbol } from "../store/countary/countrySlice";
 
 const MyCampaigns = () => {
   const dispatch = useDispatch();
@@ -187,8 +188,8 @@ const MyCampaigns = () => {
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-xl text-white">
-                            {currency}{" "}
-                            {camp.budget?.toLocaleString("en-IN") || "0"}
+                            {camp.currency || getCurrencySymbol(camp.country || camp.location?.country || country)}{" "}
+                            {Number(camp.budget || 0).toLocaleString()}
                           </span>
                         </div>
                         {camp.budgetType && (

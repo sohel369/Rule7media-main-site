@@ -681,8 +681,17 @@ const discount =
                     </span>
                   </div>
 
+                  {calculatorInputs[`discount${calculatorInputs.campaignLength}Month`] > 0 && (
+                    <div className="flex justify-between items-center text-emerald-400">
+                      <span>Offered Discount ({calculatorInputs.campaignLength} Mo):</span>
+                      <span className="font-bold text-lg">
+                        -{calculatorInputs[`discount${calculatorInputs.campaignLength}Month`]}%
+                      </span>
+                    </div>
+                  )}
+
                   <div className="flex justify-between items-center">
-                    <span className="text-white">Avg Surface Area:</span>
+                    <span className="text-white">Selected Surface Area:</span>
                     <span className="font-bold text-white text-lg">
                       {calculatorResults.avgSurfaceArea.toFixed(2)} m²
                     </span>

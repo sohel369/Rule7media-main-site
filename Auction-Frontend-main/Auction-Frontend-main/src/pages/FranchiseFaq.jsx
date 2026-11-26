@@ -177,7 +177,7 @@ const faqVideos =
       {/* Navigation */}
       <nav className="fixed w-[94%] sm:w-full z-[100] backdrop-blur-md bg-black/60 border border-white/10 top-14 sm:top-16 left-1/2 -translate-x-1/2 max-w-6xl mx-auto rounded-2xl px-5 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between shadow-2xl">
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/franchise" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-gradient-to-br from-rose-600 to-rose-900 rounded-lg flex items-center justify-center font-extrabold text-xl text-white shadow-lg shadow-rose-900/20">
               R7
             </div>

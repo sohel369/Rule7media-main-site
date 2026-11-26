@@ -162,7 +162,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row gap-14">
           {/* LEFT SECTION - 4 parts */}
           <div className="lg:w-[50%] space-y-6">
-            <div className="relative inline-flex flex-col items-start group">
+            <Link to="/" className="relative inline-flex flex-col items-start group cursor-pointer">
               <div className="flex items-center gap-3 relative z-10">
                 {/* Icon instead of img */}
                 <div className="w-10 h-10 flex items-center justify-center bg-red-600 rounded-xl text-white shadow-lg shadow-red-200 transition-transform group-hover:rotate-12">
@@ -178,7 +178,7 @@ const Footer = () => {
 
               {/* Glow / shadow effect below logo */}
               <div className="absolute left-1/2 -translate-x-1/2 -bottom-3 w-32 h-6 bg-red-600/50 blur-2xl rounded-full"></div>
-            </div>
+            </Link>
 
             <p className="text-1xl font-semibold leading-tight">
               A global ecosystem for high end digital storytelling and

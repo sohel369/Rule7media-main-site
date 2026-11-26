@@ -344,8 +344,9 @@ export const seoData = {
 
   // Wrapper Landing Page
   wrapperLanding: {
-    title: "Gotts | Exclusive Global Vehicle Wrapping Network",
-    description: "",
+    title: "Rule 7 Media | Exclusive Global Vehicle Wrapping Network",
+    description: 
+    "Rule 7 Media: Join our exclusive global vehicle wrapping network. Connecting certified vehicle wrap shops with commercial fleet wrapping contracts and leads.",
     keywords: 
     "Vehicle wrapping leads, Car wrap marketing agency, Wrapping business leads, Wrap shop marketing, First-mover advantage wrapping",
     canonicalUrl: `${BASE_URL}/WrapperLandingPage`,

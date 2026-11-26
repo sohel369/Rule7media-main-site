@@ -290,8 +290,8 @@ const PricingOptions = () => {
     }
 
     if (hasActiveSubscription) {
-      toast.info("You already have an active subscription! Redirecting to Dashboard...", { autoClose: 2000 });
-      navigate("/user-profile/profile");
+      toast.info("You already have an active subscription! Opening Campaign Creator...", { autoClose: 2000 });
+      navigate("/user-profile/create-campaign");
       return;
     }
 
@@ -346,16 +346,20 @@ const PricingOptions = () => {
     dispatch(createsubscriptionCheckoutSession(payload))
       .unwrap()
       .then((url) => {
-        if (url) window.location.href = url;
+        if (url) {
+          window.location.href = url;
+        } else {
+          toast.error("Checkout session URL not received.");
+        }
       })
       .catch((err) => {
-        if (
-          (typeof err === "string" && err.toLowerCase().includes("already has an active subscription")) ||
-          (err?.message && err.message.toLowerCase().includes("already has an active subscription"))
-        ) {
+        const errStr = typeof err === "string" ? err : err?.message || "";
+        if (errStr.toLowerCase().includes("already has an active subscription")) {
           setHasActiveSubscription(true);
-          toast.success("Active subscription verified! Redirecting to Dashboard...");
-          setTimeout(() => navigate("/user-profile/profile"), 1200);
+          toast.success("Active subscription verified! Opening Campaign Creator...");
+          setTimeout(() => navigate("/user-profile/create-campaign"), 1200);
+        } else {
+          toast.error(errStr || "Failed to initiate checkout session");
         }
       })
       .finally(() => {
@@ -638,15 +642,16 @@ const PricingOptions = () => {
           <div className="mt-auto">
           {hasActiveSubscription ? (
             currentPlan ? (
-              <div className="text-center py-3">
+              <div className="text-center py-2 flex flex-col gap-2">
                 <span className="text-green-400 font-semibold">
                   ✓ Active Plan
                 </span>
-                {/* <p className="text-gray-400 text-sm mt-1">
-                Renewal: {subscriptionStatus.currentPeriodEnd ? 
-                  new Date(subscriptionStatus.currentPeriodEnd * 1000).toLocaleDateString() : 
-                  "N/A"}
-              </p> */}
+                <button
+                  onClick={() => navigate("/user-profile/create-campaign")}
+                  className="w-full px-5 py-3 rounded-full font-bold bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-center transition-all shadow-md"
+                >
+                  Create Campaign
+                </button>
               </div>
             ) : upgradePlan ? (
               <button
@@ -662,10 +667,10 @@ const PricingOptions = () => {
               </button>
             ) : (
               <button
-                onClick={() => navigate("/user-profile/profile")}
+                onClick={() => navigate("/user-profile/create-campaign")}
                 className="w-full px-5 py-3 rounded-full font-bold bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-center transition-all shadow-md"
               >
-                Go to Dashboard
+                Create Campaign
               </button>
             )
           ) : (
@@ -784,12 +789,18 @@ const PricingOptions = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigate("/user-profile/create-campaign")}
+                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-sm font-bold rounded-xl shadow-lg transition-all shrink-0 cursor-pointer"
+                >
+                  Create Campaign Now →
+                </button>
                 <button
                   onClick={() => navigate("/user-profile/profile")}
-                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-sm font-bold rounded-xl shadow-lg transition-all shrink-0"
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold rounded-xl border border-slate-700 transition-all shrink-0 cursor-pointer"
                 >
-                  Go to Dashboard
+                  Dashboard
                 </button>
               </div>
             </div>

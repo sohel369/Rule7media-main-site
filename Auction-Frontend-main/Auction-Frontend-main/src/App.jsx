@@ -641,7 +641,7 @@ useEffect(() => {
         />
         <Route
           path="/single-fleet-auction-detail"
-          element={<Navigate to="/single-fleet-auction-detail/6a6179860df1cf42a8dbdb78" replace />}
+          element={<Navigate to="/search-results" replace />}
         />
         <Route
           path="/campaign-details"

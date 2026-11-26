@@ -12,8 +12,6 @@ import {
   FooterLeaderboard,
   MobileStickyLeaderboard,
 } from "../../components/AdSlots";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import logo from "../../assets/LOGO.png"; // Keep the logo import if needed elsewhere, or remove
 
 const Login = () => {
@@ -56,7 +54,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-black flex flex-col">
         {/* ===== HEADER LEADERBOARD ===== */}
         <div className="pt-6 pb-4">
@@ -183,7 +180,6 @@ const Login = () => {
         {/* Mobile Sticky Leaderboard */}
         <MobileStickyLeaderboard />
       </div>
-      <Footer />
     </>
   );
 };

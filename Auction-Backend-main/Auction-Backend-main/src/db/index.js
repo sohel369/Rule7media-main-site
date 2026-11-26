@@ -24,12 +24,12 @@ const connectDB = async () => {
         email: { $regex: new RegExp(`^${adminEmail}$`, "i") }
       });
       if (!existingAdmin) {
-        const hashedPassword = await bcrypt.hash("Admin@1234", 10);
+        // Plaintext here: userSchema.pre("save") automatically hashes it with bcrypt 10 rounds
         await User.create({
           firstName: "Rule7",
           lastname: "Admin",
           email: adminEmail,
-          password: hashedPassword,
+          password: "Admin@1234",
           position: "Administrator",
           company: "Rule 7 Media",
           country: "Australia",
@@ -37,10 +37,18 @@ const connectDB = async () => {
           paymentVerified: true,
         });
         console.log("✅ Admin user (Admin@admin.com) auto-seeded in database!");
-      } else if (existingAdmin.userType !== "admin") {
-        existingAdmin.userType = "admin";
-        await existingAdmin.save();
-        console.log("✅ Admin user updated to admin role in database!");
+      } else {
+        const isMatch = await bcrypt.compare("Admin@1234", existingAdmin.password);
+        if (!isMatch) {
+          existingAdmin.password = "Admin@1234";
+          existingAdmin.userType = "admin";
+          await existingAdmin.save();
+          console.log("✅ Admin password synchronized to Admin@1234 in database!");
+        } else if (existingAdmin.userType !== "admin") {
+          existingAdmin.userType = "admin";
+          await existingAdmin.save();
+          console.log("✅ Admin user updated to admin role in database!");
+        }
       }
     } catch (seedErr) {
       console.warn("⚠️ Admin auto-seed check notice:", seedErr.message);

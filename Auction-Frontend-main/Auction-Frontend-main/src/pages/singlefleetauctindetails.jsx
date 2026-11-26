@@ -511,10 +511,29 @@ const FleetAuctionDetails = () => {
 
   if (isError) {
     return (
-      <div className="text-red-500 text-center py-20 bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="text-2xl font-bold mb-2">Error Loading Auction</div>
-          <div className="text-gray-600">{message}</div>
+      <div className="text-center py-20 bg-slate-950 min-h-screen flex items-center justify-center px-4">
+        <div className="bg-slate-900 border border-white/10 rounded-3xl shadow-2xl p-8 sm:p-12 max-w-lg w-full text-center">
+          <div className="w-16 h-16 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 text-rose-500 text-3xl">
+            🔍
+          </div>
+          <div className="text-2xl font-bold text-white mb-2">Auction Not Found</div>
+          <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+            The requested fleet auction is currently unavailable, has ended, or was removed from the marketplace.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              to="/search-results"
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-rose-700 hover:from-rose-600 hover:to-rose-800 text-white font-semibold text-sm transition shadow-lg shadow-rose-900/30"
+            >
+              Browse Live Auctions
+            </Link>
+            <Link
+              to="/user-profile/profile"
+              className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm transition border border-white/10"
+            >
+              My Dashboard
+            </Link>
+          </div>
         </div>
       </div>
     );

@@ -73,11 +73,14 @@ const RequestBudgetModal = ({ onClose }) => {
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-2 sm:p-4">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto">
         <div className="p-4 sm:p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg sm:text-xl font-semibold">Request Budget</h2>
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Request Budget Proposal</h2>
+              <p className="text-xs text-gray-500 mt-0.5">Propose your advertising budget rate ($/m²) to the Fleet Manager for this vehicle.</p>
+            </div>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-xl"
+              className="text-gray-400 hover:text-gray-700 text-2xl leading-none p-1"
             >
               ×
             </button>
@@ -87,8 +90,8 @@ const RequestBudgetModal = ({ onClose }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {Object.entries(pricing).map(([key, value]) => (
                 <div key={key} className="sm:col-span-1">
-                  <label className="block text-xs sm:text-sm font-medium capitalize mb-1 text-left">
-                    {key.replace(/([A-Z])/g, " $1")}
+                  <label className="block text-xs sm:text-sm font-medium capitalize mb-1 text-left text-gray-700">
+                    {key.replace(/([A-Z])/g, " $1")} ($/m²)
                   </label>
                   <input
                     type="number"
@@ -96,6 +99,7 @@ const RequestBudgetModal = ({ onClose }) => {
                     value={value}
                     onChange={handleChange}
                     required
+                    placeholder="e.g. 25"
                     className="w-full border rounded-md px-3 py-2 text-sm sm:text-base text-left"
                   />
                 </div>

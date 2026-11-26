@@ -1193,7 +1193,7 @@ useEffect(() => {
     return 'bg-blue-500/10 text-blue-400';
   };
 
-  const cardClass = "p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-rose-500/30 transition-all hover:bg-white/10";
+  const cardClass = "p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-rose-500/50 hover:bg-white/10 transition-all cursor-pointer group shadow-lg hover:shadow-rose-500/10 hover:-translate-y-1";
 
   // Render Campaign Card WITH IMAGE
   const renderCampaignCard = (item) => {
@@ -1202,7 +1202,19 @@ useEffect(() => {
     const allImages = getImages(item);
 
     return (
-      <div key={item._id} className={cardClass}>
+      <div
+        key={item._id}
+        onClick={() => navigate(`/campaign-details/${item._id}`)}
+        className={cardClass}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            navigate(`/campaign-details/${item._id}`);
+          }
+        }}
+      >
         {/* Image */}
         {imageUrl && !hasError ? (
           <div className="relative w-full h-48 rounded-2xl mb-4 overflow-hidden bg-slate-800 group">
@@ -1279,8 +1291,8 @@ useEffect(() => {
 
         {/* Budget */}
         {item.budget && (
-          <div className="mt-2 text-xs text-emerald-400">
-            💰 Budget: ₹{item.budget.toLocaleString()}
+          <div className="mt-2 text-xs text-emerald-400 font-semibold">
+            💰 Budget: ${item.budget.toLocaleString()}
           </div>
         )}
 
@@ -1302,10 +1314,13 @@ useEffect(() => {
 
         {/* View Details Button */}
         <button
-          onClick={() => navigate(`/campaign-details/${item._id}`)}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white text-sm font-bold shadow-md shadow-rose-600/20 active:scale-95 transition-all"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/campaign-details/${item._id}`);
+          }}
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white text-sm font-bold shadow-md shadow-rose-600/20 active:scale-95 transition-all"
         >
-          <span>👁️</span> View Campaign Details
+          <span>👁️</span> View Campaign Details / Bid Now
         </button>
       </div>
     );
@@ -1317,7 +1332,19 @@ useEffect(() => {
     const hasError = imageErrors[item._id];
 
     return (
-      <div key={item._id} className={cardClass}>
+      <div
+        key={item._id}
+        onClick={() => navigate(`/single-fleet-auction-detail/${item._id}`)}
+        className={cardClass.replace("hover:border-rose-500/50", "hover:border-blue-500/50")}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            navigate(`/single-fleet-auction-detail/${item._id}`);
+          }
+        }}
+      >
         {/* Image */}
         {imageUrl && !hasError ? (
           <div className="relative w-full h-48 rounded-2xl mb-4 overflow-hidden bg-slate-800 group">
@@ -1367,7 +1394,7 @@ useEffect(() => {
         {/* Price */}
         {item.minAuctionRates && (
           <div className="text-sm font-bold text-emerald-400 mb-2">
-            Starting: ₹{item.minAuctionRates.fullWrap?.toLocaleString() || 0}
+            Starting: ${item.minAuctionRates.fullWrap?.toLocaleString() || 0}
           </div>
         )}
 
@@ -1387,10 +1414,13 @@ useEffect(() => {
 
         {/* View Details Button */}
         <button
-          onClick={() => navigate(`/single-fleet-auction-detail/${item._id}`)}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-sm font-bold shadow-md shadow-blue-600/20 active:scale-95 transition-all"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/single-fleet-auction-detail/${item._id}`);
+          }}
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-sm font-bold shadow-md shadow-blue-600/20 active:scale-95 transition-all"
         >
-          <span>🚛</span> View Fleet Auction Details
+          <span>🚛</span> View Fleet Details / Bid Now
         </button>
       </div>
     );
@@ -1402,7 +1432,19 @@ useEffect(() => {
     const hasError = imageErrors[item._id];
 
     return (
-      <div key={item._id} className={cardClass}>
+      <div
+        key={item._id}
+        onClick={() => navigate(`/single-auction-detail/${item._id}`)}
+        className={cardClass.replace("hover:border-rose-500/50", "hover:border-emerald-500/50")}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            navigate(`/single-auction-detail/${item._id}`);
+          }
+        }}
+      >
         {/* Image */}
         {imageUrl && !hasError ? (
           <div className="relative w-full h-48 rounded-2xl mb-4 overflow-hidden bg-slate-800 group">
@@ -1445,12 +1487,12 @@ useEffect(() => {
         <div className="flex items-center gap-4 mb-3">
           {item.startingPrice && (
             <div className="text-sm font-bold text-emerald-400">
-              ₹{item.startingPrice.toLocaleString()}
+              ${item.startingPrice.toLocaleString()}
             </div>
           )}
           {item.currentPrice && item.currentPrice !== item.startingPrice && (
             <div className="text-xs text-slate-400">
-              Current: ₹{item.currentPrice.toLocaleString()}
+              Current: ${item.currentPrice.toLocaleString()}
             </div>
           )}
         </div>
@@ -1478,10 +1520,13 @@ useEffect(() => {
 
         {/* View Details Button */}
         <button
-          onClick={() => navigate(`/single-auction-detail/${item._id}`)}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-sm font-bold shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/single-auction-detail/${item._id}`);
+          }}
+          className="mt-4 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-sm font-bold shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
         >
-          <span>🏷️</span> View Auction Details
+          <span>🏷️</span> View Auction Details / Bid Now
         </button>
       </div>
     );

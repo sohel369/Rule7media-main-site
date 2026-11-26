@@ -21,8 +21,6 @@ const AdvancedSearchPage = () => {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
 
-  const previousSearch = location.state?.previousSearch;
-
   // Redux state
   const { categories } = useSelector((state) => state.category);
   const { user } = useSelector((state) => state.auth);
@@ -31,26 +29,113 @@ const AdvancedSearchPage = () => {
   const vehiclesState = useSelector((state) => state.vehicles || {});
   const vehicles = vehiclesState.list || [];
 
-  // Form state
-  const [userType, setUserType] = useState(previousSearch?.userType || "fleetOwner");
-  const [searchType, setSearchType] = useState(previousSearch?.searchType || "campaign");
-  const [firstName, setFirstName] = useState(previousSearch?.firstName || "");
-  const [lastname, setlastname] = useState(previousSearch?.lastname || "");
-  const [email, setEmail] = useState(previousSearch?.email || "");
-  const [country, setCountry] = useState(previousSearch?.country || userCountry || "");
-  const [state, setState] = useState(previousSearch?.state || "");
+  // Fallback to localStorage user if Redux user is initializing
+  const authUser = useMemo(() => {
+    if (user) return user;
+    try {
+      return JSON.parse(localStorage.getItem("user") || "null");
+    } catch {
+      return null;
+    }
+  }, [user]);
+
+  // Load previous search from location state or persistent localStorage
+  const savedSearch = useMemo(() => {
+    if (location.state?.previousSearch) {
+      return location.state.previousSearch;
+    }
+    try {
+      return JSON.parse(localStorage.getItem("lastMarketplaceSearch") || "null");
+    } catch {
+      return null;
+    }
+  }, [location.state]);
+
+  // Check if wrapper
+  const isWrapper = Boolean(
+    authUser?.userType === "wrapper" ||
+    authUser?.userType === "vehicle_wrapper" ||
+    authUser?.role === "wrapper"
+  );
+
+  // Determine user role
+  const resolvedRole = useMemo(() => {
+    if (isWrapper) return "wrapper";
+    if (authUser?.userType === "fleetOwner" || authUser?.userType === "seller" || authUser?.role === "fleetOwner") {
+      return "fleetOwner";
+    }
+    if (authUser?.userType === "advertiser" || authUser?.userType === "buyer" || authUser?.role === "advertiser") {
+      return "advertiser";
+    }
+    return savedSearch?.userType || "fleetOwner";
+  }, [authUser, isWrapper, savedSearch]);
+
+  // Form state initialized with persistent values or user defaults
+  const [userType, setUserType] = useState(resolvedRole);
+  const [searchType, setSearchType] = useState(() => {
+    if (resolvedRole === "fleetOwner") return "campaign";
+    if (resolvedRole === "advertiser") return "auction";
+    return savedSearch?.searchType || "campaign";
+  });
+
+  const [firstName, setFirstName] = useState(() => {
+    return (
+      savedSearch?.firstName ||
+      authUser?.firstName ||
+      authUser?.firstname ||
+      authUser?.first_name ||
+      (authUser?.name ? authUser.name.split(" ")[0] : "") ||
+      ""
+    );
+  });
+
+  const [lastname, setlastname] = useState(() => {
+    return (
+      savedSearch?.lastname ||
+      authUser?.lastname ||
+      authUser?.lastName ||
+      authUser?.last_name ||
+      (authUser?.name ? authUser.name.split(" ").slice(1).join(" ") : "") ||
+      ""
+    );
+  });
+
+  const [email, setEmail] = useState(() => {
+    return savedSearch?.email || authUser?.email || "";
+  });
+
+  const [country, setCountry] = useState(() => {
+    return (
+      savedSearch?.country ||
+      authUser?.country ||
+      authUser?.location?.country ||
+      userCountry ||
+      "Australia"
+    );
+  });
+
+  const [state, setState] = useState(() => {
+    return savedSearch?.state || authUser?.state || authUser?.location?.state || "";
+  });
+
   const [postCode, setPostCode] = useState("");
-  const [zipCodes, setZipCodes] = useState(previousSearch?.postCodes || []);
-  const [background, setBackground] = useState(previousSearch?.background || "");
+  const [zipCodes, setZipCodes] = useState(() => {
+    if (savedSearch?.postCodes && savedSearch.postCodes.length > 0) {
+      return savedSearch.postCodes;
+    }
+    const defaultZip = authUser?.postalCode || authUser?.postCode || authUser?.zip || authUser?.location?.zip;
+    return defaultZip ? [defaultZip.toString().trim().toUpperCase()] : [];
+  });
+
+  const [background, setBackground] = useState(() => {
+    return savedSearch?.background || authUser?.background || authUser?.bio || authUser?.description || "";
+  });
 
   // Dropdown states
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [showVehicleDropdown, setShowVehicleDropdown] = useState(false);
-  const [selectedVehicles, setSelectedVehicles] = useState([]);
-
-  // ✅ WRAPPER CHECK
-  const isWrapper = user?.userType === "wrapper" || user?.userType === "vehicle_wrapper" || user?.role === "wrapper";
+  const [selectedVehicles, setSelectedVehicles] = useState(savedSearch?.vehicleType || []);
 
   // Compute dynamic options
   const categoryList = useMemo(() => {
@@ -89,6 +174,20 @@ const AdvancedSearchPage = () => {
     return [{ value: "ALL", label: "All Vehicle Types" }, ...options];
   }, [searchType, categoryList, dynamicVehicleTypes]);
 
+  // Helpers
+  const updateStatesForCountry = useCallback((countryName) => {
+    if (worldData && countryName) {
+      const c = worldData.find((item) => item.name === countryName);
+      if (c?.states) {
+        setStates(c.states.map((s) => s.name).sort());
+      } else {
+        setStates([]);
+      }
+    } else {
+      setStates([]);
+    }
+  }, []);
+
   // Effects
   useEffect(() => {
     dispatch(getAllCategories());
@@ -106,77 +205,61 @@ const AdvancedSearchPage = () => {
     }
   }, []);
 
+  // Pre-populate form and update states when country changes or user/savedSearch is ready
   useEffect(() => {
-    if (userCountry) {
-      setCountry(userCountry);
-      updateStatesForCountry(userCountry);
+    const activeCountry = country || savedSearch?.country || authUser?.country || authUser?.location?.country || userCountry || "Australia";
+    if (activeCountry) {
+      setCountry(activeCountry);
+      updateStatesForCountry(activeCountry);
     }
-  }, [userCountry]);
+  }, [country, savedSearch, authUser, userCountry, updateStatesForCountry]);
 
-  // ✅ PRE-POPULATE FORM WITH PREVIOUS SEARCH OR USER DATA
+  // Keep form fields synced with user profile or saved previous search
   useEffect(() => {
-    if (previousSearch) {
-      if (previousSearch.userType) setUserType(previousSearch.userType);
-      if (previousSearch.searchType) setSearchType(previousSearch.searchType);
-      if (previousSearch.firstName) setFirstName(previousSearch.firstName);
-      if (previousSearch.lastname) setlastname(previousSearch.lastname);
-      if (previousSearch.email) setEmail(previousSearch.email);
-      if (previousSearch.country) {
-        setCountry(previousSearch.country);
-        updateStatesForCountry(previousSearch.country);
-      }
-      if (previousSearch.state) setState(previousSearch.state);
-      if (previousSearch.postCodes) setZipCodes(previousSearch.postCodes);
-      if (previousSearch.background) setBackground(previousSearch.background);
-      if (previousSearch.vehicleType) setSelectedVehicles(previousSearch.vehicleType);
-      return;
+    if (savedSearch) {
+      if (savedSearch.firstName) setFirstName(savedSearch.firstName);
+      if (savedSearch.lastname) setlastname(savedSearch.lastname);
+      if (savedSearch.email) setEmail(savedSearch.email);
+      if (savedSearch.state) setState(savedSearch.state);
+      if (savedSearch.postCodes && savedSearch.postCodes.length > 0) setZipCodes(savedSearch.postCodes);
+      if (savedSearch.background) setBackground(savedSearch.background);
+      if (savedSearch.vehicleType && savedSearch.vehicleType.length > 0) setSelectedVehicles(savedSearch.vehicleType);
     }
 
-    if (user) {
-      // Set user type - WRAPPER gets special treatment
-      let resolvedUserType = "regular";
-      
-      if (isWrapper) {
-        resolvedUserType = "wrapper"; // Special type for wrapper
-      } else if (user.userType === "fleetOwner" || user.role === "fleetOwner") {
-        resolvedUserType = "fleetOwner";
-      } else if (user.userType === "advertiser" || user.role === "advertiser") {
-        resolvedUserType = "advertiser";
+    if (authUser) {
+      const uFirst = authUser.firstName || authUser.firstname || authUser.first_name || (authUser.name ? authUser.name.split(" ")[0] : "");
+      const uLast = authUser.lastname || authUser.lastName || authUser.last_name || (authUser.name ? authUser.name.split(" ").slice(1).join(" ") : "");
+      const uEmail = authUser.email || "";
+      const uState = authUser.state || authUser.location?.state || "";
+      const uZip = authUser.postalCode || authUser.postCode || authUser.zip || authUser.location?.zip || "";
+
+      setFirstName((prev) => prev || uFirst);
+      setlastname((prev) => prev || uLast);
+      setEmail((prev) => prev || uEmail);
+      if (!state && uState) setState(uState);
+      if ((!zipCodes || zipCodes.length === 0) && uZip) {
+        setZipCodes([uZip.toString().trim().toUpperCase()]);
       }
-      
-      setUserType(resolvedUserType);
-      
-      // Set search type based on user type
-      if (isWrapper) {
-        // Wrappers should search for campaigns (vehicles to wrap)
-        setSearchType("campaign");
-      } else if (resolvedUserType === "fleetOwner") {
-        setSearchType("campaign");
-      } else {
-        setSearchType("auction");
-      }
-      
-      // ✅ Pre-populate user details
-      setFirstName(user.firstName || user.name?.split(" ")[0] || "");
-      setlastname(user.lastname || user.name?.split(" ").slice(1).join(" ") || "");
-      setEmail(user.email || "");
-      
-      // If user has country info
-      if (user.country || user.location?.country) {
-        setCountry(user.country || user.location?.country || userCountry || "");
-      }
-      
-      // If user has state info
-      if (user.state || user.location?.state) {
-        setState(user.state || user.location?.state || "");
-      }
-      
-      // If user has background info
-      if (user.background || user.bio || user.description) {
-        setBackground(user.background || user.bio || user.description || "");
+      if (!background && (authUser.background || authUser.bio || authUser.description)) {
+        setBackground(authUser.background || authUser.bio || authUser.description);
       }
     }
-  }, [user, userCountry, isWrapper]);
+  }, [authUser, savedSearch]);
+
+  // Strict role lock enforcement:
+  // Fleet Manager/Owner ONLY searches Buyer/Marketing Executive Campaigns
+  // Advertiser/Buyer ONLY searches Fleet Owner Vehicle Listings
+  useEffect(() => {
+    if (resolvedRole === "fleetOwner") {
+      setUserType("fleetOwner");
+      setSearchType("campaign");
+    } else if (resolvedRole === "advertiser") {
+      setUserType("advertiser");
+      setSearchType("auction");
+    } else if (isWrapper) {
+      setUserType("wrapper");
+    }
+  }, [resolvedRole, isWrapper]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -186,20 +269,6 @@ const AdvancedSearchPage = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Helpers
-  const updateStatesForCountry = useCallback((countryName) => {
-    if (worldData && countryName) {
-      const c = worldData.find((c) => c.name === countryName);
-      if (c?.states) {
-        setStates(c.states.map((s) => s.name).sort());
-      } else {
-        setStates([]);
-      }
-    } else {
-      setStates([]);
-    }
   }, []);
 
   const handleCountryChange = (e) => {
@@ -229,47 +298,35 @@ const AdvancedSearchPage = () => {
 
   // ✅ CORRECT TOGGLE VEHICLE FUNCTION
   const toggleVehicle = (value) => {
-    // If "All" is clicked
     if (value === "ALL") {
-      // If already selected, deselect all
       if (selectedVehicles.includes("ALL")) {
         setSelectedVehicles([]);
       } else {
-        // Select all vehicles
         const allValues = vehicleOptionsList
-          .filter(item => item.value !== "ALL")
-          .map(item => item.value);
+          .filter((item) => item.value !== "ALL")
+          .map((item) => item.value);
         setSelectedVehicles(["ALL", ...allValues]);
       }
       return;
     }
 
-    // If a specific vehicle is clicked
     setSelectedVehicles((prev) => {
-      // Remove "ALL" if it was selected
       let filtered = prev.filter((v) => v !== "ALL");
-      
-      // Toggle the vehicle
       if (filtered.includes(value)) {
         filtered = filtered.filter((v) => v !== value);
       } else {
         filtered = [...filtered, value];
       }
-      
-      // If all vehicles are selected, add "ALL"
       const allValues = vehicleOptionsList
-        .filter(item => item.value !== "ALL")
-        .map(item => item.value);
-      
-      if (filtered.length === allValues.length && allValues.every(v => filtered.includes(v))) {
+        .filter((item) => item.value !== "ALL")
+        .map((item) => item.value);
+      if (filtered.length === allValues.length && allValues.every((v) => filtered.includes(v))) {
         return ["ALL", ...filtered];
       }
-      
       return filtered;
     });
   };
 
-  // Check if a vehicle is selected
   const isVehicleSelected = (value) => {
     if (value === "ALL") {
       return selectedVehicles.includes("ALL");
@@ -277,7 +334,7 @@ const AdvancedSearchPage = () => {
     return selectedVehicles.includes(value);
   };
 
-  // ✅ Submit handler with proper userType mapping
+  // ✅ Submit handler with persistence in localStorage and auto-adding current typed zip
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
 
@@ -286,26 +343,34 @@ const AdvancedSearchPage = () => {
       return;
     }
 
+    // Auto-include any entered postcode that wasn't clicked "Add"
+    const activeZipCodes = [...zipCodes];
+    const trimmedInputZip = postCode.trim().toUpperCase();
+    if (trimmedInputZip && !activeZipCodes.includes(trimmedInputZip)) {
+      activeZipCodes.push(trimmedInputZip);
+      setZipCodes(activeZipCodes);
+      setPostCode("");
+    }
+
     const resolvedVehicleTypes =
       searchType === "campaign"
         ? selectedVehicles
             .filter((id) => id !== "ALL")
-            .map((id) => categoryList.find((c) => c._id === id)?.name?.trim())
+            .map((id) => categoryList.find((c) => c._id === id)?.name?.trim() || id)
             .filter(Boolean)
         : selectedVehicles.filter((v) => v !== "ALL");
 
     const hasAnyFilter =
-      country.trim() || state.trim() || zipCodes.length > 0 || resolvedVehicleTypes.length > 0;
+      country.trim() || state.trim() || activeZipCodes.length > 0 || resolvedVehicleTypes.length > 0;
 
     if (!hasAnyFilter) {
       toast.error("Please fill at least one search field (location, postcode, or vehicle type).");
       return;
     }
 
-    // ✅ Map userType to what backend expects
     let mappedUserType = userType;
     if (isWrapper) {
-      mappedUserType = "wrapper"; // Send "wrapper" to backend
+      mappedUserType = "wrapper";
     }
 
     const payload = {
@@ -316,12 +381,19 @@ const AdvancedSearchPage = () => {
       searchType,
       country: country.trim(),
       state: state.trim(),
-      postCodes: zipCodes,
+      postCodes: activeZipCodes,
       vehicleType: resolvedVehicleTypes,
       background: background.trim(),
     };
 
     try {
+      // Save for persistence across back-navigation and refreshed sessions
+      try {
+        localStorage.setItem("lastMarketplaceSearch", JSON.stringify(payload));
+      } catch (storageErr) {
+        console.warn("Could not save search to localStorage", storageErr);
+      }
+
       const result = await dispatch(searchMarketplace(payload)).unwrap();
       navigate("/search-results", {
         state: {
@@ -339,8 +411,8 @@ const AdvancedSearchPage = () => {
   // ✅ Get user display label
   const getUserTypeDisplay = () => {
     if (isWrapper) return "Vehicle Wrapping Business";
-    if (userType === "fleetOwner") return "Fleet Owner";
-    if (userType === "advertiser") return "Advertiser";
+    if (resolvedRole === "fleetOwner") return "Fleet Owner";
+    if (resolvedRole === "advertiser") return "Buyer / Marketing Executive (Advertiser)";
     return "Regular User";
   };
 
@@ -355,24 +427,28 @@ const AdvancedSearchPage = () => {
         
         {/* Page Header */}
         <div className="mb-12">
-          <h1 className="text-5xl font-bold tracking-tighter text-white mb-3">Advanced Search</h1>
-          <p className="text-xl text-slate-400 max-w-2xl">Discover premium advertising opportunities, fleet campaigns, and vehicle auctions tailored to your territory.</p>
+          <h1 className="text-5xl font-bold tracking-tighter text-white mb-3">Search Marketplace</h1>
+          <p className="text-xl text-slate-400 max-w-2xl">
+            {resolvedRole === "fleetOwner"
+              ? "Discover active advertising campaigns from Buyers & Marketing Executives looking for vehicle fleets."
+              : "Discover verified vehicle fleet auctions and mobile billboard opportunities."}
+          </p>
         </div>
 
         {/* SEARCH COMPONENT */}
         <div className="bg-black/40 p-10 rounded-3xl border border-white/5 shadow-2xl">
           <form onSubmit={handleSearchSubmit} className="space-y-8">
             
-            {/* Row 1: I am a / Search For */}
+            {/* Row 1: I am a / Search For - Strict Role Separation */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelClass}>I am a</label>
-                {user ? (
+                {authUser ? (
                   <input
                     type="text"
                     readOnly
                     value={getUserTypeDisplay()}
-                    className={fieldClass + " cursor-default"}
+                    className={fieldClass + " cursor-default bg-slate-800/70 font-semibold"}
                   />
                 ) : (
                   <select
@@ -386,25 +462,44 @@ const AdvancedSearchPage = () => {
                     className={fieldClass + " cursor-pointer"}
                   >
                     <option value="fleetOwner">Fleet Owner</option>
-                    <option value="advertiser">Advertiser</option>
-                    <option value="regular">Regular User</option>
+                    <option value="advertiser">Buyer / Marketing Executive</option>
                   </select>
                 )}
               </div>
 
               <div>
                 <label className={labelClass}>Search For</label>
-                <select
-                  value={searchType}
-                  onChange={(e) => {
-                    setSearchType(e.target.value);
-                    setSelectedVehicles([]);
-                  }}
-                  className={fieldClass + " cursor-pointer"}
-                >
-                  <option value="campaign">Advertising Campaigns</option>
-                  <option value="auction">Vehicle Auctions</option>
-                </select>
+                {authUser && !isWrapper ? (
+                  <div>
+                    <input
+                      type="text"
+                      readOnly
+                      value={
+                        resolvedRole === "fleetOwner"
+                          ? "Advertising Campaigns"
+                          : "Vehicle Auctions / Fleet"
+                      }
+                      className={fieldClass + " cursor-default bg-slate-800/70 font-semibold"}
+                    />
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      {resolvedRole === "fleetOwner"
+                        ? "Fleet Owners search for Buyer & Marketing Executive Campaigns"
+                        : "Advertisers search for Fleet Owner Vehicle Listings"}
+                    </p>
+                  </div>
+                ) : (
+                  <select
+                    value={searchType}
+                    onChange={(e) => {
+                      setSearchType(e.target.value);
+                      setSelectedVehicles([]);
+                    }}
+                    className={fieldClass + " cursor-pointer"}
+                  >
+                    <option value="campaign">Advertising Campaigns</option>
+                    <option value="auction">Vehicle Auctions / Fleet</option>
+                  </select>
+                )}
               </div>
             </div>
 

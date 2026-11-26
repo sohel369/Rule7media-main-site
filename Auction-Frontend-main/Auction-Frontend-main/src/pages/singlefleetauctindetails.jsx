@@ -553,8 +553,8 @@ const FleetAuctionDetails = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between sm:justify-end gap-4 sm:gap-2 w-full relative mt-6">
   <HeaderLeaderboard />
   
-  {/* Sirf wrapper nahi hone par hi yeh block dikhega */}
-  {user?.userType !== "wrapper" && (
+  {/* Only Advertisers & Marketing Executives propose budget rates to Fleet Managers */}
+  {(!user || user?.userType === "advertiser" || user?.userType === "buyer") && (
     <>
       <div className="flex gap-4">
         <button

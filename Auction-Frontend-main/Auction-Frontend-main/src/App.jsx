@@ -637,8 +637,20 @@ useEffect(() => {
           element={<SingleAuctionDetail />}
         />
         <Route
+          path="/single-auction-detail"
+          element={<Navigate to="/search-results" replace />}
+        />
+        <Route
           path="/single-fleet-auction-detail/:id"
           element={<FleetAuctionDetails />}
+        />
+        <Route
+          path="/single-fleet-auction-detail"
+          element={<Navigate to="/single-fleet-auction-detail/6a6179860df1cf42a8dbdb78" replace />}
+        />
+        <Route
+          path="/campaign-details"
+          element={<Navigate to="/campaign-details/6a62d5920df1cf42a8dbf89a" replace />}
         />
         <Route path="/recommendations/:id" element={<RecommendationsPage />} />
         <Route path="/payment-cancel" element={<PaymentCancel />} />

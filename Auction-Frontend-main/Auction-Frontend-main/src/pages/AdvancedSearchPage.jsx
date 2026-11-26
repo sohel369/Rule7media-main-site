@@ -273,12 +273,6 @@ const AdvancedSearchPage = () => {
 
   const handleCountryChange = (e) => {
     const selected = e.target.value;
-    if (userCountry && selected && selected.toLowerCase() !== userCountry.toLowerCase()) {
-      toast.error(`You can only search within ${userCountry}.`);
-      setCountry(userCountry);
-      updateStatesForCountry(userCountry);
-      return;
-    }
     setCountry(selected);
     setState("");
     updateStatesForCountry(selected);
@@ -337,11 +331,6 @@ const AdvancedSearchPage = () => {
   // ✅ Submit handler with persistence in localStorage and auto-adding current typed zip
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-
-    if (userCountry && country && country.toLowerCase() !== userCountry.toLowerCase()) {
-      toast.error(`Searches are only available within your country (${userCountry})`);
-      return;
-    }
 
     // Auto-include any entered postcode that wasn't clicked "Add"
     const activeZipCodes = [...zipCodes];

@@ -743,31 +743,33 @@ const BillboardSlider = () => {
   return (
     <>
       <div className="min-h-screen bg-black text-white z-50 overflow-hidden">
-        {/* <div className="flex justify-end mt-3 gap-3">
- {user?.subscription?.status === "active" ? (
-  <button
-   onClick={() => navigate("/user-profile/profile")}
-    className="w-28 bg-green-700 hover:bg-green-600 px-4 py-2 rounded-full text-sm font-semibold shadow-md text-center transition duration-200"
-  >
-    Dashboard
-  </button>
-) : (
-  <button
-   onClick={() => navigate("/subscriberonly")}
-    className="w-28 bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-full text-sm font-semibold shadow-md text-center transition duration-200 cursor-pointer"
-  >
-    Dashboard
-  </button>
-)}
-
-
-    <button
-      onClick={handleLogout}
-      className="w-28 bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full text-sm font-semibold shadow-md text-center transition duration-200"
-    >
-      Logout
-    </button>
-  </div> */}
+        {/* Persistent Top Action Bar on Billboard */}
+        <div className="w-full bg-[#121620] border-b border-gray-800 px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate("/user-profile/profile")}
+              className="px-4 py-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <FaUser size={13} />
+              <span>Go to Dashboard</span>
+            </button>
+            <button
+              onClick={() => navigate("/pricing")}
+              className="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <span>View Pricing Plans</span>
+            </button>
+          </div>
+          {isSubscribed ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full text-xs font-semibold">
+              <FaCheckCircle size={12} /> Active Subscription
+            </span>
+          ) : user ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full text-xs font-semibold">
+              Subscription required for campaign launch
+            </span>
+          ) : null}
+        </div>
         <div className="relative w-full h-full">
           <div className="w-full h-full flex items-start justify-center pt-16">
             <div

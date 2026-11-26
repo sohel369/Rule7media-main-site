@@ -33,6 +33,20 @@ export const verifyUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+export const optionalVerifyUser = asyncHandler(async (req, res, next) => {
+  try {
+    const token = req.cookies?.JwtToken || req.headers.authorization?.split(" ")[1];
+    if (token) {
+      const decodedToken = await jwt.verify(token, JWT_SECRET);
+      const user = await User.findById(decodedToken?._id).select("-password");
+      if (user) req.user = user;
+    }
+  } catch (error) {
+    // Non-blocking for optional auth
+  }
+  next();
+});
+
 export const verifySeller = asyncHandler(async (req, res, next) => {
   try {
     const user = req.user;

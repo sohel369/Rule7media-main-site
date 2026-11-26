@@ -5,8 +5,9 @@ const getSubscriptionPlans = async () => {
   return response.data;
 };
 const getSubscriptionPlansforusers = async () => {
-  const token = JSON.parse(localStorage.getItem("user"))?.token;
-  const response = await axiosInstance.get("/subscription-plans");
+  const token = Cookies.get("JwtToken") || JSON.parse(localStorage.getItem("user") || "{}")?.token;
+  const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+  const response = await axiosInstance.get("/subscription-plans", config);
   return response.data;
 };
 const createSubscriptionPlan = async (planData) => {

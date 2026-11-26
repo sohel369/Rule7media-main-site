@@ -633,7 +633,31 @@ export const checkSubscriptionStatus = asyncHandler(async (req, res) => {
     }
 
     // 🔹 Fetch subscription details from Stripe
-    const subscription = await stripe.subscriptions.retrieve(stripeSubId);
+    let subscription = null;
+    try {
+      subscription = await stripe.subscriptions.retrieve(stripeSubId);
+    } catch (e) {
+      console.warn("Stripe subscription retrieve failed:", e.message);
+    }
+
+    if (!subscription) {
+      if (user.subscription?.status === "active") {
+        return res.status(200).json({
+          success: true,
+          subscription: {
+            id: stripeSubId,
+            status: "active",
+            planDuration: user.subscription.durationMonths || 3,
+            currentPeriodEnd: Math.floor(Date.now() / 1000) + 30 * 86400,
+            cancelAtPeriodEnd: false,
+          },
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        subscription: { status: "inactive" },
+      });
+    }
 
     // 🔹 Extract duration ONLY from metadata or DB
     let durationMonths =

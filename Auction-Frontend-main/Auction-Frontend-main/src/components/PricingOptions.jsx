@@ -827,7 +827,7 @@ const PricingOptions = () => {
             </div>
           ) : (
             <>
-              {errorMessage && (
+              {errorMessage && !errorMessage.toLowerCase().includes("unauthorized") && (
                 <div className="text-red-500 text-center mb-4">
                   {errorMessage}
                 </div>
@@ -835,7 +835,7 @@ const PricingOptions = () => {
               {subLoading && (
                 <div className="text-center">Loading plans...</div>
               )}
-              {subError && (
+              {subError && !subError.toLowerCase().includes("unauthorized") && (
                 <div className="text-red-500 text-center">{subError}</div>
               )}
               {loading && (

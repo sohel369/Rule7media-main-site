@@ -322,7 +322,7 @@ if (isAffiliatePage) {
       params.has("session_id")) ||
     location.pathname === "/subscription-cancel";
 
-  const isLoggedIn = !!user && !isSpecialPage && hasActiveSubscription;
+  const isLoggedIn = !!user && !isSpecialPage;
   const isLogged = user;
   // Dropdown items with correct icon colors (matching original)
   const collaborativeItems = [
@@ -609,31 +609,22 @@ if (isAffiliatePage) {
                     </button>
                    {isAffiliatePage ? ( <a href="https://www.refferq.com/" target="_blank" rel="noopener noreferrer" className="ml-2 px-6 py-2.5 border border-slate-600 text-slate-300 text-sm font-bold rounded-full hover:bg-slate-800 transition-all" > Login </a> ) : ( <Link to="/login" className="ml-2 px-6 py-2.5 border border-slate-600 text-slate-300 text-sm font-bold rounded-full hover:bg-slate-800 transition-all" > Login </Link> )}
                   </>
-                ) : !hasActiveSubscription ? (
-                  // Logged in but NO subscription - sirf Logout dikhao
-                  <button
-                    onClick={logoutHandle}
-                    className="ml-4 px-6 py-2.5 bg-slate-700 text-red-400 text-sm font-bold rounded-full hover:bg-slate-600 border border-red-500/30 transition-all flex items-center gap-2 cursor-pointer"
-                  >
-                    <FaSignOutAlt size={14} /> Logout
-                  </button>
                 ) : (
-                  <Link
-                    to="/user-profile/profile"
-                    onClick={handleProfileIconClick}
-                    style={{ cursor: "pointer" }}
-                    className="ml-4 flex items-center cursor-pointer"
-                  >
-                    <img
-                      src={
-                        user?.profilePicture ||
-                        logInUser?.profilePicture ||
-                        "https://via.placeholder.com/40"
-                      }
-                      alt="Profile"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-slate-700 hover:border-red-500 transition-all"
-                    />
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to="/user-profile/profile"
+                      className="ml-3 px-3.5 py-1.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs md:text-sm font-bold rounded-xl shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider shrink-0"
+                    >
+                      <FaUser size={13} />
+                      <span>Dashboard</span>
+                    </Link>
+                    <button
+                      onClick={logoutHandle}
+                      className="ml-2 px-4 py-1.5 bg-slate-700 text-red-400 text-xs font-bold rounded-xl hover:bg-slate-600 border border-red-500/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <FaSignOutAlt size={13} /> Logout
+                    </button>
+                  </div>
                 )}
               </>
             ) : (
@@ -1008,33 +999,25 @@ if (isAffiliatePage) {
                       Login
                     </Link>
                   </>
-                ) : !hasActiveSubscription ? (
-                  <button
-                    onClick={() => {
-                      logoutHandle();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="mt-4 mx-4 px-6 py-2.5 bg-slate-700 text-red-400 text-sm font-bold rounded-full flex items-center justify-center gap-2"
-                  >
-                    <FaSignOutAlt size={14} /> Logout
-                  </button>
                 ) : (
-                  <Link
-                    to="/user-profile/profile"
-                    onClick={handleProfileIconClick}
-                    style={{ cursor: "pointer" }}
-                    className="mt-4 flex justify-center"
-                  >
-                    <img
-                      src={
-                        user?.profilePicture ||
-                        logInUser?.profilePicture ||
-                        "https://via.placeholder.com/50"
-                      }
-                      alt="Profile"
-                      className="w-12 h-12 rounded-full object-cover border-2 border-slate-700"
-                    />
-                  </Link>
+                  <div className="flex flex-col gap-2 mt-4 px-4">
+                    <Link
+                      to="/user-profile/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-6 py-2.5 bg-gradient-to-r from-red-600 to-rose-600 text-white text-sm font-bold rounded-xl text-center flex items-center justify-center gap-2"
+                    >
+                      <FaUser size={14} /> Go to Dashboard
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logoutHandle();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="px-6 py-2 bg-slate-700 text-red-400 text-sm font-bold rounded-xl flex items-center justify-center gap-2"
+                    >
+                      <FaSignOutAlt size={14} /> Logout
+                    </button>
+                  </div>
                 )}
               </div>
             ) : (

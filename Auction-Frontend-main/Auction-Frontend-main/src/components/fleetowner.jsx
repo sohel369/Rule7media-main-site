@@ -46,7 +46,9 @@ const FleetOwnerForm = () => {
   const approvedVehicles = fleetvehclelist?.filter((v) => v.isApproved) || [];
   const { user } = useSelector((state) => state.auth);
 
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 
   if (!googleMapsApiKey) {
     console.error("Google Maps API key is missing!");
@@ -2589,7 +2591,9 @@ export default FleetOwnerForm;
 //   } = useSelector((state) => state.vehicles || {});
 //   const { user } = useSelector((state) => state.auth);
 
-//   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//   const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 //   if (!googleMapsApiKey) {
 //     console.error("Google Maps API key is missing!");
 //   }
@@ -4257,7 +4261,9 @@ export default FleetOwnerForm;
 //   );
 //   const { user } = useSelector((state) => state.auth);
 //
-//   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//   const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 //   if (!googleMapsApiKey) {
 //     console.error("Google Maps API key is missing!");
 //   }
@@ -5813,7 +5819,9 @@ export default FleetOwnerForm;
 //   } = useSelector((state) => state.vehicles || {});
 //   const { user } = useSelector((state) => state.auth);
 //
-//   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//   const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 //   if (!googleMapsApiKey) {
 //     console.error("Google Maps API key is missing!");
 //   }

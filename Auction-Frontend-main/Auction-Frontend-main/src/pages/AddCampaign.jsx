@@ -23,6 +23,34 @@ import {
   RightSkyscraper,
   MobileStickyLeaderboard,
 } from "../components/AdSlots";
+const DEFAULT_VEHICLE_TYPES = [
+  "Box Van",
+  "Large Delivery Van",
+  "Medium Delivery Van",
+  "Small Delivery Van",
+  "Passenger Van",
+  "Refrigerated Van",
+  "Short Haul Interstate Truck",
+  "Long Haul Interstate Truck",
+  "B-Double Truck",
+  "Transit Bus",
+  "Large SUV",
+  "Medium SUV",
+  "Small SUV",
+  "Large Pick Up/Ute",
+  "Medium Pick Up/Ute",
+  "Small Pick Up/Ute",
+  "Large Saloon",
+  "Medium Saloon",
+  "Small Saloon",
+  "Refuse Truck",
+  "Liquid/Fuel Truck",
+  "Cement Mixer",
+  "Curtain Trailers",
+  "Removalist Vans",
+  "Dump Truck",
+];
+
 const CreateCampaign = () => {
   const { id } = useParams();
   const isEditMode = Boolean(id);
@@ -65,7 +93,7 @@ const CreateCampaign = () => {
   const [loadingLocation, setLoadingLocation] = useState(false);
   const debounceRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uniqueVehicleTypes, setUniqueVehicleTypes] = useState([]);
+  const [uniqueVehicleTypes, setUniqueVehicleTypes] = useState(DEFAULT_VEHICLE_TYPES);
   const { list: vehicles, selectedVehicle } = useSelector(
     (state) => state.vehicles || {},
   );
@@ -76,7 +104,9 @@ const CreateCampaign = () => {
   // Map related states
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 
   // Default center and map container style
   const defaultCenter = { lat: 41.3444587, lng: -99.6104541 };
@@ -135,18 +165,22 @@ const CreateCampaign = () => {
   useEffect(() => {
     let categoryNames = [];
 
-    if (categories?.data && Array.isArray(categories.data)) {
+    if (categories?.data && Array.isArray(categories.data) && categories.data.length > 0) {
       categoryNames = categories.data
         .map((cat) => cat.name)
         .filter(
           (name) => name && typeof name === "string" && name.trim() !== "",
         );
-    } else if (Array.isArray(categories)) {
+    } else if (Array.isArray(categories) && categories.length > 0) {
       categoryNames = categories
         .map((cat) => cat.name)
         .filter(
           (name) => name && typeof name === "string" && name.trim() !== "",
         );
+    }
+
+    if (categoryNames.length === 0) {
+      categoryNames = DEFAULT_VEHICLE_TYPES;
     }
 
     setUniqueVehicleTypes(categoryNames);

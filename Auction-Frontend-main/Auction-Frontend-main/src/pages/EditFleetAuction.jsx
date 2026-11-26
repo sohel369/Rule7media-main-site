@@ -51,7 +51,9 @@ const EditFleetAuction = () => {
   // Map related states
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const googleMapsApiKey =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    "AIzaSyAiw-1CuDm1ZD5-Dq7smGpD-9lLYYRF5rY";
 
   // Default center and map container style
   const defaultCenter = { lat: -25.2744, lng: 133.7751 }; // Centered on Australia

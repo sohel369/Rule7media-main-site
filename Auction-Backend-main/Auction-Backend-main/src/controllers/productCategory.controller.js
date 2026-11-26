@@ -120,7 +120,20 @@ const getProductCategory = asyncHandler(async (req, res) => {
 
 const getAllProductCategories = async ( req, res) => {
     try {
-        const productCategories = await ProductCategory.find();
+        let productCategories = await ProductCategory.find();
+        if (!productCategories || productCategories.length === 0) {
+            const defaults = [
+                'Short Haul Interstate Truck', 'Box Van', 'Large Delivery Van',
+                'Medium Delivery Van', 'Small Delivery Van', 'Long Haul Interstate Truck',
+                'Passenger Van', 'Refrigerated Van', 'B-Double Truck', 'Transit Bus',
+                'Large SUV', 'Medium SUV', 'Small SUV', 'Large Pick Up/Ute',
+                'Medium Pick Up/Ute', 'Small Pick Up/Ute', 'Large Saloon', 'Medium Saloon',
+                'Small Saloon', 'Refuse Truck', 'Liquid/Fuel Truck', 'Cement Mixer',
+                'Curtain Trailers', 'Removalist Vans', 'Dump Truck'
+            ];
+            await ProductCategory.insertMany(defaults.map(name => ({ name })));
+            productCategories = await ProductCategory.find();
+        }
         res.status(200).json(new ApiResponse(200, "Product categories retrieved successfully", productCategories));
     } catch (err) {
         return res.status(500).json(new ApiResponse(500, err?.message || "Internal server error"));

@@ -10,14 +10,19 @@ const register = async (user) => {
 const login = async (user) => {
   const response = await axiosInstance.post(`/users/login`, user);
 
-  if (response.data.data.user) {
-    localStorage.setItem("user", JSON.stringify(response.data.data.user));
-    Cookies.set("JwtToken", response.data.data.JwtToken, {
-      expires: 1, // Expires in 7 days
-      path: "/", // Accessible throughout the site
-      secure: true, // Ensures the cookie is sent over HTTPS
-      sameSite: "Lax", // Helps protect against CSRF attacks
-    });
+  if (response.data?.data?.user) {
+    const userData = response.data.data.user;
+    const token = response.data.data.JwtToken;
+    localStorage.setItem("user", JSON.stringify(userData));
+    if (token) {
+      localStorage.setItem("token", token);
+      Cookies.set("JwtToken", token, {
+        expires: 7, // Expires in 7 days
+        path: "/", // Accessible throughout the site
+        secure: true, // Ensures the cookie is sent over HTTPS
+        sameSite: "Lax",
+      });
+    }
   }
 
   return response.data;
@@ -25,9 +30,10 @@ const login = async (user) => {
 
 const logout = async () => {
   Cookies.remove("JwtToken", { path: "/" });
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 
   const response = await axiosInstance.post(`/users/logout`, {});
-  localStorage.removeItem("user");
 
   window.location.href = "/";
   return response.data;

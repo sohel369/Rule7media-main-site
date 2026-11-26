@@ -1,5 +1,5 @@
 import axios from "axios";
-//
+import Cookies from "js-cookie";
 
 const getApiUrl = () => {
   if (typeof window !== "undefined") {
@@ -20,5 +20,27 @@ const axiosInstance = axios.create({
   withCredentials: true,
   timeout: 120000,
 });
+
+// Attach JWT token from Cookies or localStorage to all outgoing requests
+axiosInstance.interceptors.request.use(
+  (config) => {
+    let token = null;
+    try {
+      token =
+        Cookies.get("JwtToken") ||
+        localStorage.getItem("token") ||
+        JSON.parse(localStorage.getItem("user") || "{}")?.token ||
+        JSON.parse(localStorage.getItem("user") || "{}")?.JwtToken;
+    } catch (e) {
+      token = Cookies.get("JwtToken") || localStorage.getItem("token");
+    }
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default axiosInstance;

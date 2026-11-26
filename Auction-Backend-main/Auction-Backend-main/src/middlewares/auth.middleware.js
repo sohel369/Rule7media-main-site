@@ -90,15 +90,12 @@ export const verifyBuyer = asyncHandler(async (req, res, next) => {
 });
 export const verifyAdmin = asyncHandler(async (req, res, next) => {
   try {
-
-
     const user = req.user;
-    if(!user){
+    if (!user) {
       return res.status(401).json(new ApiResponse(401, "Unauthorized request"));
     }
 
-
-    if (user.userType !== "admin") {
+    if (String(user.userType).toLowerCase() !== "admin") {
       return res.status(403).json(new ApiResponse(403, "Access denied"));
     }
 
